@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>3367321487</fileChecksum>
+  <configuration>
+    <name>BOOT</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>FLASH</name>
+    <outputs>
+      <file>$PROJ_DIR$\..\..\..\lib\common\assert.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\common.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\io.c</file>
+      <file>$PROJ_DIR$\..\app\Source\PWM_init.h</file>
+      <file>$PROJ_DIR$\..\app\Source\PWM_init.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\assert.c</file>
+      <file>$PROJ_DIR$\..\app\Source\VirtualOsc.c</file>
+      <file>$PROJ_DIR$\..\app\Source\VirtualOsc.h</file>
+      <file>$PROJ_DIR$\..\app\Gold_Razor.c</file>
+      <file>$PROJ_DIR$\..\app\k60_card.h</file>
+      <file>$PROJ_DIR$\..\app\Source\oledfont.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\alloc.c</file>
+      <file>$PROJ_DIR$\FLASH\Obj\printf.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\queue.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_NVIC.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\relocate.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\Gold_Razor_K60DZ10.pbd</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_PIT.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_FTM.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\stdlib.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\Gold_Razor.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\uif.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_FTM.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\DEV_SCCB.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\assert.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\system_MK60.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\io.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\io.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\PWM_init.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_ENET.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\Eagle_ov7725.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\oled.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_I2C.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FLASH.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_GPIO.pbi</file>
+      <file>$TOOLKIT_DIR$\CMSIS\Include\core_cmFunc.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\ImgDispose.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\printf.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\startup_K60DZ10.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_RTC.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_LPTMR.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\printf.c</file>
+      <file>$PROJ_DIR$\..\app\Source\All_init.h</file>
+      <file>$PROJ_DIR$\..\app\Source\bmp.h</file>
+      <file>$PROJ_DIR$\..\app\Source\Eagle_ov7725.c</file>
+      <file>$PROJ_DIR$\..\app\Source\All_init.c</file>
+      <file>$PROJ_DIR$\..\app\Source\Eagle_ov7725.h</file>
+      <file>$PROJ_DIR$\..\app\Source\Eagle_ov7725_reg.h</file>
+      <file>$PROJ_DIR$\..\app\Source\ImgDispose.c</file>
+      <file>$PROJ_DIR$\..\app\Source\oled.c</file>
+      <file>$PROJ_DIR$\..\app\Source\Encoder_init.h</file>
+      <file>$PROJ_DIR$\..\app\Source\ImgDispose.h</file>
+      <file>$PROJ_DIR$\..\app\Source\Encoder_init.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\io.h</file>
+      <file>$PROJ_DIR$\..\app\Source\oled.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_DMA.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_PIT.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_UART.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_PIT.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\LPLD_Drivers.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_UART.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\uif.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_ADC.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\relocate.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\DEV\DEV_SCCB.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FTM.c</file>
+      <file>$PROJ_DIR$\FLASH\Exe\Gold_Razor_K60DZ10.out</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_GPIO.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_NVIC.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_NVIC.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\CPU\system_MK60.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_ADC.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\DEV\DEV_SCCB.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\uif.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\stdlib.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_GPIO.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FTM.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\relocate.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\stdlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_LPTMR.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\CPU\startup_K60DZ10.s</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_DMA.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\queue.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_LPTMR.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_MCG.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_MCG.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_DMA.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_SPI.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_DAC.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_NVIC.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_LPTMR.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FLEXBUS.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_PDB.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_ADC.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\VirtualOsc.pbi</file>
+      <file>$TOOLKIT_DIR$\CMSIS\Include\core_cm4.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_MCG.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\ImgDispose.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$TOOLKIT_DIR$\CMSIS\Include\core_cmSimd.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\DEV_SCCB.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\FLASH\Exe\Gold_Razor_K60DZ10.bin</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_SDHC.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_USB.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_PIT.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_UART.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\VirtualOsc.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\CPU\MK60DZ10.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\Gold_Razor.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\system_MK60.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\uif.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_ADC.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\assert.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_WDOG.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\All_init.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\relocate.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\CPU\system_MK60DZ10.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_TSI.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\alloc.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\stdlib.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_UART.pbi</file>
+      <file>$TOOLKIT_DIR$\CMSIS\Include\core_cmInstr.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\Eagle_ov7725.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\Encoder_init.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_GPIO.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\cmsis_iar.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_DMA.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\Encoder_init.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\alloc.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_CAN.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\oled.pbi</file>
+      <file>$PROJ_DIR$\FLASH\Obj\queue.o</file>
+      <file>$PROJ_DIR$\FLASH\Obj\HW_MCG.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\All_init.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_SYSTICK.h</file>
+      <file>$PROJ_DIR$\FLASH\Obj\PWM_init.o</file>
+    </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 67</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\io.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 27</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 28</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Source\PWM_init.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 143</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 29</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\assert.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 25</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 117</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Source\VirtualOsc.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 110</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 97</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Gold_Razor.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 113</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\alloc.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 135</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 125</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\printf.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 38</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 12</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Source\Eagle_ov7725.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 129</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 31</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Source\All_init.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 120</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 141</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 89 21 84 3 74 47 119 124 1 0 78 52 98 102 77 106 142 51 55 9 111 54 79 60 122 128 112 101 104 140 65 68 91 33 40 90 43 118 36 87 123 132 86 58 59 63 95 34 136 82 94 30 107 70</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Source\ImgDispose.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 37</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 100</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Source\oled.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 32</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 137</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Source\Encoder_init.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 134</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 130</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_DMA.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 88</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 133</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_PIT.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 108</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 17</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_UART.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 109</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 127</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\uif.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 22</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 115</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\relocate.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 121</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 15</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FTM.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 23</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\FLASH\Exe\Gold_Razor_K60DZ10.out</name>
+      <outputs>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 105</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_NVIC.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 92</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 14</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\CPU\system_MK60.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 26</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 114</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_ADC.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 96</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 116</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\DEV\DEV_SCCB.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 103</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 24</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\stdlib.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 126</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 19</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_GPIO.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 131</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 35</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_LPTMR.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 93</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 41</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\CPU\startup_K60DZ10.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 39</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\queue.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 138</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 13</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_MCG.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 99</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 139</file>
+        </tool>
+      </outputs>
+    </file>
+  </configuration>
+  <configuration>
+    <name>RAM</name>
+    <outputs>
+      <file>$PROJ_DIR$\..\..\..\lib\common\assert.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\common.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\io.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\assert.c</file>
+      <file>$PROJ_DIR$\..\app\Gold_Razor.c</file>
+      <file>$PROJ_DIR$\..\app\k60_card.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\alloc.c</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\RAM\Exe\Gold_Razor_K60DZ10.out</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_ADC.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_MCG.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_PIT.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_DMA.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\assert.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_GPIO.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\uif.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\startup_K60DZ10.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\Gold_Razor.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\Gold_Razor.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_UART.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_MCG.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\alloc.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\assert.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\stdlib.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\printf.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\alloc.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\queue.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_UART.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_FTM.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_GPIO.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_PIT.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\system_MK60.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_DMA.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_ADC.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\system_MK60.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\stdlib.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\printf.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_ENET.h</file>
+      <file>$PROJ_DIR$\RAM\Obj\io.o</file>
+      <file>$PROJ_DIR$\RAM\Exe\Gold_Razor_K60DZ10.bin</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_I2C.h</file>
+      <file>$PROJ_DIR$\RAM\Obj\queue.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\uif.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FLASH.h</file>
+      <file>$TOOLKIT_DIR$\CMSIS\Include\core_cmFunc.h</file>
+      <file>$PROJ_DIR$\RAM\Obj\relocate.o</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_RTC.h</file>
+      <file>$PROJ_DIR$\RAM\Obj\relocate.pbi</file>
+      <file>$PROJ_DIR$\RAM\Obj\HW_FTM.o</file>
+      <file>$PROJ_DIR$\RAM\Obj\io.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\printf.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\io.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_DMA.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_PIT.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_UART.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_PIT.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\LPLD_Drivers.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_UART.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\uif.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_ADC.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\relocate.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FTM.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\queue.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_GPIO.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_NVIC.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\CPU\system_MK60.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_ADC.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\uif.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\stdlib.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_GPIO.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FTM.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\relocate.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\stdlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\CPU\startup_K60DZ10.s</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_DMA.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\common\queue.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_LPTMR.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_MCG.c</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_MCG.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_SPI.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_DAC.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FLEXBUS.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_PDB.h</file>
+      <file>$TOOLKIT_DIR$\CMSIS\Include\core_cm4.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$TOOLKIT_DIR$\CMSIS\Include\core_cmSimd.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_SDHC.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_USB.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\CPU\MK60DZ10.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_WDOG.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\CPU\system_MK60DZ10.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_TSI.h</file>
+      <file>$TOOLKIT_DIR$\CMSIS\Include\core_cmInstr.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\cmsis_iar.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_CAN.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_SYSTICK.h</file>
+    </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 8</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\io.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 38</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 49</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 100 51 85 86 5 98 92 88 101 55 90 91 72 56 80 78 84 83 1 54 0 67 71 95 87 7 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\assert.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 13</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 22</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 100 86 51 85 98 92 88 101 55 90 91 72 56 80 78 84 83 1 0 67 71 95 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\app\Gold_Razor.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 18</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 17</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 91 100 56 86 72 98 92 88 101 55 90 5 51 85 80 78 84 83 1 0 67 71 95 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\alloc.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 21</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 78 0 83 71 80 84 1 67 85 98 92 86 88 101 55 100 90 72 5 91 51 56 95 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\RAM\Exe\Gold_Razor_K60DZ10.out</name>
+      <outputs>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 39</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\printf.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 24</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 78 71 83 0 80 84 1 67 85 98 92 86 88 101 55 100 90 5 91 51 72 56 95 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_DMA.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 32</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 12</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 100 80 86 67 95 98 92 88 101 55 90 0 71 78 84 83 1 74 5 91 51 72 56 85 87 7 54 59 43 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_PIT.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 11</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 30</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 100 67 95 86 80 98 92 88 101 55 90 0 71 78 84 83 1 5 91 51 72 56 85 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_UART.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 27</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 19</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 51 85 100 86 5 98 92 88 101 55 90 91 72 56 80 78 84 83 1 54 0 67 71 95 87 7 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\uif.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 42</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 15</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 78 5 83 51 80 84 1 91 72 56 95 98 92 86 88 101 55 100 90 67 0 71 85 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\relocate.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 45</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 47</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 56 100 91 86 72 98 92 88 101 55 90 5 51 85 80 78 84 83 1 0 67 71 95 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_FTM.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 48</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 28</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 78 71 83 0 80 84 1 67 85 98 92 86 88 101 55 100 90 70 5 91 51 72 56 95 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\CPU\system_MK60.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 34</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 31</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 100 96 67 95 92 80 93 55 90 101 79 0 71 78 84 83 1 7 86 88 5 91 51 72 56 85 44 54 59 43 74 37 64 98 87 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_ADC.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 33</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 9</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 80 100 86 67 95 98 92 88 101 55 90 0 71 78 84 83 1 59 5 91 51 72 56 85 87 7 54 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\stdlib.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 23</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 35</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 78 1 0 83 71 93 84 67 80 85 44 101 92 79 99 55 100 90 5 91 51 72 56 95 96 54 59 43 74 37 64 98 87 7 86 88 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_GPIO.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 14</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 29</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 71 100 86 0 98 92 88 101 55 90 67 80 95 78 84 83 1 63 5 91 51 72 56 85 87 7 54 59 43 74 37 64 93 44 79 96 99 94 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\CPU\startup_K60DZ10.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 16</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\common\queue.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 41</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 26</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 56 89 91 72 44 101 92 79 99 70 102 5 51 85 93 1 94 76 97 62 0 67 71 80 95 96 63 82 40 46 81 98 87 7 86 88 78 54 55 59 84 43 100 74 83 37 90 64</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\lib\LPLD\HW\HW_MCG.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 100 5 86 51 85 98 92 88 101 55 90 91 72 56 80 78 84 83 1 0 67 71 95 87 7 54 59 43 74 37 64 93 44 79 96 99 94 63 70 82 76 40 89 46 97 81 102</file>
+        </tool>
+      </inputs>
+    </file>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+
