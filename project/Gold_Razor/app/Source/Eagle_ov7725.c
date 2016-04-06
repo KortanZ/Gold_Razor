@@ -282,13 +282,10 @@ void porta_isr(void)
 void RazorDMA_Isr(void)
 {
     ov7725_eagle_img_flag = IMG_FINISH ;
-      /*for(temp_i=1;temp_i<120;temp_i+=3)
-      {
-  	img_extract(&(img[160*temp_j]),&(imgbuff[160*temp_i]),CAMERA_SIZE);
-	temp_j++;
-       }*/
-    //Get_MidLine();
-    //vcan_sendimg(imgbuff, CAMERA_SIZE);                  //发送到上位机
+    
+    img_extract(img, imgbuff, CAMERA_SIZE);
+    imgEdge(img);
+    //vcan_sendimg(img, CAMERA_W * CAMERA_H);                  //发送到上位机
     DMA0->INT |= 0x1u<<0;
 }
 

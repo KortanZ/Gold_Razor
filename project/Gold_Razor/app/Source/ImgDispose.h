@@ -5,7 +5,7 @@
 
 
 
-extern void ImgDis(void);
+extern void imgEdge(uint8 *img);
 
 
 #endif

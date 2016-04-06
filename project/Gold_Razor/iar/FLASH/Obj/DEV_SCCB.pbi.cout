@@ -1,4 +1,4 @@
-"E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\app\Source\Eagle_ov7725.c"
+"E:\MCU\Freescale\K60\Gold_Razor\lib\LPLD\DEV\DEV_SCCB.c"
 -std=c99
 -ferror-limit=100
 -I
