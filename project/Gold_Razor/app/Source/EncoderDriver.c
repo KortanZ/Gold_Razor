@@ -38,8 +38,8 @@ uint16 Encoder_GetPulseNum(EncoderPosition position)
 {
 	switch(position)
 	{
-		case Left: return ~LPLD_FTM_GetCounter(FTM1); break;	//左编码器反转
-		case Right: return LPLD_LPTMR_GetPulseAcc(); break;
+		case Left: return ~LPLD_FTM_GetCounter(FTM1);	//左编码器反转
+		case Right: return LPLD_LPTMR_GetPulseAcc();
 	}
 
 }
