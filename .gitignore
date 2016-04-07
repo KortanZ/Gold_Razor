@@ -1,0 +1,7 @@
+/lib/
+/project/
+!*.h
+!*.c
+!*.txt
+!*.md
+!*.icf

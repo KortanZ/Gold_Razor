@@ -1,11 +1,17 @@
+/* 
+*This head file for image processing
+*include edge extacting
+*include 
+*/
 #include "common.h"
 
 void imgEdge(uint8 *img)
 {
 
 	uint8 i, j;
-	uint8 scale = 4;
-	float32 thresh, cutoff, sum = 0.0;
+	//uint8 scale = 4;
+	//float32 thresh, cutoff, sum = 0.0;
+	uint8 thresh = 254;
 	/* define  laplacian */
 	int8 laplacian[3][3] = {{0, 1, 0}, {1, -4, 1}, {0, 1, 0}};
 
@@ -33,15 +39,17 @@ void imgEdge(uint8 *img)
 
 		/* comput summation for avg */
 
-		for (i = 1; i < CAMERA_H - 1; ++i)
-		{
-			for (j = 1; j < CAMERA_W - 1; ++j)     
-				sum += imgTemp[CAMERA_W * i + j];
-		}
+		// for (i = 1; i < CAMERA_H - 1; ++i)
+		// {
+		// 	for (j = 1; j < CAMERA_W - 1; ++j)     
+		// 		sum += imgTemp[CAMERA_W * i + j];
+		// }
 		
-		cutoff = scale * (sum / ((CAMERA_H - 2) * (CAMERA_W - 2)));
-		thresh = sqrt(cutoff);
+		// cutoff = scale * (sum / ((CAMERA_H - 2) * (CAMERA_W - 2)));
+		// thresh = sqrt(cutoff);
 		
+		/* convert to gray imgage through thresh */
+
 		for (i = 1; i < CAMERA_H - 1; ++i)
 		{
 			for (j = 1; j < CAMERA_W - 1; ++j)

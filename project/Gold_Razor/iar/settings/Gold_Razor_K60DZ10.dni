@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-721754318
+Checksum=-21735906
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -103,11 +103,6 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 SumSortOrder=0
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\app\Source\ImgDispose.c}.16.2" 0 0 1 "" 0 "" 0
-Count=1
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -115,6 +110,25 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
+[DriverProfiling]
+Enabled=0
+Mode=1
+Graph=0
+Symbiont=0
+Exclusions=
+[CallStackLog]
+Enabled=0
+[CallStackStripe]
+ShowTiming=1
+[PowerProbe]
+Frequency=10000
+Probe0=I0
+ProbeSetup0=2 1 1 2 0 0
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\app\Source\ImgDispose.c}.16.2" 0 0 1 "" 0 "" 0
+Count=1
 [Aliases]
 A0=_ "C:\Users\Administrator\Desktop\Gold_Razor\lib\CPU\startup_K60DZ10.s" ""
 A1=_ "C:\Users\Administrator\Desktop\Gold_Razor\lib\LPLD\DEV\DEV_SCCB.c" ""
@@ -130,17 +144,3 @@ A10=_ "C:\Users\Administrator\Desktop\Gold_Razor\project\Gold_Razor\app\Source\P
 A11=_ "C:\Users\Administrator\Desktop\Gold_Razor\project\Gold_Razor\app\Source\oled.c" ""
 Count=12
 SuppressDialog=0
-[DriverProfiling]
-Enabled=0
-Mode=1
-Graph=0
-Symbiont=0
-Exclusions=
-[CallStackLog]
-Enabled=0
-[CallStackStripe]
-ShowTiming=1
-[PowerProbe]
-Frequency=10000
-Probe0=I0
-ProbeSetup0=2 1 1 2 0 0

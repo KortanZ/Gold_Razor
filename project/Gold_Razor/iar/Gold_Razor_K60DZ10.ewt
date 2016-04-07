@@ -3145,15 +3145,6 @@
     <group>
       <name>Source</name>
       <file>
-        <name>$PROJ_DIR$\..\app\Source\All_init.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\app\Source\All_init.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\app\Source\bmp.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\app\Source\Eagle_ov7725.c</name>
       </file>
       <file>

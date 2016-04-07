@@ -133,11 +133,17 @@ typedef unsigned char   boolean;      /* 8-bit*/
 
 /*用户头文件*/
 
-#include "ImgDispose.h"
+#include "ImgProcess.h"
 #include "oled.h"
 #include "Eagle_ov7725.h"
+<<<<<<< HEAD
 #include "EncoderDriver.h"
 #include "SequenceCtrl.h"
+=======
+#include "MotorDriver.h"
+#include "SteerDriver.h"
+#include "DebugerDriver.h"
+>>>>>>> 168816eaab11c538fd1ca27a151c4a43e6c865a7
 
 /*
  * 包含实时系统头文件
