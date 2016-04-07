@@ -43,20 +43,20 @@ void Button_Delay(uint16 n)
 
 void Encoder_init(void)
 {
-	//ÅäÖÃÕı½»½âÂë¹¦ÄÜ²ÎÊı
-	Left_Encoder_init_struct.FTM_Ftmx = FTM1;              //Ö»ÓĞFTM1ºÍFTM2ÓĞÕı½»½âÂë¹¦ÄÜ
-	Left_Encoder_init_struct.FTM_Mode = FTM_MODE_QD;       //Õı½»½âÂë¹¦ÄÜ
-	Left_Encoder_init_struct.FTM_QdMode = QD_MODE_PHAB;    //ABÏàÊäÈëÄ£Ê½
-	//³õÊ¼»¯FTM
+	//é…ç½®æ­£äº¤è§£ç åŠŸèƒ½å‚æ•°
+	Left_Encoder_init_struct.FTM_Ftmx = FTM1;              //åªæœ‰FTM1å’ŒFTM2æœ‰æ­£äº¤è§£ç åŠŸèƒ½
+	Left_Encoder_init_struct.FTM_Mode = FTM_MODE_QD;       //æ­£äº¤è§£ç åŠŸèƒ½
+	Left_Encoder_init_struct.FTM_QdMode = QD_MODE_PHAB;    //ABç›¸è¾“å…¥æ¨¡å¼
+	//åˆå§‹åŒ–FTM
 	LPLD_FTM_Init(Left_Encoder_init_struct);
-	//Ê¹ÄÜABÏàÊäÈëÍ¨µÀ
-	//PTB0Òı½Å½ÓAÏàÊäÈë¡¢PTB1Òı½Å½ÓBÏàÊäÈë
+	//ä½¿èƒ½ABç›¸è¾“å…¥é€šé“
+	//PTB0å¼•è„šæ¥Aç›¸è¾“å…¥ã€PTB1å¼•è„šæ¥Bç›¸è¾“å…¥
 	LPLD_FTM_QD_Enable(FTM1, PTA12, PTA13);
 
-	//LPTMR_MODE_PLACCÂö³åÀÛ¼ÓÄ£Ê½
-	//LPTMR_ALT2µÄÊäÈë¿ÚÎªPTC5
-	//½ûÓÃÖĞ¶Ï
-	//ÎŞÖĞ¶Ïº¯Êı
+	//LPTMR_MODE_PLACCè„‰å†²ç´¯åŠ æ¨¡å¼
+	//LPTMR_ALT2çš„è¾“å…¥å£ä¸ºPTC5
+	//ç¦ç”¨ä¸­æ–­
+	//æ— ä¸­æ–­å‡½æ•°
 	Right_Encoder_init_param.LPTMR_Mode = LPTMR_MODE_PLACC;
 	Right_Encoder_init_param.LPTMR_PluseAccInput = LPTMR_ALT2;
 	Right_Encoder_init_param.LPTMR_Isr = NULL;
@@ -69,11 +69,11 @@ void Encoder_init(void)
 /*------------------UART-------------------*/
 void UART_init(void)
 {
-	uartRazor_init_struct.UART_Uartx = UART2; //Ê¹ÓÃUART5
-	uartRazor_init_struct.UART_BaudRate = 115200; //ÉèÖÃ²¨ÌØÂÊ9600
-	uartRazor_init_struct.UART_RxPin = PTD2;  //½ÓÊÕÒı½ÅÎªPTD2
-	uartRazor_init_struct.UART_TxPin = PTD3;  //·¢ËÍÒı½ÅÎªPTD3
-	//³õÊ¼»¯UART
+	uartRazor_init_struct.UART_Uartx = UART2; //ä½¿ç”¨UART5
+	uartRazor_init_struct.UART_BaudRate = 115200; //è®¾ç½®æ³¢ç‰¹ç‡9600
+	uartRazor_init_struct.UART_RxPin = PTD2;  //æ¥æ”¶å¼•è„šä¸ºPTD2
+	uartRazor_init_struct.UART_TxPin = PTD3;  //å‘é€å¼•è„šä¸ºPTD3
+	//åˆå§‹åŒ–UART
 	LPLD_UART_Init(uartRazor_init_struct);
 
 	//--------------------K60_LED-------------------
@@ -155,21 +155,21 @@ void pit_init(void)
 {
 
 
-	//ÅäÖÃPIT1²ÎÊı
+	//é…ç½®PIT1å‚æ•°
 	pit3_init_struct.PIT_Pitx = PIT3;
-	pit3_init_struct.PIT_PeriodMs = 1;//¶¨Ê±ÖÜÆÚ
-	pit3_init_struct.PIT_Isr = main_isr;  //ÉèÖÃÖĞ¶Ïº¯Êı
-	//³õÊ¼»¯PIT1
+	pit3_init_struct.PIT_PeriodMs = 1;//å®šæ—¶å‘¨æœŸ
+	pit3_init_struct.PIT_Isr = main_isr;  //è®¾ç½®ä¸­æ–­å‡½æ•°
+	//åˆå§‹åŒ–PIT1
 	LPLD_PIT_Init(pit3_init_struct);
 	LPLD_PIT_EnableIrq(pit3_init_struct);
 }
 
 void pit0_time_start(void)
 {
-	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;         //Ê¹ÄÜPITÊ±ÖÓ
-	PIT->MCR &= ~(PIT_MCR_MDIS_MASK | PIT_MCR_FRZ_MASK);    //Ê¹ÄÜPIT¶¨Ê±Æ÷Ê±ÖÓ £¬µ÷ÊÔÄ£Ê½ÏÂ¼ÌĞøÔËĞĞ
+	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;         //ä½¿èƒ½PITæ—¶é’Ÿ
+	PIT->MCR &= ~(PIT_MCR_MDIS_MASK | PIT_MCR_FRZ_MASK);    //ä½¿èƒ½PITå®šæ—¶å™¨æ—¶é’Ÿ ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹ç»§ç»­è¿è¡Œ
 	PIT->CHANNEL[0].TCTRL &= ~(PIT_TCTRL_TEN_MASK);
-	PIT->CHANNEL[0].LDVAL = ~0;							 //ÉèÖÃÒç³öÖĞ¶ÏÊ±¼ä
+	PIT->CHANNEL[0].LDVAL = ~0;							 //è®¾ç½®æº¢å‡ºä¸­æ–­æ—¶é—´
 	PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
 	PIT->CHANNEL[0].TCTRL &= ~PIT_TCTRL_TEN_MASK;
 	PIT->CHANNEL[0].TCTRL |= (0 | PIT_TCTRL_TEN_MASK);
@@ -187,24 +187,24 @@ uint32 pit0_time_get(void)
 	}
 	if (val == (~0))
 	{
-		val--;              //È·±£ ²»µÈÓÚ ~0
+		val--;              //ç¡®ä¿ ä¸ç­‰äº ~0
 	}
 	return val;
 }
 
 void NVIC_init(void)
 {
-	//ÅäÖÃPIT3µÄNVIC·Ö×é
+	//é…ç½®PIT3çš„NVICåˆ†ç»„
 	nvicpit3_init_struct.NVIC_IRQChannel = PIT3_IRQn;
 	nvicpit3_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvicpit3_init_struct.NVIC_IRQChannelPreemptionPriority = 2;
 	LPLD_NVIC_Init(nvicpit3_init_struct);
-	//ÅäÖÃPORTAµÄNVIC·Ö×é
+	//é…ç½®PORTAçš„NVICåˆ†ç»„
 	nvicporta_init_struct.NVIC_IRQChannel = PORTA_IRQn;
 	nvicporta_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvicporta_init_struct.NVIC_IRQChannelPreemptionPriority = 1;
 	LPLD_NVIC_Init(nvicporta_init_struct);
-	//ÅäÖÃDMA0µÄNVIC·Ö×é
+	//é…ç½®DMA0çš„NVICåˆ†ç»„
 	nvicdma0_init_struct.NVIC_IRQChannel = DMA0_IRQn;
 	nvicdma0_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvicdma0_init_struct.NVIC_IRQChannelPreemptionPriority = 0;
@@ -220,16 +220,16 @@ void main_isr(void)
 	//pit_counter = 1;
 	if ((pit_counter % 20) == 1)              //&& (IMG_Ready==1)
 	{
-		ov7725_eagle_img_flag = IMG_START;                   //¿ªÊ¼²É¼¯Í¼Ïñ
+		ov7725_eagle_img_flag = IMG_START;                   //å¼€å§‹é‡‡é›†å›¾åƒ
 		PORTA->ISFR = ~0;
 		enable_irq((IRQn_Type)(PORTA_IRQn));
 		while (ov7725_eagle_img_flag != IMG_FINISH)
 		{
-			if (ov7725_eagle_img_flag == IMG_FAIL)            //¼ÙÈçÍ¼Ïñ²É¼¯´íÎó£¬ÔòÖØĞÂ¿ªÊ¼²É¼¯
+			if (ov7725_eagle_img_flag == IMG_FAIL)            //å‡å¦‚å›¾åƒé‡‡é›†é”™è¯¯ï¼Œåˆ™é‡æ–°å¼€å§‹é‡‡é›†
 			{
-				ov7725_eagle_img_flag = IMG_START;           //¿ªÊ¼²É¼¯Í¼Ïñ
-				PORTA->ISFR = 0xFFFFFFFFu;                //Ğ´1ÇåÖĞ¶Ï±êÖ¾Î»(±ØĞëµÄ£¬²»È»»Øµ¼ÖÂÒ»¿ªÖĞ¶Ï¾ÍÂíÉÏ´¥·¢ÖĞ¶Ï)
-				enable_irq(PORTA_IRQn);                 //ÔÊĞíPTAµÄÖĞ¶Ï
+				ov7725_eagle_img_flag = IMG_START;           //å¼€å§‹é‡‡é›†å›¾åƒ
+				PORTA->ISFR = 0xFFFFFFFFu;                //å†™1æ¸…ä¸­æ–­æ ‡å¿—ä½(å¿…é¡»çš„ï¼Œä¸ç„¶å›å¯¼è‡´ä¸€å¼€ä¸­æ–­å°±é©¬ä¸Šè§¦å‘ä¸­æ–­)
+				enable_irq(PORTA_IRQn);                 //å…è®¸PTAçš„ä¸­æ–­
 			}
 		}
 		//IMG_Ready = 0;
@@ -248,7 +248,7 @@ void main_isr(void)
 		//Left_Pulse = (float32)qd_result_ftm/(10.0*256.0);
 		//Right_Pulse = (float32)qd_result_lptmr/(10.0*256.0);
 
-		//Motor_Speed = ((Left_Pulse + Right_Pulse)/2.0)*1000.0;	//´Ë´¦PIDº¯ÊıÓĞ´íÎó
+		//Motor_Speed = ((Left_Pulse + Right_Pulse)/2.0)*1000.0;	//æ­¤å¤„PIDå‡½æ•°æœ‰é”™è¯¯
 	  
 		
 		//OLED_ShowNum(70, 5, PWM_Expect, Num_Len);

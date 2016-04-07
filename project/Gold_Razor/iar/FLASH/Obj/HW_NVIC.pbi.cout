@@ -1,4 +1,4 @@
-"E:\11ΩÏFreescale\Gold_Razor\lib\common\assert.c"
+"E:\11ΩÏFreescale\Gold_Razor\lib\LPLD\HW\HW_NVIC.c"
 -std=c99
 -ferror-limit=100
 -I

@@ -8,7 +8,7 @@
 
 "-p" 
 
-"E:\MCU\Freescale\K60\IAR7.4\arm\CONFIG\debugger\Freescale\MK60DN512Zxxx10.ddf" 
+"D:\IAR\arm\CONFIG\debugger\Freescale\MK60DN512Zxxx10.ddf" 
 
 "--semihosting" 
 

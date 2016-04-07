@@ -25,7 +25,7 @@ if not "%1" == "" goto debugFile
 
 @echo on 
 
-"E:\MCU\Freescale\K60\IAR7.4\common\bin\cspybat" -f "E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\settings\Gold_Razor_K60DZ10.FLASH.general.xcl" --backend -f "E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\settings\Gold_Razor_K60DZ10.FLASH.driver.xcl" 
+"D:\IAR\common\bin\cspybat" -f "E:\11ΩÏFreescale\Gold_Razor\project\Gold_Razor\iar\settings\Gold_Razor_K60DZ10.FLASH.general.xcl" --backend -f "E:\11ΩÏFreescale\Gold_Razor\project\Gold_Razor\iar\settings\Gold_Razor_K60DZ10.FLASH.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"E:\MCU\Freescale\K60\IAR7.4\common\bin\cspybat" -f "E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\settings\Gold_Razor_K60DZ10.FLASH.general.xcl" "--debug_file=%1" --backend -f "E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\settings\Gold_Razor_K60DZ10.FLASH.driver.xcl" 
+"D:\IAR\common\bin\cspybat" -f "E:\11ΩÏFreescale\Gold_Razor\project\Gold_Razor\iar\settings\Gold_Razor_K60DZ10.FLASH.general.xcl" "--debug_file=%1" --backend -f "E:\11ΩÏFreescale\Gold_Razor\project\Gold_Razor\iar\settings\Gold_Razor_K60DZ10.FLASH.driver.xcl" 
 
 @echo off 
 :end
