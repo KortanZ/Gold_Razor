@@ -3,8 +3,8 @@
 
 #include "common.h"
 
-void MainCtrl_Pit_Init(void);
-void NVIC_Init(void);
-void Main_Isr(void);
+extern void MainCtrl_Pit_Init(void);
+extern void NVIC_Init(void);
+extern void Main_Isr(void);
 
 #endif

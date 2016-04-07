@@ -30,7 +30,6 @@
 #include "oled.h"
 //#include "stdlib.h"
 #include "oledfont.h"
-#include "ImgDispose.h"
 //#include "delay.h"
 //OLED的显存
 //存放格式如下.

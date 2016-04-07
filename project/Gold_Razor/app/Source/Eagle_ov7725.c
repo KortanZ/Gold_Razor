@@ -1,6 +1,4 @@
-#include "Eagle_ov7725.h"
-#include "Eagle_ov7725_reg.h"
-#include "ImgDispose.h"
+#include "common.h"
 
 /*OV7725≥ı ºªØ≈‰÷√±Ì*/
 reg_s ov7725_eagle_reg[] =

@@ -1,5 +1,4 @@
 #include "common.h"
-#include "All_init.h"
 
 void Keypress_GPIO_init(void);
 void keybordDelay(void);
@@ -8,11 +7,6 @@ void main(void)
 {
 	//uint8 Model_Flag;
 	DisableInterrupts;
-	NVIC_init();
-	UART_init();
-	pit_init();
-	Motor_init();
-	Steer_init();
 	Keypress_GPIO_init();
 	
 	//GPIO_init();

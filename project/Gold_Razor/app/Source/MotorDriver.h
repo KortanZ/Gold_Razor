@@ -14,11 +14,14 @@
 #define MOTOR_RIGHT_BACKWARD PTA6
 #define MOTOR_RIGHT_FORWARD PTA7
 
-enum MotorPosition {left, right};
+typedef enum {
+	left, 
+	right
+}MotorPosition;
 
 extern uint32 PWM_Expect;
 
 extern void Motor_Init(void);
-void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty);
+extern void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty);
 
 #endif

@@ -1,12 +1,15 @@
-#ifndef _ENCODERDRIVER_
+#ifndef _ENCODERDRIVER_H_
 #define _ENCODERDRIVER_H_
 
 #include "common.h"
 
-enum EncoderPosition {Left, Right};
+typedef enum {
+	Left, 
+	Right
+}EncoderPosition;
 
-void Encoder_Init(void);
-uint16 Encoder_GetPulseNum(EncoderPosition position);
+extern void Encoder_Init(void);
+extern uint16 Encoder_GetPulseNum(EncoderPosition position);
 
 
 #endif

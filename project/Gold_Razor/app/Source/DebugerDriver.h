@@ -3,8 +3,8 @@
 *include UART and GPIO initial
 *include timer initial
 */
-#ifndef _DEBUGERDRIVER_
-#define _DEBUGERDRIVER_ 
+#ifndef _DEBUGERDRIVER_H_
+#define _DEBUGERDRIVER_H_
 
 #include "common.h"
 

@@ -3,8 +3,8 @@
 *include edge extacting
 *include 
 */
-#ifndef _IMGPROCESS_H
-#define _IMGPROCESS_H
+#ifndef _IMGPROCESS_H_
+#define _IMGPROCESS_H_
 
 #include "common.h"
 

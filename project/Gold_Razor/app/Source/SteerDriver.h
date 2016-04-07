@@ -10,6 +10,6 @@
 #define MIDLINE_EXPECT_DUTY 1432
 
 extern void Steer_Init(void);
-void Steer_Duty_Change(uint32 tagetDuty);
+extern void Steer_Duty_Change(uint32 tagetDuty);
 
 #endif
