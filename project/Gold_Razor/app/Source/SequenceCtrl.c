@@ -55,18 +55,7 @@ void Main_Isr(void)
 	pitCounter++;
 	if ((pitCounter % 20) == 1)
 	{
-		ov7725_eagle_img_flag = IMG_START;                   //开始采集图像
-		PORTA->ISFR = ~0;
-		enable_irq((IRQn_Type)(PORTA_IRQn));
-		while (ov7725_eagle_img_flag != IMG_FINISH)
-		{
-			if (ov7725_eagle_img_flag == IMG_FAIL)            //假如图像采集错误，则重新开始采集
-			{
-				ov7725_eagle_img_flag = IMG_START;           //开始采集图像
-				PORTA->ISFR = 0xFFFFFFFFu;                //写1清中断标志位(必须的，不然回导致一开中断就马上触发中断)
-				enable_irq(PORTA_IRQn);                 //允许PTA的中断
-			}
-		}
+		
 	}
 	if ((pitCounter % 2) == 0)
 	{

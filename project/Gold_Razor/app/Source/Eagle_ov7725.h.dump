@@ -4,8 +4,8 @@
 
 typedef struct
 {
-	uint8 addr;                 /*¼Ä´æÆ÷µØÖ·*/
-	uint8 val;                   /*¼Ä´æÆ÷Öµ*/
+	uint8 addr;                 /*å¯„å­˜å™¨åœ°å€*/
+	uint8 val;                   /*å¯„å­˜å™¨å€¼*/
 } reg_s;
 
 #define ARR_SIZE( a ) ( sizeof( (a) ) / sizeof( ((a)[0]) ) )
@@ -19,7 +19,7 @@ typedef struct
 #define PICTURE_SIZE (PICTURE_W * PICTURE_H / 8)
 
 
-//¶¨ÒåÍ¼Ïñ²É¼¯×´Ì¬
+//å®šä¹‰å›¾åƒé‡‡é›†çŠ¶æ€
 
 #define IMG_NOTINIT 0
 #define IMG_FINISH 1
