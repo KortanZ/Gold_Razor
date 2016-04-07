@@ -4,8 +4,8 @@
 #include "common.h"
 
 typedef enum {
-	Left, 
-	Right
+	LEFT, 
+	RIGHT,
 }EncoderPosition;
 
 extern void Encoder_Init(void);

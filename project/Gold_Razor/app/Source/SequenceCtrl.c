@@ -55,7 +55,7 @@ void Main_Isr(void)
 	pitCounter++;
 	if ((pitCounter % 20) == 1)
 	{
-		
+		Get_Img();
 	}
 	if ((pitCounter % 2) == 0)
 	{
@@ -80,7 +80,9 @@ void Main_Isr(void)
 
 		//LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch2, PWM_Expect);
 		//LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch4, PWM_Expect);
-		
+		Motor_Duty_Change(LEFT, PWM_Expect);
+		Motor_Duty_Change(RIGHT, PWM_Expect);
+
 		pitCounter = 0;
 	}
 

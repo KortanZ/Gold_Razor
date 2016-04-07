@@ -35,7 +35,7 @@ static void DMA_ov7725_init(void);
 extern void porta_isr(void);
 extern void camera_delay(void);
 extern void RazorDMA_Isr(void);
-extern void Get_Img();
+extern void Get_Img(void);
 extern uint8 Camera_init(void);
 
 extern suint8 ov7725_eagle_img_flag;

@@ -5,11 +5,9 @@ void keybordDelay(void);
 
 void main(void)
 {
-	//uint8 Model_Flag;
 	DisableInterrupts;
 	Keypress_GPIO_init();
 	
-	//GPIO_init();
 	OLED_Init();
 	OLED_Clear();
 	
@@ -20,7 +18,7 @@ void main(void)
 	while (1)
 	{
 	  	
-		if (PTD12_I == 0)						//¶æ»úKdÔö
+		if (PTD12_I == 0)						//Â¶Ã¦Â»ÃºKdÃ”Ã¶
 		{
 			keybordDelay();
 			if (PTD12_I == 0)
@@ -28,7 +26,7 @@ void main(void)
 				
 			}
 		}
-		if (PTD13_I == 0)						//¶æ»úKd¼õ
+		if (PTD13_I == 0)						//Â¶Ã¦Â»ÃºKdÂ¼Ãµ
 		{
 			keybordDelay();
 			if (PTD13_I == 0)
@@ -37,7 +35,7 @@ void main(void)
 			}
 		}
 
-		if (PTD10_I == 0)						//¶æ»úKdÔö
+		if (PTD10_I == 0)						//Â¶Ã¦Â»ÃºKdÃ”Ã¶
 		{
 			keybordDelay();
 			if (PTD10_I == 0)
@@ -45,7 +43,7 @@ void main(void)
 				
 			}
 		}
-		if (PTD11_I == 0)						//¶æ»úKd¼õ
+		if (PTD11_I == 0)						//Â¶Ã¦Â»ÃºKdÂ¼Ãµ
 		{
 			keybordDelay();
 			if (PTD11_I == 0)
@@ -54,7 +52,7 @@ void main(void)
 			}
 		}
 
-		if (PTC14_I == 0)						//ËÙ¶ÈÔö
+		if (PTC14_I == 0)						//Ã‹Ã™Â¶ÃˆÃ”Ã¶
 		{
 			keybordDelay();
 			if (PTC14_I == 0)
@@ -62,7 +60,7 @@ void main(void)
 				PWM_Expect += 50;
 			}
 		}
-		if (PTC15_I == 0)						//ËÙ¶È¼õ
+		if (PTC15_I == 0)						//Ã‹Ã™Â¶ÃˆÂ¼Ãµ
 		{
 			keybordDelay();
 			if (PTC15_I == 0)
