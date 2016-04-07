@@ -1,14 +1,14 @@
-"D:\IAR\arm\bin\armproc.dll" 
+"E:\MCU\Freescale\K60\IAR7.4\arm\bin\armproc.dll" 
 
-"D:\IAR\arm\bin\armjlink.dll" 
+"E:\MCU\Freescale\K60\IAR7.4\arm\bin\armjlink.dll" 
 
-"E:\11ΩÏFreescale\Gold_Razor\project\Gold_Razor\iar\FLASH\Exe\Gold_Razor_K60DZ10.out" 
+"E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\FLASH\Exe\Gold_Razor_K60DZ10.out" 
 
---plugin "D:\IAR\arm\bin\armbat.dll" 
+--plugin "E:\MCU\Freescale\K60\IAR7.4\arm\bin\armbat.dll" 
 
---device_macro "D:\IAR\arm\config\debugger\Freescale\Kxx.dmac" 
+--device_macro "E:\MCU\Freescale\K60\IAR7.4\arm\config\debugger\Freescale\Kxx.dmac" 
 
---flash_loader "D:\IAR\arm\config\flashloader\Freescale\FlashK60Dxxx128K.board" 
+--flash_loader "E:\MCU\Freescale\K60\IAR7.4\arm\config\flashloader\Freescale\FlashK60Dxxx128K.board" 
 
 
 

@@ -1,0 +1,118 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.40.3.8902/W32 for ARM        07/Apr/2016  16:08:35
+# Copyright 1999-2015 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\app\Source\All_init.c
+#    Command line =  
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\app\Source\All_init.c
+#        -D LPLD_K60 -D USE_K60DZ10 -lCN
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\FLASH\List\ -lB
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\FLASH\List\ -o
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\FLASH\Obj\
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M4 -e --fpu=None --dlib_config
+#        E:\MCU\Freescale\K60\IAR7.4\arm\INC\c\DLib_Config_Normal.h -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\app\ -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\app\Source\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\CPU\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\common\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\LPLD\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\LPLD\HW\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\LPLD\DEV\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\LPLD\FUNC\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\uCOS-II\Ports\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\uCOS-II\Source\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\FatFs\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\FatFs\option\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\USB\common\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\USB\driver\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\USB\descriptor\
+#        -I
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\USB\class\
+#        -Ol -I E:\MCU\Freescale\K60\IAR7.4\arm\CMSIS\Include\ -D ARM_MATH_CM4
+#    List file    =  
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\FLASH\List\All_init.lst
+#    Object file  =  
+#        E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\FLASH\Obj\All_init.o
+#
+###############################################################################
+
+E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\app\Source\All_init.c
+      1          #include "All_init.h"
+      2          
+      3          
+      4          
+      5          
+
+   \                                 In section .text, align 2, keep-with-next
+      6          void All_init(void)
+      7          {
+   \                     All_init: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+      8            //GPIO_init();
+      9            NVIC_init();
+   \   00000002   0x.... 0x....      BL       NVIC_init
+     10            Motor_init();
+   \   00000006   0x.... 0x....      BL       Motor_init
+     11            Steer_init();
+   \   0000000A   0x.... 0x....      BL       Steer_init
+     12            OLED_Init();
+   \   0000000E   0x.... 0x....      BL       OLED_Init
+     13            Encoder_init();
+   \   00000012   0x.... 0x....      BL       Encoder_init
+     14            UART_init();
+   \   00000016   0x.... 0x....      BL       UART_init
+     15            pit_init();
+   \   0000001A   0x.... 0x....      BL       pit_init
+     16            Camera_init();
+   \   0000001E   0x.... 0x....      BL       Camera_init
+     17          }
+   \   00000022   0xBD01             POP      {R0,PC}          ;; return
+     18          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   All_init
+         8   -> Camera_init
+         8   -> Encoder_init
+         8   -> Motor_init
+         8   -> NVIC_init
+         8   -> OLED_Init
+         8   -> Steer_init
+         8   -> UART_init
+         8   -> pit_init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      36  All_init
+
+ 
+ 36 bytes in section .text
+ 
+ 36 bytes of CODE memory
+
+Errors: none
+Warnings: none

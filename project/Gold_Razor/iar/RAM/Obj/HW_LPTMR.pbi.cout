@@ -1,10 +1,8 @@
-"E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\app\Source\Eagle_ov7725.c"
+"E:\MCU\Freescale\K60\Gold_Razor\lib\LPLD\HW\HW_LPTMR.c"
 -std=c99
 -ferror-limit=100
 -I
 E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\app
--I
-E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\app\Source
 -I
 E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\iar\..\..\..\lib\CPU
 -I
@@ -41,8 +39,6 @@ E:\MCU\Freescale\K60\IAR7.4\arm\inc
 E:\MCU\Freescale\K60\IAR7.4\arm\inc\c
 -I
 E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\app
--I
-E:\MCU\Freescale\K60\Gold_Razor\project\Gold_Razor\app\Source
 -I
 E:\MCU\Freescale\K60\Gold_Razor\lib\CPU
 -I
