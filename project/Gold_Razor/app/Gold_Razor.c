@@ -4,21 +4,17 @@ void main(void)
 {
 	DisableInterrupts;
 
-
-	Keyboard_GPIO_init();
-	MainCtrl_Pit_Init();
 	NVIC_Init();
+	Steer_Init();
+	MainCtrl_Pit_Init();
+	Motor_Init();
 	OLED_Init();
 	OLED_Clear();
-	
+	Keyboard_GPIO_init();
 	Camera_init();
-	//OLED_ShowNum(70, 5, PWM_Expect, Num_Len);
 	EnableInterrupts;
-
-	
 	while (1)
 	{
-	  	
 		Keyboard_Scan();
 	}
 }

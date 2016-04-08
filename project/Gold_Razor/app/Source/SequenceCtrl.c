@@ -15,6 +15,8 @@ void MainCtrl_Pit_Init(void)
 	//配置PIT3参数
 	pit3_init_struct.PIT_Pitx = PIT3;
 	pit3_init_struct.PIT_PeriodMs = 1;//定时周期
+	pit3_init_struct.PIT_PeriodUs = 0;
+	pit3_init_struct.PIT_PeriodS = 0;
 	pit3_init_struct.PIT_Isr = Main_Isr;  //设置中断函数
 	//初始化PIT3
 	LPLD_PIT_Init(pit3_init_struct);
@@ -26,25 +28,28 @@ void MainCtrl_Pit_Init(void)
 
 void NVIC_Init(void)
 {
-	
 	NVIC_InitTypeDef nvic_init_struct;
+	
 	//配置PIT3的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = PIT3_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 2;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
+	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
 	//配置PORTA的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = PORTA_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 1;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
+	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
 	//配置DMA0的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = DMA0_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 0;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
+	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
 
 }
@@ -68,8 +73,6 @@ void Main_Isr(void)
 	}
 	if ((pitCounter % 20) == 0)
 	{
-		//if(qd_result_ftm < 0)  qd_result_ftm = -qd_result_ftm;
-		//if(qd_result_lptmr < 0) qd_result_lptmr = -qd_result_lptmr;
 
 		//Left_Pulse = (float32)qd_result_ftm/(10.0*256.0);
 		//Right_Pulse = (float32)qd_result_lptmr/(10.0*256.0);
@@ -77,12 +80,10 @@ void Main_Isr(void)
 		//Motor_Speed = ((Left_Pulse + Right_Pulse)/2.0)*1000.0;	//此处PID函数有错误
 	  
 		
-		OLED_ShowNum(70, 5, PWM_Expect, Num_Len);
+		OLED_ShowNum(0, 3, steerDebugDuty, Num_Len);
 	  	
+	  	Steer_Duty_Change(steerDebugDuty);
 
-
-		//LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch2, PWM_Expect);
-		//LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch4, PWM_Expect);
 		Motor_Duty_Change(MOTOR_LEFT, PWM_Expect);
 		Motor_Duty_Change(MOTOR_RIGHT, PWM_Expect);
 

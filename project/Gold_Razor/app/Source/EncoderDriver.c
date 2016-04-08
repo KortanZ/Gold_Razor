@@ -11,6 +11,8 @@ void Encoder_Init(void)
 	//配置正交解码功能参数
 	Left_Encoder_init_struct.FTM_Ftmx = FTM1;              //只有FTM1和FTM2有正交解码功能
 	Left_Encoder_init_struct.FTM_Mode = FTM_MODE_QD;       //正交解码功能
+	Left_Encoder_init_struct.FTM_PwmFreq = 0;
+
 	Left_Encoder_init_struct.FTM_QdMode = QD_MODE_PHAB;    //AB相输入模式
 	//初始化FTM
 	LPLD_FTM_Init(Left_Encoder_init_struct);
@@ -24,6 +26,7 @@ void Encoder_Init(void)
 	//无中断函数
 	Right_Encoder_init_param.LPTMR_Mode = LPTMR_MODE_PLACC;
 	Right_Encoder_init_param.LPTMR_PluseAccInput = LPTMR_ALT2;
+	Right_Encoder_init_param.LPTMR_IntEnable = FALSE;
 	Right_Encoder_init_param.LPTMR_Isr = NULL;
 
 	LPLD_LPTMR_Init(Right_Encoder_init_param);

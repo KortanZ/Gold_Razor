@@ -8,6 +8,8 @@
 
 #include "common.h"
 
+extern uint32 steerDebugDuty;
+
 extern void UART_Debuger_Init(void);
 extern void LED_Debuger_Init(void);
 extern void Time_Counter_Start(void);

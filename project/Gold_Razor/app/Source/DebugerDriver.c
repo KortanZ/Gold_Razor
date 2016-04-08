@@ -5,6 +5,8 @@
 */
 #include "common.h"
 
+uint32 steerDebugDuty = 1431;
+
 void UART_Debuger_Init(void)
 {
 	UART_InitTypeDef uartInitStruct;
@@ -38,20 +40,20 @@ void LED_Debuger_Init(void)
 
 void Keyboard_GPIO_init(void)
 {
-  	  GPIO_InitTypeDef gpio_init_struct;
-      gpio_init_struct.GPIO_PTx = PTD;
-      gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
-      gpio_init_struct.GPIO_Dir = DIR_INPUT;
-      gpio_init_struct.GPIO_Output = 1;
-      gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
-      LPLD_GPIO_Init(gpio_init_struct);
+  	  GPIO_InitTypeDef keyboard_gpio_init_struct;
+      keyboard_gpio_init_struct.GPIO_PTx = PTD;
+      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
+      keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+      keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
+      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
+      LPLD_GPIO_Init(keyboard_gpio_init_struct);
 
-      gpio_init_struct.GPIO_PTx = PTC;
-      gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
-      gpio_init_struct.GPIO_Dir = DIR_INPUT;
-      gpio_init_struct.GPIO_Output = 1;
-      gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
-      LPLD_GPIO_Init(gpio_init_struct);
+      keyboard_gpio_init_struct.GPIO_PTx = PTC;
+      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
+      keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+      keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
+      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
+      LPLD_GPIO_Init(keyboard_gpio_init_struct);
 }
 
 void Time_Counter_Start(void)
@@ -103,7 +105,7 @@ void Keyboard_Scan(void)
 		Keybord_Delay();
 		if (PTD12_I == 0)
 		{
-			
+			steerDebugDuty++;
 		}
 	}
 	if (PTD13_I == 0)						//¶æ»úKd¼õ
@@ -111,7 +113,7 @@ void Keyboard_Scan(void)
 		Keybord_Delay();
 		if (PTD13_I == 0)
 		{
-		  	
+		  	steerDebugDuty--;
 		}
 	}
 

@@ -92,8 +92,8 @@ uint8 Camera_init(void)
     while (ov7725_eagle_reg_init() == 0);
     camera_delay();
 
-    GPIO_ov7725_init();
-    DMA_ov7725_init();
+	GPIO_ov7725_init();
+	DMA_ov7725_init();
 
 
     return 0;
@@ -143,26 +143,27 @@ uint8 ov7725_eagle_reg_init(void)
 static void GPIO_ov7725_init(void)
 {
     
-    GPIO_InitTypeDef pt_init;
+    GPIO_InitTypeDef ov7725_gpio_init;
     /*------------ov7725数据IO初始化(PTB0_PTB7)-------------*/
-    pt_init.GPIO_PTx = PTB;
-    pt_init.GPIO_Dir = DIR_INPUT;
-    pt_init.GPIO_Pins = GPIO_Pin0_7;
-    pt_init.GPIO_PinControl = IRQC_DIS | INPUT_PULL_DIS;
-    LPLD_GPIO_Init(pt_init);
+    ov7725_gpio_init.GPIO_PTx = PTB;
+    ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
+    ov7725_gpio_init.GPIO_Pins = GPIO_Pin0_7;
+	ov7725_gpio_init.GPIO_Output = OUTPUT_L;
+    ov7725_gpio_init.GPIO_PinControl = IRQC_DIS | INPUT_PULL_DIS;
+    LPLD_GPIO_Init(ov7725_gpio_init);
     /*------------ov7725场信号IO初始化(PTA29)---------------*/
-    pt_init.GPIO_PTx = PTA;
-    pt_init.GPIO_Dir = DIR_INPUT;
-    pt_init.GPIO_Pins = GPIO_Pin29;
-    pt_init.GPIO_PinControl = IRQC_RI | INPUT_PULL_DOWN | INPUT_PF_EN;
-    pt_init.GPIO_Isr = porta_isr;
-    LPLD_GPIO_Init(pt_init);
+    ov7725_gpio_init.GPIO_PTx = PTA;
+    ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
+    ov7725_gpio_init.GPIO_Pins = GPIO_Pin29;
+    ov7725_gpio_init.GPIO_PinControl = IRQC_RI | INPUT_PULL_DOWN | INPUT_PF_EN;
+    ov7725_gpio_init.GPIO_Isr = porta_isr;
+    LPLD_GPIO_Init(ov7725_gpio_init);
     /*------------ov7725_PCLK_IO初始化(PTA27)---------------*/
-    pt_init.GPIO_PTx = PTA;
-    pt_init.GPIO_Pins = GPIO_Pin27;
-    pt_init.GPIO_Dir = DIR_INPUT;
-    pt_init.GPIO_PinControl = IRQC_DMAFA | INPUT_PULL_DOWN;
-    LPLD_GPIO_Init(pt_init);
+    ov7725_gpio_init.GPIO_PTx = PTA;
+    ov7725_gpio_init.GPIO_Pins = GPIO_Pin27;
+    ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
+    ov7725_gpio_init.GPIO_PinControl = IRQC_DMAFA | INPUT_PULL_DOWN;
+    LPLD_GPIO_Init(ov7725_gpio_init);
 }
 
 
@@ -173,13 +174,20 @@ void DMA_ov7725_init(void)
     //DMA参数配置
     dma_init_struct.DMA_CHx = DMA_CH0;    //CH0通道
     dma_init_struct.DMA_Req = PORTA_DMAREQ;       //PORTA为请求源
+    dma_init_struct.DMA_PeriodicTriggerEnable = FALSE;
     dma_init_struct.DMA_MajorLoopCnt = CAMERA_SIZE; //主循环计数值
     dma_init_struct.DMA_MinorByteCnt = 1; //次循环字节计数：每次读入1字节
+    dma_init_struct.DMA_SourceDataSize = DMA_SRC_8BIT;
     dma_init_struct.DMA_SourceAddr = (uint32)&PTB->PDIR;        //源地址：PTD8~15
+    dma_init_struct.DMA_SourceAddrOffset = 0;
+    dma_init_struct.DMA_LastSourceAddrAdj = 0;
     dma_init_struct.DMA_DestAddr = (uint32)imgbuff;      //目的地址：存放图像的数组
+    dma_init_struct.DMA_DestDataSize = DMA_DST_8BIT;
     dma_init_struct.DMA_DestAddrOffset = 1;       //目的地址偏移：每次读入增加1
+    dma_init_struct.DMA_LastDestAddrAdj = 0;
     dma_init_struct.DMA_AutoDisableReq = TRUE;    //自动禁用请求
     dma_init_struct.DMA_MajorCompleteIntEnable = TRUE;
+    dma_init_struct.DMA_MajorHalfCompleteIntEnable = FALSE;
     dma_init_struct.DMA_Isr = RazorDMA_Isr;
     //初始化DMA
     LPLD_DMA_Init(dma_init_struct);
@@ -249,9 +257,9 @@ void RazorDMA_Isr(void)
     ov7725_eagle_img_flag = IMG_FINISH;
 
     img_extract(img, imgbuff, CAMERA_SIZE);
-    imgEdge(img);
+    //imgEdge(img);
     //vcan_sendimg(imgbuff, CAMERA_SIZE);
-    vcan_sendimg(img, CAMERA_W * CAMERA_H);                  //发送到上位机
+    //vcan_sendimg(img, CAMERA_W * CAMERA_H);                  //发送到上位机
     DMA0->INT |= 0x1u << 0;
 }
 

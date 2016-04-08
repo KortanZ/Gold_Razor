@@ -7,7 +7,9 @@
 
 #include "common.h"
 
-#define MIDLINE_EXPECT_DUTY 1432
+#define STEER_MID_DUTY 1428
+#define STEER_LEFT_DUTY 1312
+#define STEER_RIGHT_DUTY 1547
 
 extern void Steer_Init(void);
 extern void Steer_Duty_Change(uint32 tagetDuty);
