@@ -149,20 +149,20 @@ static void GPIO_ov7725_init(void)
     pt_init.GPIO_Dir = DIR_INPUT;
     pt_init.GPIO_Pins = GPIO_Pin0_7;
     pt_init.GPIO_PinControl = IRQC_DIS | INPUT_PULL_DIS;
-    LPLD_GPIO_Init(ptb_init);
+    LPLD_GPIO_Init(pt_init);
     /*------------ov7725场信号IO初始化(PTA29)---------------*/
     pt_init.GPIO_PTx = PTA;
     pt_init.GPIO_Dir = DIR_INPUT;
     pt_init.GPIO_Pins = GPIO_Pin29;
     pt_init.GPIO_PinControl = IRQC_RI | INPUT_PULL_DOWN | INPUT_PF_EN;
     pt_init.GPIO_Isr = porta_isr;
-    LPLD_GPIO_Init(pta_init);
+    LPLD_GPIO_Init(pt_init);
     /*------------ov7725_PCLK_IO初始化(PTA27)---------------*/
     pt_init.GPIO_PTx = PTA;
     pt_init.GPIO_Pins = GPIO_Pin27;
     pt_init.GPIO_Dir = DIR_INPUT;
     pt_init.GPIO_PinControl = IRQC_DMAFA | INPUT_PULL_DOWN;
-    LPLD_GPIO_Init(pta_init);
+    LPLD_GPIO_Init(pt_init);
 }
 
 

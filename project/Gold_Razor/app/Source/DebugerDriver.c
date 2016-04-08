@@ -36,6 +36,24 @@ void LED_Debuger_Init(void)
 	LPLD_GPIO_Init(gpioInitStruct);
 }
 
+void Keyboard_GPIO_init(void)
+{
+  	  GPIO_InitTypeDef gpio_init_struct;
+      gpio_init_struct.GPIO_PTx = PTD;
+      gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
+      gpio_init_struct.GPIO_Dir = DIR_INPUT;
+      gpio_init_struct.GPIO_Output = 1;
+      gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
+      LPLD_GPIO_Init(gpio_init_struct);
+
+      gpio_init_struct.GPIO_PTx = PTC;
+      gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
+      gpio_init_struct.GPIO_Dir = DIR_INPUT;
+      gpio_init_struct.GPIO_Output = 1;
+      gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
+      LPLD_GPIO_Init(gpio_init_struct);
+}
+
 void Time_Counter_Start(void)
 {
 	/* Timer count start */
@@ -64,4 +82,70 @@ uint32 Time_Counter_Get(void)
 		val--;              //确保 不等于 ~0
 	}
 	return val;
+}
+
+void Keybord_Delay(void)
+{
+	uint16 i, n;
+	for (i = 0; i<15000; i++)
+	{
+		for (n = 0; n<50; n++)
+		{
+			asm("nop");
+		}
+	}
+}
+
+void Keyboard_Scan(void)
+{
+	if (PTD12_I == 0)						//¶æ»úKdÔö
+	{
+		Keybord_Delay();
+		if (PTD12_I == 0)
+		{
+			
+		}
+	}
+	if (PTD13_I == 0)						//¶æ»úKd¼õ
+	{
+		Keybord_Delay();
+		if (PTD13_I == 0)
+		{
+		  	
+		}
+	}
+
+	if (PTD10_I == 0)						//¶æ»úKdÔö
+	{
+		Keybord_Delay();
+		if (PTD10_I == 0)
+		{
+			
+		}
+	}
+	if (PTD11_I == 0)						//¶æ»úKd¼õ
+	{
+		Keybord_Delay();
+		if (PTD11_I == 0)
+		{
+		  	
+		}
+	}
+
+	if (PTC14_I == 0)						//ËÙ¶ÈÔö
+	{
+		Keybord_Delay();
+		if (PTC14_I == 0)
+		{
+			PWM_Expect += 50;
+		}
+	}
+	if (PTC15_I == 0)						//ËÙ¶È¼õ
+	{
+		Keybord_Delay();
+		if (PTC15_I == 0)
+		{
+		  	PWM_Expect -= 50;
+		}
+	}
 }

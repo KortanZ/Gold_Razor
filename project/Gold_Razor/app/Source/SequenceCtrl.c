@@ -32,16 +32,19 @@ void NVIC_Init(void)
 	nvic_init_struct.NVIC_IRQChannel = PIT3_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 2;
+	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	LPLD_NVIC_Init(nvic_init_struct);
 	//配置PORTA的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = PORTA_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 1;
+	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	LPLD_NVIC_Init(nvic_init_struct);
 	//配置DMA0的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = DMA0_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
 	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 0;
+	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	LPLD_NVIC_Init(nvic_init_struct);
 
 }
@@ -74,14 +77,14 @@ void Main_Isr(void)
 		//Motor_Speed = ((Left_Pulse + Right_Pulse)/2.0)*1000.0;	//此处PID函数有错误
 	  
 		
-		//OLED_ShowNum(70, 5, PWM_Expect, Num_Len);
+		OLED_ShowNum(70, 5, PWM_Expect, Num_Len);
 	  	
 
 
 		//LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch2, PWM_Expect);
 		//LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch4, PWM_Expect);
-		Motor_Duty_Change(LEFT, PWM_Expect);
-		Motor_Duty_Change(RIGHT, PWM_Expect);
+		Motor_Duty_Change(MOTOR_LEFT, PWM_Expect);
+		Motor_Duty_Change(MOTOR_RIGHT, PWM_Expect);
 
 		pitCounter = 0;
 	}

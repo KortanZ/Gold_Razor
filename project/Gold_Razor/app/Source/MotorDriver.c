@@ -5,7 +5,7 @@
 
 #include "common.h"
 
-uint32 PWM_Expect;
+uint32 PWM_Expect = 3000;
 
 void Motor_Init(void)
 {
@@ -52,11 +52,11 @@ void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty)
 {
 	switch (motorPos)
 	{
-		case left :
+		case MOTOR_LEFT :
 			LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch0, tagetDuty > 0 ? 0 : (uint32)fabs(tagetDuty));
 			LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch1, tagetDuty > 0 ? (uint32)tagetDuty : 0);
 			break;
-		case right :
+		case MOTOR_RIGHT :
 			LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch2, tagetDuty > 0 ? 0 : (uint32)fabs(tagetDuty));
 			LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch3, tagetDuty > 0 ? (uint32)tagetDuty : 0);
 	}

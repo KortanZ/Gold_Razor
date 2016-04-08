@@ -38,7 +38,7 @@ extern void RazorDMA_Isr(void);
 extern void Get_Img(void);
 extern uint8 Camera_init(void);
 
-extern suint8 ov7725_eagle_img_flag;
+extern uint8 ov7725_eagle_img_flag;
 extern uint8 img[CAMERA_H * CAMERA_W];
 extern uint8 imgbuff[CAMERA_SIZE];
 

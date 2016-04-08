@@ -15,8 +15,8 @@
 #define MOTOR_RIGHT_FORWARD PTA7
 
 typedef enum {
-	LEFT, 
-	RIGHT,
+	MOTOR_LEFT, 
+	MOTOR_RIGHT,
 }MotorPosition;
 
 extern uint32 PWM_Expect;

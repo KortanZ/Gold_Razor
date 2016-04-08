@@ -136,6 +136,7 @@ typedef unsigned char   boolean;      /* 8-bit*/
 #include "ImgProcess.h"
 #include "oled.h"
 #include "Eagle_ov7725.h"
+#include "Eagle_ov7725_reg.h"
 #include "EncoderDriver.h"
 #include "SequenceCtrl.h"
 #include "MotorDriver.h"
