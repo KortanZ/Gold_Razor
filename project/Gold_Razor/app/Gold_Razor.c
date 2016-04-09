@@ -11,6 +11,8 @@ void main(void)
 	OLED_Init();
 	OLED_Clear();
 	Keyboard_GPIO_init();
+	UART_Debuger_Init();
+	Encoder_Init();
 	Camera_init();
 	EnableInterrupts;
 	while (1)

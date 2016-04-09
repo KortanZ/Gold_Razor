@@ -78,9 +78,13 @@ void Main_Isr(void)
 		//Right_Pulse = (float32)qd_result_lptmr/(10.0*256.0);
 
 		//Motor_Speed = ((Left_Pulse + Right_Pulse)/2.0)*1000.0;	//此处PID函数有错误
-	  
+
+
+	  	
 		
-		OLED_ShowNum(0, 3, steerDebugDuty, Num_Len);
+		OLED_ShowNum(0, 3, PulseNum_To_Speed(Encoder_GetPulseNum(ENCODER_RIGHT)), Num_Len);
+		//Encoder_GetPulseNum(ENCODER_LEFT);
+		//OLED_ShowNum(0, 3, Encoder_GetPulseNum(ENCODER_RIGHT), Num_Len);
 	  	
 	  	Steer_Duty_Change(steerDebugDuty);
 

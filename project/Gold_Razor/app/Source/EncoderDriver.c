@@ -50,3 +50,11 @@ uint16 Encoder_GetPulseNum(EncoderPosition position)
 	return result;
 }
 
+float32 PulseNum_To_Speed(uint16 pulseNum)
+{
+	/* This function convert pulse number to rotational speed */
+
+	float32 speed;
+	speed = pulseNum / (256 * 0.02);
+	return speed;
+}

@@ -18,13 +18,13 @@ void imgEdge(uint8 *img)
 	/* declear temp array for convolution */
 	int16 *imgTemp = (int16 *)malloc(sizeof(int16) * CAMERA_H * CAMERA_W);
 
-	/* convolution */
 	if (NULL == imgTemp)
 	{
 		OLED_ShowString(0, 0, "Memery alloc faild");
 	}
 	else
 	{
+		/* convolution */
 		for (i = 1; i < CAMERA_H - 1; i++)
 		{
 			for (j = 1; j < CAMERA_W - 1; j++)
