@@ -8,11 +8,11 @@ void main(void)
 	Steer_Init();
 	MainCtrl_Pit_Init();
 	Motor_Init();
+	Encoder_Init();
 	OLED_Init();
 	OLED_Clear();
 	Keyboard_GPIO_init();
 	UART_Debuger_Init();
-	Encoder_Init();
 	Camera_init();
 	EnableInterrupts;
 	while (1)

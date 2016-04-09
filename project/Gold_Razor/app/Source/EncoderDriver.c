@@ -1,12 +1,11 @@
 #include "common.h"
 
+LPTMR_InitTypeDef Right_Encoder_init_param;
 /*编码器初始化*/
-
 void Encoder_Init(void)
 {
 	
 	FTM_InitTypeDef Left_Encoder_init_struct;
-	LPTMR_InitTypeDef Right_Encoder_init_param;
 
 	//配置正交解码功能参数
 	Left_Encoder_init_struct.FTM_Ftmx = FTM1;              //只有FTM1和FTM2有正交解码功能
@@ -43,8 +42,15 @@ uint16 Encoder_GetPulseNum(EncoderPosition position)
 	
 	switch (position)
 	{
-		case ENCODER_LEFT: result = ~LPLD_FTM_GetCounter(FTM1); break;	//左编码器反转
-		case ENCODER_RIGHT: result = LPLD_LPTMR_GetPulseAcc(); break;
+		case ENCODER_LEFT: 
+			result = (~LPLD_FTM_GetCounter(FTM1)) + 1; 
+			LPLD_FTM_ClearCounter(FTM1);
+			break;	//左编码器反转
+		case ENCODER_RIGHT: 
+			result = LPLD_LPTMR_GetPulseAcc(); 
+			LPLD_LPTMR_ResetCounter();       //复位LPTMR0 counter 
+    		LPLD_LPTMR_Init(Right_Encoder_init_param);
+    		break;
 	}
 
 	return result;

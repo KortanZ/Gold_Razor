@@ -59,6 +59,7 @@ void NVIC_Init(void)
 void Main_Isr(void)
 {
 	
+	uint16 LeftS = 0, RightS = 0;
 	static uint8 pitCounter = 0;
 	pitCounter++;
 	if ((pitCounter % 20) == 1)
@@ -80,17 +81,29 @@ void Main_Isr(void)
 		//Motor_Speed = ((Left_Pulse + Right_Pulse)/2.0)*1000.0;	//此处PID函数有错误
 
 
+
 	  	
 		
-		OLED_ShowNum(0, 3, PulseNum_To_Speed(Encoder_GetPulseNum(ENCODER_RIGHT)), Num_Len);
-		//Encoder_GetPulseNum(ENCODER_LEFT);
-		//OLED_ShowNum(0, 3, Encoder_GetPulseNum(ENCODER_RIGHT), Num_Len);
+		
 	  	
 	  	Steer_Duty_Change(steerDebugDuty);
+
+	  
+		LeftS = Encoder_GetPulseNum(ENCODER_LEFT);
+		RightS = Encoder_GetPulseNum(ENCODER_RIGHT);
+
+		Steer_Duty_Change(steerDebugDuty);
+
 
 		Motor_Duty_Change(MOTOR_LEFT, PWM_Expect);
 		Motor_Duty_Change(MOTOR_RIGHT, PWM_Expect);
 
+		
+		OLED_ShowNum(0, 1, LeftS, Num_Len);
+		OLED_ShowNum(0,2, RightS, Num_Len);
+		OLED_ShowNum(0, 3, steerDebugDuty, Num_Len);
+		OLED_ShowNum(0, 4, PWM_Expect, Num_Len);	
+		
 		pitCounter = 0;
 	}
 
