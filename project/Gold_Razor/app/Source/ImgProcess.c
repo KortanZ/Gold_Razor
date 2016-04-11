@@ -9,8 +9,7 @@ void imgEdge(uint8 *img)
 {
 
 	uint8 i, j;
-	//uint8 scale = 4;
-	//float32 thresh, cutoff, sum = 0.0;
+
 	uint8 thresh = 254;
 	/* define  laplacian */
 	int8 laplacian[3][3] = {{0, 1, 0}, {1, -4, 1}, {0, 1, 0}};
@@ -20,7 +19,8 @@ void imgEdge(uint8 *img)
 
 	if (NULL == imgTemp)
 	{
-		OLED_ShowString(0, 0, "Memery alloc faild");
+		printf("Memery alloc faild!\n");
+		OLED_ShowString(4, 0, "Memery alloc faild");
 	}
 	else
 	{
@@ -36,17 +36,6 @@ void imgEdge(uint8 *img)
 										  + laplacian[2][1] * img[(i + 1) * CAMERA_W + j];
 			}
 		}
-
-		/* comput summation for avg */
-
-		// for (i = 1; i < CAMERA_H - 1; ++i)
-		// {
-		// 	for (j = 1; j < CAMERA_W - 1; ++j)     
-		// 		sum += imgTemp[CAMERA_W * i + j];
-		// }
-		
-		// cutoff = scale * (sum / ((CAMERA_H - 2) * (CAMERA_W - 2)));
-		// thresh = sqrt(cutoff);
 		
 		/* convert to gray imgage through thresh */
 
@@ -63,4 +52,39 @@ void imgEdge(uint8 *img)
 		}
 		free(imgTemp);
 	}
+}
+
+
+uint16 *Sample(uint8 *img)
+{
+	uint16 *vector = (uint16 *)malloc(sizeof(uint16) * 6);
+
+	uint16 cnt = 0;
+	uint8 i, j, part;
+
+	if (NULL == vector)
+	{
+		printf("Memery alloc faild!\n");
+		OLED_ShowString(4, 0, "Memery alloc faild");
+	}
+	else
+	{
+		for ( part = 0; part < 6; ++part)
+		{
+			for ( i = (part / 2) * 40; i < ((part / 2) + 1) * 40; ++i)
+			{
+				for ( j = (part % 2) * 80; j < ((part % 2) + 1) * 80; ++j)
+				{
+					if (img[i * CAMERA_W + j] == 255)
+					{
+						++cnt;
+					}
+				}
+			}
+			vector[part] = cnt;
+			cnt = 0;
+		}
+	}
+
+	return vector;
 }
