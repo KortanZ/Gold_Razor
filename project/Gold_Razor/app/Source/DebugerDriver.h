@@ -14,7 +14,7 @@ extern void UART_Debuger_Init(void);
 extern void LED_Debuger_Init(void);
 extern void Time_Counter_Start(void);
 extern uint32 Time_Counter_Get(void);
-extern void Keyboard_GPIO_init(void);
+extern void Keyboard_GPIO_Init(void);
 extern void Keybord_Delay(void);
 extern void Keyboard_Scan(void);
 

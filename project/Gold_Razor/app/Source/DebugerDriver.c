@@ -4,8 +4,10 @@
 *include timer initial
 */
 #include "common.h"
-
+#include "oled_menu.h"
+					
 uint32 steerDebugDuty = 1431;
+ListType currentList = DEBUG;
 
 void UART_Debuger_Init(void)
 {
@@ -38,22 +40,22 @@ void LED_Debuger_Init(void)
 	LPLD_GPIO_Init(gpioInitStruct);
 }
 
-void Keyboard_GPIO_init(void)
+void Keyboard_GPIO_Init(void)
 {
-  	  GPIO_InitTypeDef keyboard_gpio_init_struct;
-      keyboard_gpio_init_struct.GPIO_PTx = PTD;
-      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
-      keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
-      keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
-      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
-      LPLD_GPIO_Init(keyboard_gpio_init_struct);
+	GPIO_InitTypeDef keyboard_gpio_init_struct;
+	keyboard_gpio_init_struct.GPIO_PTx = PTD;
+	keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
+	keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+	keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
+	keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
+	LPLD_GPIO_Init(keyboard_gpio_init_struct);
 
-      keyboard_gpio_init_struct.GPIO_PTx = PTC;
-      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
-      keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
-      keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
-      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
-      LPLD_GPIO_Init(keyboard_gpio_init_struct);
+	keyboard_gpio_init_struct.GPIO_PTx = PTC;
+	keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
+	keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+	keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
+	keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
+	LPLD_GPIO_Init(keyboard_gpio_init_struct);
 }
 
 void Time_Counter_Start(void)
@@ -100,7 +102,7 @@ void Keybord_Delay(void)
 
 void Keyboard_Scan(void)
 {
-	if (PTD12_I == 0)						//¶æ»úKdÔö
+	if (PTD12_I == 0)
 	{
 		Keybord_Delay();
 		if (PTD12_I == 0)
@@ -108,7 +110,7 @@ void Keyboard_Scan(void)
 			steerDebugDuty++;
 		}
 	}
-	if (PTD13_I == 0)						//¶æ»úKd¼õ
+	if (PTD13_I == 0)
 	{
 		Keybord_Delay();
 		if (PTD13_I == 0)
@@ -117,7 +119,7 @@ void Keyboard_Scan(void)
 		}
 	}
 
-	if (PTD10_I == 0)						//¶æ»úKdÔö
+	if (PTD10_I == 0)
 	{
 		Keybord_Delay();
 		if (PTD10_I == 0)
@@ -125,7 +127,7 @@ void Keyboard_Scan(void)
 			
 		}
 	}
-	if (PTD11_I == 0)						//¶æ»úKd¼õ
+	if (PTD11_I == 0)
 	{
 		Keybord_Delay();
 		if (PTD11_I == 0)
@@ -134,7 +136,7 @@ void Keyboard_Scan(void)
 		}
 	}
 
-	if (PTC14_I == 0)						//ËÙ¶ÈÔö
+	if (PTC14_I == 0)
 	{
 		Keybord_Delay();
 		if (PTC14_I == 0)
@@ -142,7 +144,7 @@ void Keyboard_Scan(void)
 			PWM_Expect += 50;
 		}
 	}
-	if (PTC15_I == 0)						//ËÙ¶È¼õ
+	if (PTC15_I == 0)
 	{
 		Keybord_Delay();
 		if (PTC15_I == 0)
