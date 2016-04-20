@@ -1,7 +1,7 @@
 #ifndef _VIRTUALOSC_H
 #define _VIRTUALOSC_H
 
-  #include "common.h"
+#include "common.h"
 
 extern float VirtualSignal[5];
 

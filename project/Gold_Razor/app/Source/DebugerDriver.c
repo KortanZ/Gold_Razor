@@ -41,19 +41,24 @@ void LED_Debuger_Init(void)
 void Keyboard_GPIO_init(void)
 {
   	  GPIO_InitTypeDef keyboard_gpio_init_struct;
+
       keyboard_gpio_init_struct.GPIO_PTx = PTD;
       keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
       keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
       keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
-      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
+      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
+      keyboard_gpio_init_struct.GPIO_Isr = Keyboard_Isr;
       LPLD_GPIO_Init(keyboard_gpio_init_struct);
+      LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
 
       keyboard_gpio_init_struct.GPIO_PTx = PTC;
       keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
       keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
       keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
-      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
+      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
+      keyboard_gpio_init_struct.GPIO_Isr = Keyboard_Isr;
       LPLD_GPIO_Init(keyboard_gpio_init_struct);
+      LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
 }
 
 void Time_Counter_Start(void)
@@ -98,6 +103,41 @@ void Keybord_Delay(void)
 	}
 }
 
+void Keyboard_Isr(void)
+{
+	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin14))
+  	{
+  		//OLED_Clear();
+  		OLED_ShowString(0, 1, "PTC14");
+  	}
+  	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin15))
+  	{
+  		//OLED_Clear();
+  		OLED_ShowString(0, 1, "PTC15");
+  	}
+  	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin10))
+	{
+		//OLED_Clear();
+	  	OLED_ShowString(0, 1, "PTD10");
+	}
+	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin11))
+	{
+		//OLED_Clear();
+	  	OLED_ShowString(0, 1, "PTD11");
+	}
+	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin12))
+	{
+		//OLED_Clear();
+	  	OLED_ShowString(0, 1, "PTD12");
+	}
+	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin13))
+	{  	
+		//OLED_Clear();
+		OLED_ShowString(0, 1, "PTD13");
+	}
+}
+
+/*
 void Keyboard_Scan(void)
 {
 	if (PTD12_I == 0)						//¶æ»úKdÔö
@@ -151,3 +191,4 @@ void Keyboard_Scan(void)
 		}
 	}
 }
+*/

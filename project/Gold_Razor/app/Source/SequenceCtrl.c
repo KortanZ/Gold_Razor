@@ -58,8 +58,8 @@ void NVIC_Init(void)
 
 void Main_Isr(void)
 {
-	
-	uint16 LeftS = 0, RightS = 0;
+	uint16 leftPulse, rightPulse;
+
 	static uint8 pitCounter = 0;
 	pitCounter++;
 	if ((pitCounter % 20) == 1)
@@ -75,34 +75,28 @@ void Main_Isr(void)
 	if ((pitCounter % 20) == 0)
 	{
 
-		//Left_Pulse = (float32)qd_result_ftm/(10.0*256.0);
-		//Right_Pulse = (float32)qd_result_lptmr/(10.0*256.0);
+		leftPulse = Encoder_GetPulseNum(ENCODER_LEFT);
+		rightPulse = Encoder_GetPulseNum(ENCODER_RIGHT);
 
-		//Motor_Speed = ((Left_Pulse + Right_Pulse)/2.0)*1000.0;	//此处PID函数有错误
+		// OLED_ShowNum(0, 1, leftPulse, Num_Len);
+		// OLED_ShowNum(0, 2, rightPulse, Num_Len);
 
-
-
+		Motor_Controller(leftMotorCtrl, (float32)PWM_Expect, leftPulse);
+		Motor_Controller(rightMororCtrl, (float32)PWM_Expect, rightPulse);
 	  	
-		
-		
-	  	
-	  	Steer_Duty_Change(steerDebugDuty);
 
-	  
-		LeftS = Encoder_GetPulseNum(ENCODER_LEFT);
-		RightS = Encoder_GetPulseNum(ENCODER_RIGHT);
+
+		Motor_Duty_Change(MOTOR_LEFT, (int32)(leftMotorCtrl -> u[0]));
+		Motor_Duty_Change(MOTOR_RIGHT, (int32)(rightMororCtrl -> u[0]));
+
+		VirtualSignal[0] = PWM_Expect;
+        VirtualSignal[1] = leftMotorCtrl -> u[0];
+        VirtualSignal[2] = rightMororCtrl -> u[0];
+        // VirtualSignal[2]=Speed_Now;
+        // VirtualSignal[3]=500;
+        OutPut_Data();
 
 		Steer_Duty_Change(steerDebugDuty);
-
-
-		Motor_Duty_Change(MOTOR_LEFT, PWM_Expect);
-		Motor_Duty_Change(MOTOR_RIGHT, PWM_Expect);
-
-		
-		OLED_ShowNum(0, 1, LeftS, Num_Len);
-		OLED_ShowNum(0,2, RightS, Num_Len);
-		OLED_ShowNum(0, 3, steerDebugDuty, Num_Len);
-		OLED_ShowNum(0, 4, PWM_Expect, Num_Len);	
 		
 		pitCounter = 0;
 	}

@@ -584,7 +584,7 @@ __INLINE uint8 LPLD_FTM_GetClkDiv(FTM_Type *ftmx)
  *    无
  *
  */
-__INLINE uint16 LPLD_FTM_GetCounter(FTM_Type *ftmx)
+__INLINE int16 LPLD_FTM_GetCounter(FTM_Type *ftmx)
 {
   return ftmx->CNT;        //获取FTMx计数器值
 }

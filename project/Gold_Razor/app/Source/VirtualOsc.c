@@ -43,6 +43,7 @@ void OutPut_Data(void)
   for(i=0;i<10;i++)
     //Send(databuf[i]);
     LPLD_UART_PutChar(UART2, databuf[i]);
+  OLED_ShowString(0, 5, "get!");
 }
 
 

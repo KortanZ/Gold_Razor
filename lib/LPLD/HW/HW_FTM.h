@@ -227,7 +227,7 @@ uint16 LPLD_FTM_GetChVal(FTM_Type *, FtmChnEnum_Type);
 //获取FTMx时钟分频系数
 uint8 LPLD_FTM_GetClkDiv(FTM_Type *);
 //获取FTMx计数器值
-uint16 LPLD_FTM_GetCounter(FTM_Type *);
+int16 LPLD_FTM_GetCounter(FTM_Type *);
 //清空FTMx计数器
 void LPLD_FTM_ClearCounter(FTM_Type *);
 
