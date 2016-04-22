@@ -15,7 +15,7 @@ void main(void)
 	UART_Debuger_Init();
 	Camera_init();
 
-	speedCtrler = SpeedCtrler_Init(3.2, 0.5, 0.8);
+	SpeedCtrler_Init();
 
 	EnableInterrupts;
 	while (1)
