@@ -82,16 +82,16 @@ void Main_Isr(void)
 			rightPulse = -rightPulse;
 		}
 
-		Speed_PID_Calc(speedCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);
+		PID_Calc(motorCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);
 
-		Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(speedCtrler -> u[0]));
-		Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(speedCtrler -> u[0]));
+		Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(motorCtrler -> u[0]));
+		Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(motorCtrler -> u[0]));
 
 		/* virtual oscilloscope */
 
 		VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);
 		VirtualSignal[1] = (leftPulse + rightPulse) / 2.0;
-        VirtualSignal[2] = speedCtrler -> u[0];
+        VirtualSignal[2] = motorCtrler -> u[0];
         // VirtualSignal[3]=500;
         OutPut_Data();
 
