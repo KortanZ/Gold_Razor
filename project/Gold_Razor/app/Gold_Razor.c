@@ -17,6 +17,7 @@ void main(void)
 	All_PID_Init();
 	Camera_init();
 	OLED_Clear();
+	Menu_Data_Link();
 	Menu_Show();
 	EnableInterrupts;
 	while (1);

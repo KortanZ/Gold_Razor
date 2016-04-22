@@ -11,6 +11,7 @@
 typedef enum{
 	DEBUG,
 	RACE,
+	
 	PID_STEER,
 	PID_MOTOR,
 	PID_DIFF,
@@ -23,6 +24,8 @@ typedef enum{
 	DIFF_KP,
 	DIFF_KD,
 	DIFF_KI,
+	
+	MOTOR_SPEED,
 }ListType;
 
 typedef struct
