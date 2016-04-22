@@ -68,10 +68,6 @@ void SpeedCtrler_Init(void)
 			speedCtrler -> u[i] = PWM_To_Pulse(PWM_Expect);
 		}
 
-		Menu_Data_Link(MOTOR_KP, (void *)(&(speedCtrler -> Kp)));
-		Menu_Data_Link(MOTOR_KD, (void *)(&(speedCtrler -> Kd)));
-		Menu_Data_Link(MOTOR_KI, (void *)(&(speedCtrler -> Ki)));
-
 	}
 
 }

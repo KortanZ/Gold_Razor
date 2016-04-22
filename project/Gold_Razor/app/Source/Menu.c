@@ -115,9 +115,12 @@ void Menu_Num_Show(ListType lst)
 	}
 }
 
-void Menu_Data_Link(ListType lst, void *ptr)
+void Menu_Data_Link(void)
 {
-	menuList[lst].data = ptr;
+	menuList[STEER_KP].data = (void *)(&(speedCtrler -> Kp));
+	menuList[STEER_KD].data = (void *)(&(speedCtrler -> Kd));
+	menuList[STEER_KI].data = (void *)(&(speedCtrler -> ki));
+
 }
 
 void Menu_Data_Increase(ListType lst)
