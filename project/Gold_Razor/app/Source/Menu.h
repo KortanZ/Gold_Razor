@@ -38,9 +38,13 @@ typedef struct
 }MenuType;
 
 extern ListType currentList;
-extern const MenuType menuList[];
+extern MenuType menuList[];
 extern const unsigned char logo[];
 
 void Menu_Show(void);
+void Menu_Num_Show(ListType lst);
+void Menu_Data_Link(ListType lst, void *ptr);
+void Menu_Data_Increase(ListType lst);
+void Menu_Data_Decrease(ListType lst);
 
 #endif

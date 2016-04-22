@@ -131,6 +131,26 @@ void OLED_Clear(void)
 	} //更新显示
 }
 
+void OLED_ClearLine(u8 y)
+{
+	unsigned char i = 0;
+	if (SIZE == 16)
+	{
+		OLED_Set_Pos(0, y);
+		for (i = 0; i<128; i++)
+			OLED_WR_Byte(0x00, OLED_DATA);
+		OLED_Set_Pos(0, y + 1);
+		for (i = 0; i<128; i++)
+			OLED_WR_Byte(0x00, OLED_DATA);
+	}
+	else {
+		OLED_Set_Pos(0, y + 1);
+		for (i = 0; i<128; i++)
+			OLED_WR_Byte(0x00, OLED_DATA);
+
+	}
+}
+
 void OLED_DrawPoint(u8 x, u8 y, u8 cmd)
 {
 	static uint8 imgMap[8][128] = { 0 };
@@ -198,13 +218,14 @@ u32 oled_pow(u8 m, u8 n)
 //size:字体大小
 //mode:模式	0,填充模式;1,叠加模式
 //num:数值(0~4294967295);
-void OLED_ShowNum(u8 x, u8 y, u32 num, u8 len)
+void OLED_ShowNum(u8 x, u8 y, int32 num, u8 len)
 {
 	u8 t, temp;
 	u8 enshow = 0;
+
 	for (t = 0; t<len; t++)
 	{
-		temp = (num / oled_pow(10, len - t - 1)) % 10;
+		temp = ((num >= 0 ? num : -num) / oled_pow(10, len - t - 1)) % 10;
 		if (enshow == 0 && t<(len - 1))
 		{
 			if (temp == 0)
@@ -212,11 +233,17 @@ void OLED_ShowNum(u8 x, u8 y, u32 num, u8 len)
 				OLED_ShowChar(x + (Num_Size / 2)*t, y, ' ');
 				continue;
 			}
-			else enshow = 1;
+			else
+			{
+				if(num < 0)
+					OLED_ShowChar(x + (Num_Size / 2)*(t - 1), y, '-');
+				enshow = 1;
+			}
 
 		}
 		OLED_ShowChar(x + (Num_Size / 2)*t, y, temp + '0');
 	}
+
 }
 void OLED_NumClear(u8 x, u8 y, u8 len)
 {

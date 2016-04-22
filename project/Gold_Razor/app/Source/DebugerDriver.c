@@ -128,7 +128,7 @@ void Keyboard_Isr(void)
 	//值减
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin11))
 	{
-
+		Menu_Data_Decrease(currentList);
 	}
 
 	//向上翻
@@ -140,7 +140,7 @@ void Keyboard_Isr(void)
 	//值增
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin13))
 	{  	
-
+		Menu_Data_Increase(currentList);
 	}
 	Menu_Show();
 }

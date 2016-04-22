@@ -14,6 +14,6 @@ typedef struct{
 extern PIDStruct *speedCtrler;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real);
-PIDStruct *SpeedCtrler_Init(float32 setKp, float32 setKd, float32 setKi);
+void SpeedCtrler_Init(void);
 
 #endif	

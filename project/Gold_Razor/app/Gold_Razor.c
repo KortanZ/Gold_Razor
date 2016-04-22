@@ -1,5 +1,7 @@
 #include "common.h"
 
+int16 test = -399;
+
 void main(void)
 {
 	DisableInterrupts;
@@ -14,13 +16,12 @@ void main(void)
 	Encoder_Init();
 	Keyboard_GPIO_Init();
 	UART_Debuger_Init();
-	speedCtrler = SpeedCtrler_Init(3.2, 0.5, 0.8);
+	SpeedCtrler_Init();
 	Camera_init();
+	OLED_Clear();
 	Menu_Show();
+	OLED_ShowNum(0, 5, test, Num_Len);
 	EnableInterrupts;
-	while (1)
-	{
-		//Keyboard_Scan();
-	}
+	while (1);
 }
 

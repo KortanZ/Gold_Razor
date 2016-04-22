@@ -70,37 +70,70 @@ const unsigned char logo[] = {
 
 ListType currentList = DEBUG;
 
-const MenuType menuList[] = {
+MenuType menuList[] = {
 	{RACE, RACE, DEBUG, PID_STEER, "Debug Mode", NULL, NULL, 0}, 			//调试模式
 	{DEBUG, DEBUG, RACE, RACE, "Race Mode", NULL, NULL, 1}, 					//比赛模式
 
 	{PID_DIFF, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, NULL, 0},
-	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, NULL， 1},
-	{PID_MOTOR, PID_STEER, DEBUG, DIFF_KP, "Diff", NULL NULL, 2},
+	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, NULL, 1},
+	{PID_MOTOR, PID_STEER, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
 
-	{STEER_KI, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, 0},
-	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_kd:", NULL, 1},
-	{STEER_KD, STEER_KP, PID_STEER, STEER_KI, "Steer_Ki:", NULL, 2},
+	{STEER_KI, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, NULL, 0},
+	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_kd:", NULL, NULL, 1},
+	{STEER_KD, STEER_KP, PID_STEER, STEER_KI, "Steer_Ki:", NULL, NULL, 2},
 
-	{MOTOR_KI, MOTOR_KD, PID_MOTOR, MOTOR_KP, "Motro_Kp:", NULL, 0},
-	{MOTOR_KP, MOTOR_KI, PID_MOTOR, MOTOR_KD, "Motor_kd:", NULL, 1},
-	{MOTOR_KD, MOTOR_KP, PID_MOTOR, MOTOR_KI, "Motor_Ki:", NULL, 2},
+	{MOTOR_KI, MOTOR_KD, PID_MOTOR, MOTOR_KP, "Motro_Kp:", NULL, NULL, 0},
+	{MOTOR_KP, MOTOR_KI, PID_MOTOR, MOTOR_KD, "Motor_kd:", NULL, NULL, 1},
+	{MOTOR_KD, MOTOR_KP, PID_MOTOR, MOTOR_KI, "Motor_Ki:", NULL, NULL, 2},
 
-	{DIFF_KI, DIFF_KD, PID_DIFF, DIFF_KP, "Diff_Kp:", NULL, 0},
-	{DIFF_KP, DIFF_KI, PID_DIFF, DIFF_KD, "Diff_kd:", NULL, 1},
-	{DIFF_KD, DIFF_KP, PID_DIFF, DIFF_KI, "Diff_Ki:", NULL, 2},
+	{DIFF_KI, DIFF_KD, PID_DIFF, DIFF_KP, "Diff_Kp:", NULL, NULL, 0},
+	{DIFF_KP, DIFF_KI, PID_DIFF, DIFF_KD, "Diff_kd:", NULL, NULL, 1},
+	{DIFF_KD, DIFF_KP, PID_DIFF, DIFF_KI, "Diff_Ki:", NULL, NULL, 2}
 };
 
 void Menu_Show(void)
 {
 	uint8 i;
 	ListType list = currentList;
-	
-	OLED_Clear();
 	for(i = 0; i < 6; i++)
 	{
+			OLED_ClearLine(menuList[list].indexInPage);
 			OLED_ShowString(8, menuList[list].indexInPage, menuList[list].str);
+			Menu_Num_Show(list);
 			list = menuList[list].next;
 	}
 	OLED_ShowChar(0, menuList[currentList].indexInPage, '>');
+}
+
+void Menu_Num_Show(ListType lst)
+{
+
+	if(NULL != menuList[lst].data)
+	{
+		if(lst >= STEER_KP && lst <= DIFF_KI)
+			OLED_ShowNum(70, menuList[lst].indexInPage, (int32)(*((float32 *)menuList[lst].data) * 10), Num_Len);
+	}
+}
+
+void Menu_Data_Link(ListType lst, void *ptr)
+{
+	menuList[lst].data = ptr;
+}
+
+void Menu_Data_Increase(ListType lst)
+{
+	if(NULL != menuList[lst].data)
+	{
+		if(lst >= STEER_KP && lst <= DIFF_KI)
+			*((float32 *)menuList[lst].data) += 0.1 ;
+	}
+}
+
+void Menu_Data_Decrease(ListType lst)
+{
+	if(NULL != menuList[lst].data)
+	{
+		if(lst >= STEER_KP && lst <= DIFF_KI)
+			*((float32 *)menuList[lst].data) -= 0.1 ;
+	}
 }
