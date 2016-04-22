@@ -4,10 +4,9 @@
 *include timer initial
 */
 #include "common.h"
-#include "oled_menu.h"
+
 					
 uint32 steerDebugDuty = 1431;
-ListType currentList = DEBUG;
 
 void UART_Debuger_Init(void)
 {
@@ -42,20 +41,26 @@ void LED_Debuger_Init(void)
 
 void Keyboard_GPIO_Init(void)
 {
-	GPIO_InitTypeDef keyboard_gpio_init_struct;
-	keyboard_gpio_init_struct.GPIO_PTx = PTD;
-	keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
-	keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
-	keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
-	keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
-	LPLD_GPIO_Init(keyboard_gpio_init_struct);
 
-	keyboard_gpio_init_struct.GPIO_PTx = PTC;
-	keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
-	keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
-	keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
-	keyboard_gpio_init_struct.GPIO_PinControl = IRQC_DIS | INPUT_PULL_UP;
-	LPLD_GPIO_Init(keyboard_gpio_init_struct);
+  	  GPIO_InitTypeDef keyboard_gpio_init_struct;
+
+      keyboard_gpio_init_struct.GPIO_PTx = PTD;
+      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
+      keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+      keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
+      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
+      keyboard_gpio_init_struct.GPIO_Isr = Keyboard_Isr;
+      LPLD_GPIO_Init(keyboard_gpio_init_struct);
+      LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
+
+      keyboard_gpio_init_struct.GPIO_PTx = PTC;
+      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
+      keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+      keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
+      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
+      keyboard_gpio_init_struct.GPIO_Isr = Keyboard_Isr;
+      LPLD_GPIO_Init(keyboard_gpio_init_struct);
+      LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
 }
 
 void Time_Counter_Start(void)
@@ -100,56 +105,42 @@ void Keybord_Delay(void)
 	}
 }
 
-void Keyboard_Scan(void)
+void Keyboard_Isr(void)
 {
-	if (PTD12_I == 0)
+	//确定
+	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin14))
+  	{
+  		currentList = menuList[currentList].child;
+  	}
+
+  	//返回
+  	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin15))
+  	{
+  		currentList = menuList[currentList].parent;
+  	}
+
+  	//向下翻
+  	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin10))
 	{
-		Keybord_Delay();
-		if (PTD12_I == 0)
-		{
-			steerDebugDuty++;
-		}
-	}
-	if (PTD13_I == 0)
-	{
-		Keybord_Delay();
-		if (PTD13_I == 0)
-		{
-		  	steerDebugDuty--;
-		}
+		currentList = menuList[currentList].next;
 	}
 
-	if (PTD10_I == 0)
+	//值减
+	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin11))
 	{
-		Keybord_Delay();
-		if (PTD10_I == 0)
-		{
-			
-		}
-	}
-	if (PTD11_I == 0)
-	{
-		Keybord_Delay();
-		if (PTD11_I == 0)
-		{
-		  	
-		}
+
 	}
 
-	if (PTC14_I == 0)
+	//向上翻
+	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin12))
 	{
-		Keybord_Delay();
-		if (PTC14_I == 0)
-		{
-			PWM_Expect += 50;
-		}
+		currentList = menuList[currentList].previous;
 	}
-	if (PTC15_I == 0)
-	{
-		Keybord_Delay();
-		if (PTC15_I == 0)
-		{
-		  	PWM_Expect -= 50;
-		}
+
+	//值增
+	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin13))
+	{  	
+
 	}
+	Menu_Show();
 }

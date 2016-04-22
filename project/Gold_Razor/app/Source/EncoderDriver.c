@@ -43,7 +43,7 @@ uint16 Encoder_GetPulseNum(EncoderPosition position)
 	switch (position)
 	{
 		case ENCODER_LEFT: 
-			result = (~LPLD_FTM_GetCounter(FTM1)) + 1; 
+			result = -LPLD_FTM_GetCounter(FTM1); 
 			LPLD_FTM_ClearCounter(FTM1);
 			break;	//左编码器反转
 		case ENCODER_RIGHT: 

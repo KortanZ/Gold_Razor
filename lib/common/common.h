@@ -142,6 +142,9 @@ typedef unsigned char   boolean;      /* 8-bit*/
 #include "MotorDriver.h"
 #include "SteerDriver.h"
 #include "DebugerDriver.h"
+#include "PID.h"
+#include "VirtualOsc.h"
+#include "Menu.h"
 
 /*
  * 包含实时系统头文件

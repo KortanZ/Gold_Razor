@@ -240,25 +240,9 @@ void OLED_ShowString(u8 x, u8 y, u8 *chr)
 		j++;
 	}
 }
-//显示汉字
-void OLED_ShowCHinese(u8 x, u8 y, u8 no)
-{
-	u8 t, adder = 0;
-	OLED_Set_Pos(x, y);
-	for (t = 0; t<16; t++)
-	{
-		OLED_WR_Byte(Hzk[2 * no][t], OLED_DATA);
-		adder += 1;
-	}
-	OLED_Set_Pos(x, y + 1);
-	for (t = 0; t<16; t++)
-	{
-		OLED_WR_Byte(Hzk[2 * no + 1][t], OLED_DATA);
-		adder += 1;
-	}
-}
+
 /***********功能描述：显示显示BMP图片128×64起始点坐标(x,y),x的范围0～127，y为页的范围0～7*****************/
-void OLED_DrawBMP(unsigned char x0, unsigned char y0, unsigned char x1, unsigned char y1, unsigned char BMP[])
+void OLED_DrawBMP(unsigned char x0, unsigned char y0, unsigned char x1, unsigned char y1, const unsigned char BMP[])
 {
 	unsigned int j = 0;
 	unsigned char x, y;

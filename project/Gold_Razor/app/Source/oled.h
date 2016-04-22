@@ -98,7 +98,7 @@ void OLED_NumClear(u8 x,u8 y,u8 len);
 void OLED_ShowString(u8 x,u8 y, u8 *p);
 void OLED_Set_Pos(unsigned char x, unsigned char y);
 void OLED_ShowCHinese(u8 x,u8 y,u8 no);
-void OLED_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,unsigned char BMP[]);
+void OLED_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,const unsigned char BMP[]);
 
 #endif
 

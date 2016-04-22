@@ -4,20 +4,25 @@ void main(void)
 {
 	DisableInterrupts;
 
-	NVIC_Init();
-	Steer_Init();
-	MainCtrl_Pit_Init();
-	Motor_Init();
-	Encoder_Init();
 	OLED_Init();
 	OLED_Clear();
-	Keyboard_GPIO_init();
+	OLED_DrawBMP(0, 0, 128, 8, logo);
+	NVIC_Init();
+	MainCtrl_Pit_Init();
+	Steer_Init();
+	Motor_Init();
+	Encoder_Init();
+	Keyboard_GPIO_Init();
 	UART_Debuger_Init();
 	Camera_init();
+	Menu_Show();
+	// leftMotorCtrl = MotorCtrler_Init();
+	// rightMororCtrl = MotorCtrler_Init();
+	
 	EnableInterrupts;
 	while (1)
 	{
-		Keyboard_Scan();
+		//Keyboard_Scan();
 	}
 }
 

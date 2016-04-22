@@ -10,12 +10,15 @@
 
 extern uint32 steerDebugDuty;
 
-extern void UART_Debuger_Init(void);
-extern void LED_Debuger_Init(void);
-extern void Time_Counter_Start(void);
-extern uint32 Time_Counter_Get(void);
-extern void Keyboard_GPIO_Init(void);
-extern void Keybord_Delay(void);
-extern void Keyboard_Scan(void);
+void UART_Debuger_Init(void);
+void LED_Debuger_Init(void);
+void Time_Counter_Start(void);
+uint32 Time_Counter_Get(void);
+void Keyboard_GPIO_Init(void);
+void Keybord_Delay(void);
+//void Keyboard_Scan(void);
+void Keyboard_Isr(void);
+void Menu_Show(void);
+
 
 #endif
