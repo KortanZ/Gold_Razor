@@ -82,7 +82,7 @@ void Main_Isr(void)
 			rightPulse = -rightPulse;
 		}
 
-		Speed_Controller(speedCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);
+		Speed_PID_Calc(speedCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);
 
 		Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(speedCtrler -> u[0]));
 		Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(speedCtrler -> u[0]));
