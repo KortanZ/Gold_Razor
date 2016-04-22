@@ -1,7 +1,5 @@
 #include "common.h"
 
-int16 test = -399;
-
 void main(void)
 {
 	DisableInterrupts;
@@ -20,7 +18,6 @@ void main(void)
 	Camera_init();
 	OLED_Clear();
 	Menu_Show();
-	OLED_ShowNum(0, 5, test, Num_Len);
 	EnableInterrupts;
 	while (1);
 }
