@@ -14,7 +14,7 @@ void main(void)
 	Encoder_Init();
 	Keyboard_GPIO_Init();
 	UART_Debuger_Init();
-	SpeedCtrler_Init();
+	All_PID_Init();
 	Camera_init();
 	OLED_Clear();
 	Menu_Show();

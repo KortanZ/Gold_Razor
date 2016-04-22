@@ -117,9 +117,17 @@ void Menu_Num_Show(ListType lst)
 
 void Menu_Data_Link(void)
 {
-	menuList[STEER_KP].data = (void *)(&(speedCtrler -> Kp));
-	menuList[STEER_KD].data = (void *)(&(speedCtrler -> Kd));
-	menuList[STEER_KI].data = (void *)(&(speedCtrler -> ki));
+	menuList[MOTOR_KP].data = (void *)(&(motorCtrler -> Kp));
+	menuList[MOTOR_KD].data = (void *)(&(motorCtrler -> Kd));
+	menuList[MOTOR_KI].data = (void *)(&(motorCtrler -> Ki));
+
+	menuList[STEER_KP].data = (void *)(&(steerCtrler -> Kp));
+	menuList[STEER_KD].data = (void *)(&(steerCtrler -> Kd));
+	menuList[STEER_KI].data = (void *)(&(steerCtrler -> Ki));
+
+	menuList[DIFF_KP].data = (void *)(&(diffCtrler -> Kp));
+	menuList[DIFF_KD].data = (void *)(&(diffCtrler -> Kd));
+	menuList[DIFF_KI].data = (void *)(&(diffCtrler -> Ki));
 
 }
 

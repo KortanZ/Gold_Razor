@@ -1,10 +1,10 @@
 #include "common.h"
 
-PIDStruct *speedCtrler;
-PIDStruct *steerCtrler;
-PIDStruct *diffCtrler;
+PIDStruct *speedCtrler = NULL;
+PIDStruct *steerCtrler = NULL;
+PIDStruct *diffCtrler = NULL;
 
-void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
+void Speed_PID_Calc(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
 	/* previous difference PID */
 
@@ -45,29 +45,36 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	// motorCtrler -> error[1] = motorCtrler -> error[0];
 }
 
-void SpeedCtrler_Init(void)
+PIDStruct *PID_Init(float32 setKp, float32 setKi, float32 setKd)
 {
 	/* Initial PID speedCtrler */
 	int8 i;
 
-	speedCtrler = (PIDStruct *)malloc(sizeof(PIDStruct));
+	PIDStruct *controller = (PIDStruct *)malloc(sizeof(PIDStruct));
 
-	if (NULL == speedCtrler)
+	if (NULL == controller)
 	{
 		printf("Memory alloc faild!\n");
 		OLED_ShowString(0, 5, "Memory alloc faild!");
 	}
 	else
 	{
-		speedCtrler -> Kp = 3.2;
-		speedCtrler -> Kd = 0.5;
-		speedCtrler -> Ki = 0.8;
+		controller -> Kp = setKp;
+		controller -> Ki = setKi;
+		controller -> Kd = setKd;
 		for (i = 0; i < 3; ++i)
 		{
-			speedCtrler -> error[i] = 0;
-			speedCtrler -> u[i] = PWM_To_Pulse(PWM_Expect);
+			controller -> error[i] = 0;
+			controller -> u[i] = PWM_To_Pulse(PWM_Expect);
 		}
-
 	}
 
+	return controller;
+}
+
+void All_PID_Init(void)
+{
+	speedCtrler = PID_Init(3.2, 0.8, 0.5);
+	steerCtrler = PID_Init(3.2, 0.8, 0.5);
+	diffCtrler = PID_Init(3.2, 0.8, 0.5);
 }
