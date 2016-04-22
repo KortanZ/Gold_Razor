@@ -11,10 +11,9 @@ typedef struct{
 	float32 u[3];
 }PIDStruct;
 
-extern PIDStruct *leftMotorCtrl;
-extern PIDStruct *rightMororCtrl;
+extern PIDStruct *speedCtrler;
 
-void Motor_Controller(PIDStruct *motorCtrler, float32 expect, float32 real);
-PIDStruct *MotorCtrler_Init(void);
+void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real);
+PIDStruct *SpeedCtrler_Init(float32 setKp, float32 setKd, float32 setKi);
 
 #endif	

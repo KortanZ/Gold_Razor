@@ -128,12 +128,14 @@ void Keyboard_Isr(void)
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin12))
 	{
 		//OLED_Clear();
-	  	OLED_ShowString(0, 1, "PTD12");
+	  	OLED_ShowString(0, 5, "PTD12");
+	  	PWM_Expect += 1000;
 	}
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin13))
 	{  	
 		//OLED_Clear();
-		OLED_ShowString(0, 1, "PTD13");
+		OLED_ShowString(0, 5, "PTD13");
+		PWM_Expect -= 1000;
 	}
 }
 

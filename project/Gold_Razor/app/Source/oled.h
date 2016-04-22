@@ -1,30 +1,30 @@
 //////////////////////////////////////////////////////////////////////////////////
-//本程序只供学习使用，未经作者许可，不得用于其它任何用途
-//中景园电子
-//店铺地址：http://shop73023976.taobao.com/?spm=2013.1.0.0.M4PqC2
+//卤戮鲁脤脨貌脰禄鹿漏脩搂脧掳脢鹿脫脙拢卢脦麓戮颅脳梅脮脽脨铆驴脡拢卢虏禄碌脙脫脙脫脷脝盲脣眉脠脦潞脦脫脙脥戮
+//脰脨戮掳脭掳碌莽脳脫
+//碌锚脝脤碌脴脰路拢潞http://shop73023976.taobao.com/?spm=2013.1.0.0.M4PqC2
 //
-//  文 件 名   : main.c
-//  版 本 号   : v2.0
-//  作    者   : HuangKai
-//  生成日期   : 2014-0101
-//  最近修改   :
-//  功能描述   : OLED 4接口演示例程(51系列)
-//              说明:
+//  脦脛 录镁 脙没   : main.c
+//  掳忙 卤戮 潞脜   : v2.0
+//  脳梅    脮脽   : HuangKai
+//  脡煤鲁脡脠脮脝脷   : 2014-0101
+//  脳卯陆眉脨脼赂脛   :
+//  鹿娄脛脺脙猫脢枚   : OLED 4陆脫驴脷脩脻脢戮脌媒鲁脤(51脧碌脕脨)
+//              脣碌脙梅:
 //              ----------------------------------------------------------------
-//              GND    电源地
-//              VCC  接5V或3.3v电源
-//              D0   P1^0（SCL）
-//              D1   P1^1（SDA）
-//              RES  接P12
-//              DC   接P13
-//              CS   接P14
+//              GND    碌莽脭麓碌脴
+//              VCC  陆脫5V禄貌3.3v碌莽脭麓
+//              D0   P1^0拢篓SCL拢漏
+//              D1   P1^1拢篓SDA拢漏
+//              RES  陆脫P12
+//              DC   陆脫P13
+//              CS   陆脫P14
 //              ----------------------------------------------------------------
-// 修改历史   :
-// 日    期   :
-// 作    者   : HuangKai
-// 修改内容   : 创建文件
-//版权所有，盗版必究。
-//Copyright(C) 中景园电子2014/3/16
+// 脨脼赂脛脌煤脢路   :
+// 脠脮    脝脷   :
+// 脳梅    脮脽   : HuangKai
+// 脨脼赂脛脛脷脠脻   : 麓麓陆篓脦脛录镁
+//掳忙脠篓脣霉脫脨拢卢碌脕掳忙卤脴戮驴隆拢
+//Copyright(C) 脰脨戮掳脭掳碌莽脳脫2014/3/16
 //All rights reserved
 //******************************************************************************/
 
@@ -34,15 +34,15 @@
 #include "common.h"
 #define  u8 unsigned char
 #define  u32 unsigned int
-#define OLED_CMD  0	//写命令
-#define OLED_DATA 1	//写数据
+#define OLED_CMD  0	//脨麓脙眉脕卯
+#define OLED_DATA 1	//脨麓脢媒戮脻
 #define OLED_MODE 0
 
-#define OLED_CS PTD,8   //片选
-#define OLED_RST PTB,22 //复位
-#define OLED_DC PTD,9   //数据/命令控制
-#define OLED_SCLK PTB,21 //时钟 D0（SCLK)
-#define OLED_SDIN PTB,20//D1（MOSI） 数据
+#define OLED_CS PTD,8   //脝卢脩隆
+#define OLED_RST PTB,22 //赂麓脦禄
+#define OLED_DC PTD,9   //脢媒戮脻/脙眉脕卯驴脴脰脝
+#define OLED_SCLK PTB,21 //脢卤脰脫 D0拢篓SCLK)
+#define OLED_SDIN PTB,20//D1拢篓MOSI拢漏 脢媒戮脻
 
 
 #define OLED_CS_Clr()  LPLD_GPIO_Output_b(OLED_CS,0)
@@ -64,13 +64,13 @@
 
 
 
-//OLED模式设置
-//0:4线串行模式
-//1:并行8080模式
+//OLED脛拢脢陆脡猫脰脙
+//0:4脧脽麓庐脨脨脛拢脢陆
+//1:虏垄脨脨8080脛拢脢陆
 
 #define SIZE 8
 #define Num_Size 12
-#define Num_Len 4
+#define Num_Len 5
 #define XLevelL		0x02
 #define XLevelH		0x10
 #define Max_Column	128
@@ -78,14 +78,14 @@
 #define	Brightness	0xFF
 #define X_WIDTH 	128
 #define Y_WIDTH 	64
-//-----------------OLED端口定义----------------
+//-----------------OLED露脣驴脷露篓脪氓----------------
 
 void delay_ms(unsigned int ms);
 
 
 
 
-//OLED控制用函数
+//OLED驴脴脰脝脫脙潞炉脢媒
 void OLED_WR_Byte(u8 dat,u8 cmd);
 void OLED_Display_On(void);
 void OLED_Display_Off(void);

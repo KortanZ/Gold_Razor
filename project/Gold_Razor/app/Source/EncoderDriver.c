@@ -36,9 +36,9 @@ void Encoder_Init(void)
 
 //参数position：Left左编码器；Right右编码器
 
-uint16 Encoder_GetPulseNum(EncoderPosition position)
+int16 Encoder_GetPulseNum(EncoderPosition position)
 {
-	uint16 result;
+	int16 result;
 	
 	switch (position)
 	{
@@ -47,7 +47,7 @@ uint16 Encoder_GetPulseNum(EncoderPosition position)
 			LPLD_FTM_ClearCounter(FTM1);
 			break;	//左编码器反转
 		case ENCODER_RIGHT: 
-			result = LPLD_LPTMR_GetPulseAcc(); 
+			result = 4 * LPLD_LPTMR_GetPulseAcc();
 			LPLD_LPTMR_ResetCounter();       //复位LPTMR0 counter 
     		LPLD_LPTMR_Init(Right_Encoder_init_param);
     		break;
@@ -56,11 +56,24 @@ uint16 Encoder_GetPulseNum(EncoderPosition position)
 	return result;
 }
 
-float32 PulseNum_To_Speed(uint16 pulseNum)
+float32 PulseNum_To_PWM(float32 pulseNum)
 {
 	/* This function convert pulse number to rotational speed */
 
-	float32 speed;
-	speed = pulseNum / (256 * 0.02);
-	return speed;
+	float32 pwm;
+	pwm = (pulseNum + 319.8) / 0.5724;
+	return pwm;
+}
+
+float32 PWM_To_Pulse(uint32 pwm)
+{
+	float32 pulse;
+	pulse = 0.5724 * pwm - 319.8;
+
+	if (pulse < 0)
+	{
+		pulse = 0;
+	}
+
+	return pulse;
 }

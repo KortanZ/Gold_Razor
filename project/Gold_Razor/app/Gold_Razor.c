@@ -15,9 +15,8 @@ void main(void)
 	UART_Debuger_Init();
 	Camera_init();
 
-	leftMotorCtrl = MotorCtrler_Init();
-	rightMororCtrl = MotorCtrler_Init();
-	
+	speedCtrler = SpeedCtrler_Init(3.2, 0.5, 0.8);
+
 	EnableInterrupts;
 	while (1)
 	{

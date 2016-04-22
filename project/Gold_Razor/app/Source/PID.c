@@ -1,23 +1,45 @@
 #include "common.h"
 
-PIDStruct *leftMotorCtrl;
-PIDStruct *rightMororCtrl;
+PIDStruct *speedCtrler;
 
-
-void Motor_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
+void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
-	motorCtrler -> error[0] = real - expect;
-	motorCtrler -> u[0] = (motorCtrler -> Kp) * ((motorCtrler -> error[0]) - (motorCtrler -> error[1]))
+	/* previous difference PID */
+
+	float32 incrementU;
+
+	motorCtrler -> error[0] = expect - real;
+	incrementU = (motorCtrler -> Kp) * ((motorCtrler -> error[0]) - (motorCtrler -> error[1]))
 						 + (motorCtrler -> Ki) * (motorCtrler -> error[0]) + (motorCtrler -> Kd) 
 						 * ((motorCtrler -> u[0]) - 2 * (motorCtrler -> u[1]) + (motorCtrler -> u[2]))
-						 - (motorCtrler -> Kd) * ((motorCtrler -> u[0]) - (motorCtrler -> u[1])) + (motorCtrler -> u[1]);
+						 - (motorCtrler -> Kd) * ((motorCtrler -> u[0]) - (motorCtrler -> u[1]));
+
+	motorCtrler -> u[0] = (motorCtrler -> u[1]) + incrementU; 
+
 	motorCtrler -> u[2] = motorCtrler -> u[1];
 	motorCtrler -> u[1] = motorCtrler -> u[0];
 	motorCtrler -> error[1] = motorCtrler -> error[0]; 
+
+	/* standard PID */
+
+	// motorCtrler -> error[0] = expect - real;
+	// incrementU = (motorCtrler -> Kp) * ((motorCtrler -> error[0]) - (motorCtrler -> error[1]))
+	// 					+ (motorCtrler -> Ki) * (motorCtrler -> error[0]) + (motorCtrler -> Kd)
+	// 					* ((motorCtrler -> error[0]) - 2 * (motorCtrler -> error[1]) + (motorCtrler -> error[2]));
+
+	// motorCtrler -> u[0] = (motorCtrler -> u[1]) + incrementU; 
+	
+	// motorCtrler -> u[2] = motorCtrler -> u[1];
+	// motorCtrler -> u[1] = motorCtrler -> u[0];
+	// motorCtrler -> error[2] = motorCtrler -> error[1];
+	// motorCtrler -> error[1] = motorCtrler -> error[0];
+
+	return;
 }
 
-PIDStruct *MotorCtrler_Init(void)
+PIDStruct *SpeedCtrler_Init(float32 setKp, float32 setKd, float32 setKi)
 {
+	/* Initial PID controller */
 	int8 i;
 
 	PIDStruct *controller = (PIDStruct *)malloc(sizeof(PIDStruct));
@@ -29,15 +51,14 @@ PIDStruct *MotorCtrler_Init(void)
 	}
 	else
 	{
-		controller -> Kp = 1;
-		controller -> Kd = 0;
-		controller -> Ki = 0;
+		controller -> Kp = setKp;
+		controller -> Kd = setKd;
+		controller -> Ki = setKi;
 		for (i = 0; i < 3; ++i)
 		{
 			controller -> error[i] = 0;
-			controller -> u[i] = 0;
-		}
-		controller -> u[0] = PWM_Expect;
+			controller -> u[i] = PWM_To_Pulse(PWM_Expect);
+		}		
 	}
 
 	return controller;
