@@ -33,8 +33,6 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	// motorCtrler -> u[1] = motorCtrler -> u[0];
 	// motorCtrler -> error[2] = motorCtrler -> error[1];
 	// motorCtrler -> error[1] = motorCtrler -> error[0];
-
-	return;
 }
 
 PIDStruct *SpeedCtrler_Init(float32 setKp, float32 setKd, float32 setKi)

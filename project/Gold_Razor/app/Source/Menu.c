@@ -71,12 +71,12 @@ const unsigned char logo[] = {
 ListType currentList = DEBUG;
 
 const MenuType menuList[] = {
-	{RACE, RACE, DEBUG, PID_STEER, "Debug Mode", NULL, 0}, 			//调试模式
-	{DEBUG, DEBUG, RACE, RACE, "Race Mode", NULL, 1}, 					//比赛模式
+	{RACE, RACE, DEBUG, PID_STEER, "Debug Mode", NULL, NULL, 0}, 			//调试模式
+	{DEBUG, DEBUG, RACE, RACE, "Race Mode", NULL, NULL, 1}, 					//比赛模式
 
-	{PID_DIFF, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, 0},
-	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, 1},
-	{PID_MOTOR, PID_STEER, DEBUG, DIFF_KP, "Diff", NULL, 2},
+	{PID_DIFF, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, NULL, 0},
+	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, NULL， 1},
+	{PID_MOTOR, PID_STEER, DEBUG, DIFF_KP, "Diff", NULL NULL, 2},
 
 	{STEER_KI, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, 0},
 	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_kd:", NULL, 1},

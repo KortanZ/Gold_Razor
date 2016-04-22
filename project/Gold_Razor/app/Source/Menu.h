@@ -33,6 +33,7 @@ typedef struct
 	ListType child;
 	uint8 *str;
 	void (*function);
+	void *data;
 	uint8 indexInPage;
 }MenuType;
 
