@@ -9,10 +9,22 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	float32 incrementU;
 
 	motorCtrler -> error[0] = expect - real;
-	incrementU = (motorCtrler -> Kp) * ((motorCtrler -> error[0]) - (motorCtrler -> error[1]))
-						 + (motorCtrler -> Ki) * (motorCtrler -> error[0]) + (motorCtrler -> Kd) 
-						 * ((motorCtrler -> u[0]) - 2 * (motorCtrler -> u[1]) + (motorCtrler -> u[2]))
-						 - (motorCtrler -> Kd) * ((motorCtrler -> u[0]) - (motorCtrler -> u[1]));
+
+	/* anti-windup */
+
+	if ((motorCtrler -> u[1]) > U_MAX || (motorCtrler -> u[1]) < -U_MAX)
+	{
+		incrementU = (motorCtrler -> Kp) * ((motorCtrler -> error[0]) - (motorCtrler -> error[1]))
+					 + (motorCtrler -> Kd) * ((motorCtrler -> u[0]) - 2 * (motorCtrler -> u[1])
+					 + (motorCtrler -> u[2])) - (motorCtrler -> Kd) * ((motorCtrler -> u[0]) - (motorCtrler -> u[1]));
+	}
+	else
+	{
+		incrementU = (motorCtrler -> Kp) * ((motorCtrler -> error[0]) - (motorCtrler -> error[1]))
+					 + (motorCtrler -> Ki) * (motorCtrler -> error[0]) + (motorCtrler -> Kd) 
+					 * ((motorCtrler -> u[0]) - 2 * (motorCtrler -> u[1]) + (motorCtrler -> u[2]))
+					 - (motorCtrler -> Kd) * ((motorCtrler -> u[0]) - (motorCtrler -> u[1]));
+	}
 
 	motorCtrler -> u[0] = (motorCtrler -> u[1]) + incrementU; 
 
@@ -34,7 +46,6 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	// motorCtrler -> error[2] = motorCtrler -> error[1];
 	// motorCtrler -> error[1] = motorCtrler -> error[0];
 
-	return;
 }
 
 void SpeedCtrler_Init(void)
