@@ -3,6 +3,8 @@
 
 #include "common.h"
 
+#define U_MAX 4800
+
 typedef struct{
 	float32 Kp;
 	float32 Kd;
