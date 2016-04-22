@@ -1,6 +1,8 @@
 #include "common.h"
 
 PIDStruct *speedCtrler;
+PIDStruct *steerCtrler;
+PIDStruct *diffCtrler;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
