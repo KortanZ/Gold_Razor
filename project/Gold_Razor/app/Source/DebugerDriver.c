@@ -142,5 +142,4 @@ void Keyboard_Isr(void)
 	{  	
 
 	}
-	Menu_Show();
 }

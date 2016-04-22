@@ -14,11 +14,9 @@ void main(void)
 	Encoder_Init();
 	Keyboard_GPIO_Init();
 	UART_Debuger_Init();
+	speedCtrler = SpeedCtrler_Init(3.2, 0.5, 0.8);
 	Camera_init();
 	Menu_Show();
-	// leftMotorCtrl = MotorCtrler_Init();
-	// rightMororCtrl = MotorCtrler_Init();
-	
 	EnableInterrupts;
 	while (1)
 	{

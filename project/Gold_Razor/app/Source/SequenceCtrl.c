@@ -58,7 +58,7 @@ void NVIC_Init(void)
 
 void Main_Isr(void)
 {
-	uint16 leftPulse, rightPulse;
+	int16 leftPulse, rightPulse;
 
 	static uint8 pitCounter = 0;
 	pitCounter++;
@@ -68,34 +68,34 @@ void Main_Isr(void)
 	}
 	if ((pitCounter % 2) == 0)
 	{
-		//qd_result_ftm += LPLD_FTM_GetCounter(FTM1);
-		//qd_result_lptmr += LPLD_LPTMR_GetPulseAcc();
-	  	
+			  	
 	}
 	if ((pitCounter % 20) == 0)
 	{
-
 		leftPulse = Encoder_GetPulseNum(ENCODER_LEFT);
 		rightPulse = Encoder_GetPulseNum(ENCODER_RIGHT);
 
-		// OLED_ShowNum(0, 1, leftPulse, Num_Len);
-		// OLED_ShowNum(0, 2, rightPulse, Num_Len);
+		/* forward or backward ? */
 
-		Motor_Controller(leftMotorCtrl, (float32)PWM_Expect, leftPulse);
-		Motor_Controller(rightMororCtrl, (float32)PWM_Expect, rightPulse);
-	  	
+		if (leftPulse < 0)
+		{
+			rightPulse = -rightPulse;
+		}
 
+		Speed_Controller(speedCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);
 
-		Motor_Duty_Change(MOTOR_LEFT, (int32)(leftMotorCtrl -> u[0]));
-		Motor_Duty_Change(MOTOR_RIGHT, (int32)(rightMororCtrl -> u[0]));
+		Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(speedCtrler -> u[0]));
+		Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(speedCtrler -> u[0]));
 
-		VirtualSignal[0] = PWM_Expect;
-        VirtualSignal[1] = leftMotorCtrl -> u[0];
-        VirtualSignal[2] = rightMororCtrl -> u[0];
-        // VirtualSignal[2]=Speed_Now;
+		/* virtual oscilloscope */
+
+		VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);
+		VirtualSignal[1] = (leftPulse + rightPulse) / 2.0;
+        VirtualSignal[2] = speedCtrler -> u[0];
         // VirtualSignal[3]=500;
         OutPut_Data();
 
+        
 		Steer_Duty_Change(steerDebugDuty);
 		
 		pitCounter = 0;

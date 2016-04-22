@@ -21,7 +21,7 @@ typedef enum {
 
 extern int32 PWM_Expect;
 
-extern void Motor_Init(void);
-extern void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty);
+void Motor_Init(void);
+void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty);
 
 #endif

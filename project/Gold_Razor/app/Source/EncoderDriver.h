@@ -9,8 +9,9 @@ typedef enum {
 }EncoderPosition;
 
 void Encoder_Init(void);
-uint16 Encoder_GetPulseNum(EncoderPosition position);
-float32 PulseNum_To_Speed(uint16 pulseNum);
+int16 Encoder_GetPulseNum(EncoderPosition position);
+float32 PulseNum_To_PWM(float32 pulseNum);
+float32 PWM_To_Pulse(uint32 pwm);
 
 
 #endif

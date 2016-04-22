@@ -5,7 +5,7 @@
 
 #include "common.h"
 
-int32 PWM_Expect = 2500;
+int32 PWM_Expect = 1000;
 
 void Motor_Init(void)
 {
@@ -54,6 +54,17 @@ void Motor_Init(void)
 
 void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty)
 {
+
+    /* Set motor threshold */
+    if (tagetDuty > 9000)
+    {
+        tagetDuty = 9000;
+    }
+    else if (tagetDuty < -9000)
+    {
+        tagetDuty = -9000;
+    }
+
 	switch (motorPos)
 	{
 		case MOTOR_LEFT :
