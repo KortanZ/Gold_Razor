@@ -1,13 +1,13 @@
 #include "common.h"
 
-/*OV7725初始化配置表*/
+/*OV7725鲁玫脢录禄炉脜盲脰脙卤铆*/
 reg_s ov7725_eagle_reg[] =
 {
-    //寄存器，寄存器值次
-    { OV7725_COM4, 0xC1 },   //PLL时钟设置:8x时钟   AEC设置:Full Window
-    { OV7725_CLKRC, 0x00 },   //使用外部时钟
-    { OV7725_COM2, 0x03 },   //配置输出驱动能力:4x驱动能力
-    { OV7725_COM3, 0xD0 },   //7:垂直翻转开关 6:水平镜像开关
+    //录脛麓忙脝梅拢卢录脛麓忙脝梅脰碌麓脦
+    { OV7725_COM4, 0xC1 },   //PLL脢卤脰脫脡猫脰脙:8x脢卤脰脫   AEC脡猫脰脙:Full Window
+    { OV7725_CLKRC, 0x00 },   //脢鹿脫脙脥芒虏驴脢卤脰脫
+    { OV7725_COM2, 0x03 },   //脜盲脰脙脢盲鲁枚脟媒露炉脛脺脕娄:4x脟媒露炉脛脺脕娄
+    { OV7725_COM3, 0xD0 },   //7:麓鹿脰卤路颅脳陋驴陋鹿脴 6:脣庐脝陆戮碌脧帽驴陋鹿脴
     { OV7725_COM7, 0x40 },   //SCCB : No Change
     { OV7725_HSTART, 0x3F },
     { OV7725_HSIZE, 0x50 },
@@ -80,7 +80,7 @@ reg_s ov7725_eagle_reg[] =
 };
 
 
-uint8 ov7725_eagle_cfgnum = ARR_SIZE(ov7725_eagle_reg); /*结构体数组成员数目*/
+uint8 ov7725_eagle_cfgnum = ARR_SIZE(ov7725_eagle_reg); /*陆谩鹿鹿脤氓脢媒脳茅鲁脡脭卤脢媒脛驴*/
 
 
 uint8 imgbuff[CAMERA_SIZE];
@@ -144,21 +144,21 @@ static void GPIO_ov7725_init(void)
 {
     
     GPIO_InitTypeDef ov7725_gpio_init;
-    /*------------ov7725数据IO初始化(PTB0_PTB7)-------------*/
+    /*------------ov7725脢媒戮脻IO鲁玫脢录禄炉(PTB0_PTB7)-------------*/
     ov7725_gpio_init.GPIO_PTx = PTB;
     ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
     ov7725_gpio_init.GPIO_Pins = GPIO_Pin0_7;
 	ov7725_gpio_init.GPIO_Output = OUTPUT_L;
     ov7725_gpio_init.GPIO_PinControl = IRQC_DIS | INPUT_PULL_DIS;
     LPLD_GPIO_Init(ov7725_gpio_init);
-    /*------------ov7725场信号IO初始化(PTA29)---------------*/
+    /*------------ov7725鲁隆脨脜潞脜IO鲁玫脢录禄炉(PTA29)---------------*/
     ov7725_gpio_init.GPIO_PTx = PTA;
     ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
     ov7725_gpio_init.GPIO_Pins = GPIO_Pin29;
     ov7725_gpio_init.GPIO_PinControl = IRQC_RI | INPUT_PULL_DOWN | INPUT_PF_EN;
     ov7725_gpio_init.GPIO_Isr = porta_isr;
     LPLD_GPIO_Init(ov7725_gpio_init);
-    /*------------ov7725_PCLK_IO初始化(PTA27)---------------*/
+    /*------------ov7725_PCLK_IO鲁玫脢录禄炉(PTA27)---------------*/
     ov7725_gpio_init.GPIO_PTx = PTA;
     ov7725_gpio_init.GPIO_Pins = GPIO_Pin27;
     ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
@@ -171,25 +171,25 @@ void DMA_ov7725_init(void)
 {
 
     DMA_InitTypeDef dma_init_struct;
-    //DMA参数配置
-    dma_init_struct.DMA_CHx = DMA_CH0;    //CH0通道
-    dma_init_struct.DMA_Req = PORTA_DMAREQ;       //PORTA为请求源
+    //DMA虏脦脢媒脜盲脰脙
+    dma_init_struct.DMA_CHx = DMA_CH0;    //CH0脥篓碌脌
+    dma_init_struct.DMA_Req = PORTA_DMAREQ;       //PORTA脦陋脟毛脟贸脭麓
     dma_init_struct.DMA_PeriodicTriggerEnable = FALSE;
-    dma_init_struct.DMA_MajorLoopCnt = CAMERA_SIZE; //主循环计数值
-    dma_init_struct.DMA_MinorByteCnt = 1; //次循环字节计数：每次读入1字节
+    dma_init_struct.DMA_MajorLoopCnt = CAMERA_SIZE; //脰梅脩颅禄路录脝脢媒脰碌
+    dma_init_struct.DMA_MinorByteCnt = 1; //麓脦脩颅禄路脳脰陆脷录脝脢媒拢潞脙驴麓脦露脕脠毛1脳脰陆脷
     dma_init_struct.DMA_SourceDataSize = DMA_SRC_8BIT;
-    dma_init_struct.DMA_SourceAddr = (uint32)&PTB->PDIR;        //源地址：PTD8~15
+    dma_init_struct.DMA_SourceAddr = (uint32)&PTB->PDIR;        //脭麓碌脴脰路拢潞PTD8~15
     dma_init_struct.DMA_SourceAddrOffset = 0;
     dma_init_struct.DMA_LastSourceAddrAdj = 0;
-    dma_init_struct.DMA_DestAddr = (uint32)imgbuff;      //目的地址：存放图像的数组
+    dma_init_struct.DMA_DestAddr = (uint32)imgbuff;      //脛驴碌脛碌脴脰路拢潞麓忙路脜脥录脧帽碌脛脢媒脳茅
     dma_init_struct.DMA_DestDataSize = DMA_DST_8BIT;
-    dma_init_struct.DMA_DestAddrOffset = 1;       //目的地址偏移：每次读入增加1
+    dma_init_struct.DMA_DestAddrOffset = 1;       //脛驴碌脛碌脴脰路脝芦脪脝拢潞脙驴麓脦露脕脠毛脭枚录脫1
     dma_init_struct.DMA_LastDestAddrAdj = 0;
-    dma_init_struct.DMA_AutoDisableReq = TRUE;    //自动禁用请求
+    dma_init_struct.DMA_AutoDisableReq = TRUE;    //脳脭露炉陆没脫脙脟毛脟贸
     dma_init_struct.DMA_MajorCompleteIntEnable = TRUE;
     dma_init_struct.DMA_MajorHalfCompleteIntEnable = FALSE;
     dma_init_struct.DMA_Isr = RazorDMA_Isr;
-    //初始化DMA
+    //鲁玫脢录禄炉DMA
     LPLD_DMA_Init(dma_init_struct);
     DMA0->INT |= 0x1u << 0;
     LPLD_DMA_EnableIrq(dma_init_struct);
@@ -199,21 +199,21 @@ void DMA_ov7725_init(void)
 void vcan_sendimg(void *imgaddr, uint32_t imgsize)
 {
 #define CMD_IMG     1
-    int8 cmdf[2] = { CMD_IMG, ~CMD_IMG };    //山外上位机 使用的命令
-    int8 cmdr[2] = { ~CMD_IMG, CMD_IMG };    //山外上位机 使用的命令
+    int8 cmdf[2] = { CMD_IMG, ~CMD_IMG };    //脡陆脥芒脡脧脦禄禄煤 脢鹿脫脙碌脛脙眉脕卯
+    int8 cmdr[2] = { ~CMD_IMG, CMD_IMG };    //脡陆脥芒脡脧脦禄禄煤 脢鹿脫脙碌脛脙眉脕卯
 
-    LPLD_UART_PutCharArr(UART2, cmdf, sizeof(cmdf));    //先发送命令
+    LPLD_UART_PutCharArr(UART2, cmdf, sizeof(cmdf));    //脧脠路垄脣脥脙眉脕卯
 
-    LPLD_UART_PutCharArr(UART2, (int8 *)imgaddr, imgsize); //再发送图像
+    LPLD_UART_PutCharArr(UART2, (int8 *)imgaddr, imgsize); //脭脵路垄脣脥脥录脧帽
 
-    LPLD_UART_PutCharArr(UART2, cmdr, sizeof(cmdr));    //先发送命令
+    LPLD_UART_PutCharArr(UART2, cmdr, sizeof(cmdr));    //脧脠路垄脣脥脙眉脕卯
 }
 void img_extract(void *dst, void *src, uint32 srclen)
 {
-    uint8 colour[2] = { 255, 0 }; //0 和 1 分别对应的颜色
+    uint8 colour[2] = { 255, 0 }; //0 潞脥 1 路脰卤冒露脭脫娄碌脛脩脮脡芦
     uint8 * mdst = dst;
     uint8 * msrc = src;
-    //注：山外的摄像头 0 表示 白色，1表示 黑色
+    //脳垄拢潞脡陆脥芒碌脛脡茫脧帽脥路 0 卤铆脢戮 掳脳脡芦拢卢1卤铆脢戮 潞脷脡芦
     uint8 tmpsrc;
     while (srclen--)
     {
@@ -234,14 +234,14 @@ void porta_isr(void)
 {
     if (LPLD_GPIO_IsPinxExt(PORTA, GPIO_Pin29))
     {
-        //场中断需要判断是场结束还是场开始
-        if (ov7725_eagle_img_flag == IMG_START)                   //需要开始采集图像
+        //鲁隆脰脨露脧脨猫脪陋脜脨露脧脢脟鲁隆陆谩脢酶禄鹿脢脟鲁隆驴陋脢录
+        if (ov7725_eagle_img_flag == IMG_START)                   //脨猫脪陋驴陋脢录虏脡录炉脥录脧帽
         {
-            ov7725_eagle_img_flag = IMG_GATHER;                  //标记图像采集中
+            ov7725_eagle_img_flag = IMG_GATHER;                  //卤锚录脟脥录脧帽虏脡录炉脰脨
             disable_irq(PORTA_IRQn);
-            PORTA->ISFR = 1 << 27;            //清空PCLK标志位
+            PORTA->ISFR = 1 << 27;            //脟氓驴脮PCLK卤锚脰戮脦禄
             DMA0->ERQ |= DMA_ERQ_ERQ0_MASK << 0;
-            PORTA->ISFR = 1 << 27;            //清空PCLK标志位
+            PORTA->ISFR = 1 << 27;            //脟氓驴脮PCLK卤锚脰戮脦禄
             DMA0->TCD[0].DADDR = DMA_DADDR_DADDR(imgbuff);
         }
         else
@@ -257,9 +257,9 @@ void RazorDMA_Isr(void)
     ov7725_eagle_img_flag = IMG_FINISH;
 
     img_extract(img, imgbuff, CAMERA_SIZE);
-    imgEdge(img);
+    Track_Test(Img_Track(Img_Edge(img), img), img);
     //vcan_sendimg(imgbuff, CAMERA_SIZE);
-    //vcan_sendimg(img, CAMERA_W * CAMERA_H);                  //发送到上位机
+    vcan_sendimg(img, CAMERA_W * CAMERA_H);                  //路垄脣脥碌陆脡脧脦禄禄煤
     DMA0->INT |= 0x1u << 0;
 }
 
@@ -277,16 +277,16 @@ void camera_delay(void)
 
 void Get_Img(void)
 {
-    ov7725_eagle_img_flag = IMG_START;                   //开始采集图像
+    ov7725_eagle_img_flag = IMG_START;                   //驴陋脢录虏脡录炉脥录脧帽
     PORTA->ISFR = ~0;
     enable_irq((IRQn_Type)(PORTA_IRQn));
     while (ov7725_eagle_img_flag != IMG_FINISH)
     {
-        if (ov7725_eagle_img_flag == IMG_FAIL)            //假如图像采集错误，则重新开始采集
+        if (ov7725_eagle_img_flag == IMG_FAIL)            //录脵脠莽脥录脧帽虏脡录炉麓铆脦贸拢卢脭貌脰脴脨脗驴陋脢录虏脡录炉
         {
-            ov7725_eagle_img_flag = IMG_START;           //开始采集图像
-            PORTA->ISFR = 0xFFFFFFFFu;                //写1清中断标志位(必须的，不然回导致一开中断就马上触发中断)
-            enable_irq(PORTA_IRQn);                 //允许PTA的中断
+            ov7725_eagle_img_flag = IMG_START;           //驴陋脢录虏脡录炉脥录脧帽
+            PORTA->ISFR = 0xFFFFFFFFu;                //脨麓1脟氓脰脨露脧卤锚脰戮脦禄(卤脴脨毛碌脛拢卢虏禄脠禄禄脴碌录脰脗脪禄驴陋脰脨露脧戮脥脗铆脡脧麓楼路垄脰脨露脧)
+            enable_irq(PORTA_IRQn);                 //脭脢脨铆PTA碌脛脰脨露脧
         }
     }
 }

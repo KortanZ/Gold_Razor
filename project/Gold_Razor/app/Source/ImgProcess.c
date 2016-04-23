@@ -5,19 +5,33 @@
 */
 #include "common.h"
 
-void imgEdge(uint8 *img)
+ListEdge *Img_Edge(uint8 *img)
 {
 
 	uint8 i, j;
 
 	uint8 thresh = 254;
-	/* define  laplacian */
+		/* define  laplacian */
 	int8 laplacian[3][3] = {{0, 1, 0}, {1, -4, 1}, {0, 1, 0}};
 
-	/* declear temp array for convolution */
+		/* declear temp array for convolution */
 	int16 *imgTemp = (int16 *)malloc(sizeof(int16) * CAMERA_H * CAMERA_W);
 
-	if (NULL == imgTemp)
+	ListEdge *edgeHead = (ListEdge *)malloc(sizeof(ListEdge));
+	ListEdge *edgeTail = edgeHead;
+
+	if (!edgeHead)
+	{
+		OLED_ShowString(0, 5, "Edge malloc faild");
+	}
+	else
+	{
+		edgeHead -> x = 255;
+		edgeHead -> y = 255;
+		edgeHead -> next = NULL;
+	}
+
+	if (!imgTemp)
 	{
 		printf("Memery alloc faild!\n");
 		OLED_ShowString(4, 0, "Memery alloc faild");
@@ -39,52 +53,131 @@ void imgEdge(uint8 *img)
 		
 		/* convert to gray imgage through thresh */
 
-		for (i = 1; i < CAMERA_H - 1; ++i)
+		for (j = 1; j < CAMERA_W - 1; ++j)
 		{
-			for (j = 1; j < CAMERA_W - 1; ++j)
+			for (i = CAMERA_H - 2; i > 0; --i)
 			{
 				if (imgTemp[CAMERA_W * i + j] > thresh) 
-					img[i * CAMERA_W + j] = 255;
-				else
-				    img[i * CAMERA_W + j] = 0;
+				{
+					//img[i * CAMERA_W + j] = 255;
+					edgeTail = List_Insert(edgeTail, j, i);
+				}
 
 			}
 		}
 		free(imgTemp);
 	}
+
+	/* return head pionter */
+	return edgeHead;
 }
 
-
-uint16 *Sample(uint8 *img)
+ListEdge *List_Insert(ListEdge *listTail, uint8 setX, uint8 setY)
 {
-	uint16 *vector = (uint16 *)malloc(sizeof(uint16) * 6);
+	/* only tail insert */
 
-	uint16 cnt = 0;
-	uint8 i, j, part;
+	ListEdge *temp = (ListEdge *)malloc(sizeof(ListEdge));
 
-	if (NULL == vector)
+	/* if listTail == listHead */
+
+	if (!temp)
 	{
-		printf("Memery alloc faild!\n");
-		OLED_ShowString(4, 0, "Memery alloc faild");
+		OLED_ShowString(0, 5, "Edge malloc faild");
+		return NULL;
 	}
 	else
 	{
-		for ( part = 0; part < 6; ++part)
+		temp -> x = setX;
+		temp -> y = setY;
+		temp -> next = NULL;
+	}
+	listTail -> next = temp;
+
+	/* return tail pointer */
+
+	return temp;
+}
+
+void Node_Delete(ListEdge *temp, ListEdge *preTemp)
+{
+	preTemp -> next = temp -> next;
+	free(temp);
+}
+
+void List_Destroy(ListEdge *edgeList)
+{
+	ListEdge *temp;
+	while (edgeList)
+	{
+		temp = edgeList -> next;
+		free(edgeList);
+		edgeList = temp;
+	}
+}
+
+ListEdge *Img_Track(ListEdge *edgeList, uint8 *img)
+{
+	ListEdge *temp, *preTemp;
+	uint8 i;
+	uint16 top = 0, bottom = 0;
+	uint8 isDelete = 0;
+
+	for (temp = edgeList -> next; temp; temp = temp -> next)
+	{
+		if (!isDelete)
 		{
-			for ( i = (part / 2) * 40; i < ((part / 2) + 1) * 40; ++i)
+			if (temp -> y < 116 && temp -> y > 4) //116 = 120 - 1 - 3; 4 = 0 + 1 + 3; 
 			{
-				for ( j = (part % 2) * 80; j < ((part % 2) + 1) * 80; ++j)
+				for (i = 0; i < 3; ++i)
 				{
-					if (img[i * CAMERA_W + j] == 255)
-					{
-						++cnt;
-					}
+					top += img[(temp -> y + i) * CAMERA_W + (temp -> x)];
+				}
+
+				for (i = 0; i < 3; ++i)
+				{
+					bottom += img[(temp -> y - i) * CAMERA_W + (temp -> x)];
+				}
+
+				if (bottom > top)
+				{
+					isDelete = 1;
 				}
 			}
-			vector[part] = cnt;
-			cnt = 0;
+		}
+		else
+		{
+			
+			if (!(temp -> next) || (temp -> x) != (temp -> next -> x))
+			{
+				isDelete = 0;
+			}
+			Node_Delete(temp, preTemp);
+		}
+		preTemp = temp;
+	}
+	
+	return edgeList;
+}
+
+void Track_Test(ListEdge *edgeList, uint8 *img)
+{
+	uint8 i, j;
+	//ListEdge *temp = edgeList;
+
+	for (i = 0; i < CAMERA_H; ++i)
+	{
+		for (j = 0; j < CAMERA_W; ++j)
+		{
+			img[i * CAMERA_W + j] = 0;
 		}
 	}
 
-	return vector;
+	for (edgeList = edgeList -> next; edgeList; edgeList = edgeList -> next)
+	{
+		img[(edgeList -> y) * CAMERA_W + (edgeList -> x)] = 255;
+		//free(temp);
+		//temp = edgeList;
+	}
+
+	List_Destroy(edgeList);
 }
