@@ -106,7 +106,7 @@ void * malloc (unsigned nbytes)
     unsigned nunits;
 
     nunits = ((nbytes+sizeof(ALLOC_HDR)-1) / sizeof(ALLOC_HDR)) + 1;
-
+	
     if ((prevp = freep) == NULL)
     {
         p = (ALLOC_HDR *)__HEAP_START;
@@ -117,7 +117,6 @@ void * malloc (unsigned nbytes)
         base.s.size = 0;
         prevp = freep = &base;
     }
-
     for (p = prevp->s.ptr; ; prevp = p, p = p->s.ptr)
     {
         if (p->s.size >= nunits)
@@ -133,6 +132,7 @@ void * malloc (unsigned nbytes)
                 p->s.size = nunits;
             }
             freep = prevp;
+			//OLED_ShowNum(0, 5, p -> s.size, 18);
             return (void *)(p + 1);
         }
 

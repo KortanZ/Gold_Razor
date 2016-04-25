@@ -7,10 +7,9 @@
 
 ListEdge *Img_Edge(uint8 *img)
 {
-
 	uint8 i, j;
 
-	uint8 thresh = 254;
+	uint8 thresh = 200;
 		/* define  laplacian */
 	int8 laplacian[3][3] = {{0, 1, 0}, {1, -4, 1}, {0, 1, 0}};
 
@@ -23,6 +22,7 @@ ListEdge *Img_Edge(uint8 *img)
 	if (!edgeHead)
 	{
 		OLED_ShowString(0, 5, "Edge malloc faild");
+		while (1);
 	}
 	else
 	{
@@ -33,8 +33,9 @@ ListEdge *Img_Edge(uint8 *img)
 
 	if (!imgTemp)
 	{
-		printf("Memery alloc faild!\n");
+		//printf("Memery alloc faild!\n");
 		OLED_ShowString(4, 0, "Memery alloc faild");
+		while (1);
 	}
 	else
 	{
@@ -68,6 +69,8 @@ ListEdge *Img_Edge(uint8 *img)
 		free(imgTemp);
 	}
 
+	List_Destroy(edgeHead);
+
 	/* return head pionter */
 	return edgeHead;
 }
@@ -82,7 +85,7 @@ ListEdge *List_Insert(ListEdge *listTail, uint8 setX, uint8 setY)
 
 	if (!temp)
 	{
-		OLED_ShowString(0, 5, "Edge malloc faild");
+		OLED_ShowString(0, 5, "Node malloc faild");
 		return NULL;
 	}
 	else
@@ -126,14 +129,14 @@ ListEdge *Img_Track(ListEdge *edgeList, uint8 *img)
 	{
 		if (!isDelete)
 		{
-			if (temp -> y < 116 && temp -> y > 4) //116 = 120 - 1 - 3; 4 = 0 + 1 + 3; 
+			if (temp -> y < 109 && temp -> y > 11) //116 = 120 - 1 - 3; 4 = 0 + 1 + 3; 
 			{
-				for (i = 0; i < 3; ++i)
+				for (i = 0; i < 10; ++i)
 				{
 					top += img[(temp -> y + i) * CAMERA_W + (temp -> x)];
 				}
 
-				for (i = 0; i < 3; ++i)
+				for (i = 0; i < 10; ++i)
 				{
 					bottom += img[(temp -> y - i) * CAMERA_W + (temp -> x)];
 				}
@@ -178,6 +181,17 @@ void Track_Test(ListEdge *edgeList, uint8 *img)
 		//free(temp);
 		//temp = edgeList;
 	}
-
 	List_Destroy(edgeList);
+}
+
+int16 Length(ListEdge *edgeHead)
+{
+	int16 cnt = 0;
+	ListEdge *temp;
+	for (temp = edgeHead; temp; temp = temp -> next)
+	{
+		++cnt;
+	}
+
+	return cnt;
 }
