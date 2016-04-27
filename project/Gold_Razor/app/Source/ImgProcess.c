@@ -9,7 +9,7 @@ ListEdge *Img_Edge(uint8 *img)
 {
 	uint8 i, j;
 
-	uint8 thresh = 200;
+	uint8 thresh = 180;
 		/* define  laplacian */
 	int8 laplacian[3][3] = {{0, 1, 0}, {1, -4, 1}, {0, 1, 0}};
 
@@ -69,7 +69,7 @@ ListEdge *Img_Edge(uint8 *img)
 		free(imgTemp);
 	}
 
-	List_Destroy(edgeHead);
+	//List_Destroy(edgeHead);
 
 	/* return head pionter */
 	return edgeHead;
@@ -86,7 +86,8 @@ ListEdge *List_Insert(ListEdge *listTail, uint8 setX, uint8 setY)
 	if (!temp)
 	{
 		OLED_ShowString(0, 5, "Node malloc faild");
-		return NULL;
+		while (1);
+		//return NULL;
 	}
 	else
 	{
@@ -101,10 +102,62 @@ ListEdge *List_Insert(ListEdge *listTail, uint8 setX, uint8 setY)
 	return temp;
 }
 
-void Node_Delete(ListEdge *temp, ListEdge *preTemp)
+ListEdge *Find_Kth(ListEdge *edgeHead, uint16 i)
 {
-	preTemp -> next = temp -> next;
-	free(temp);
+	uint16 cnt = 1;
+	ListEdge *temp = edgeHead;
+
+	while (temp && cnt < i)
+	{
+		temp = temp -> next;
+		++cnt;
+	}
+	if (i == cnt)
+	{	
+		return temp;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+ListEdge *Node_Delete(ListEdge *edgeHead, uint16 i)
+{
+	/* Delete i th node in the edgeHead */
+	ListEdge *p, *s;
+	if (i == 1)
+	{
+		s = edgeHead;
+		if (edgeHead)
+		{
+			edgeHead = edgeHead -> next;
+		}
+		else
+		{
+			return NULL;
+		}
+		free(s);
+		return edgeHead;
+	}
+	p = Find_Kth(edgeHead, i - 1);
+	if (!p)
+	{
+		/* Theres no i - 1 th node */
+		return NULL;
+	}
+	else if (!(p -> next))
+	{
+		/* Theres no i th node */
+		return NULL;
+	}
+	else
+	{
+		s = p -> next;
+		p -> next = s -> next;
+		free(s);
+		return edgeHead;
+	}
 }
 
 void List_Destroy(ListEdge *edgeList)
@@ -120,12 +173,13 @@ void List_Destroy(ListEdge *edgeList)
 
 ListEdge *Img_Track(ListEdge *edgeList, uint8 *img)
 {
-	ListEdge *temp, *preTemp;
+	ListEdge *temp = edgeList -> next;
 	uint8 i;
 	uint16 top = 0, bottom = 0;
 	uint8 isDelete = 0;
+	uint16 seq = 1;
 
-	for (temp = edgeList -> next; temp; temp = temp -> next)
+	while (temp)
 	{
 		if (!isDelete)
 		{
@@ -154,18 +208,20 @@ ListEdge *Img_Track(ListEdge *edgeList, uint8 *img)
 			{
 				isDelete = 0;
 			}
-			Node_Delete(temp, preTemp);
+			edgeList = Node_Delete(edgeList, seq);
 		}
-		preTemp = temp;
+
+		temp = temp -> next;
+		++seq;
 	}
-	
+
 	return edgeList;
 }
 
 void Track_Test(ListEdge *edgeList, uint8 *img)
 {
 	uint8 i, j;
-	//ListEdge *temp = edgeList;
+	ListEdge *temp = edgeList;
 
 	for (i = 0; i < CAMERA_H; ++i)
 	{
@@ -178,20 +234,8 @@ void Track_Test(ListEdge *edgeList, uint8 *img)
 	for (edgeList = edgeList -> next; edgeList; edgeList = edgeList -> next)
 	{
 		img[(edgeList -> y) * CAMERA_W + (edgeList -> x)] = 255;
-		//free(temp);
-		//temp = edgeList;
+		free(temp);
+		temp = edgeList;
 	}
-	List_Destroy(edgeList);
-}
-
-int16 Length(ListEdge *edgeHead)
-{
-	int16 cnt = 0;
-	ListEdge *temp;
-	for (temp = edgeHead; temp; temp = temp -> next)
-	{
-		++cnt;
-	}
-
-	return cnt;
+	//List_Destroy(edgeList);
 }

@@ -61,7 +61,7 @@ float32 PulseNum_To_PWM(float32 pulseNum)
 	/* This function convert pulse number to pwm */
 
 	float32 pwm;
-	pwm = (pulseNum + A_CONST) / A_COF;
+	pwm = (pulseNum + B_CONST) / B_COF;
 	return pwm;
 }
 
@@ -70,7 +70,7 @@ float32 PWM_To_Pulse(uint32 pwm)
 	/* This function convert pwm to pulse number */
 
 	float32 pulse;
-	pulse = A_COF * pwm - A_CONST;
+	pulse = B_COF * pwm - B_CONST;
 
 	if (pulse < 0)
 	{
