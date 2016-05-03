@@ -17,10 +17,10 @@ typedef struct node
 
 ListEdge *Img_Edge(uint8 *img);
 ListEdge *List_Insert(ListEdge *listTail, uint8 setX, uint8 setY);
-ListEdge *Node_Delete(ListEdge *edgeHead, uint16 i);
+void Node_Delete(ListEdge *prelst, ListEdge *lst);
 ListEdge *Img_Track(ListEdge *edgeList, uint8 *img);
 void Track_Test(ListEdge *edgeList, uint8 *img);
 void List_Destroy(ListEdge *edgeList);
-ListEdge *Find_Kth(ListEdge *edgeHead, uint16 i);
+//ListEdge *Find_Kth(ListEdge *edgeHead, uint16 i);
 
 #endif
