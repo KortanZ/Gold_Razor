@@ -52,6 +52,20 @@ void NVIC_Init(void)
 	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
 
+	nvic_init_struct.NVIC_IRQChannel = PORTD_IRQn;
+	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
+	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 1;
+	nvic_init_struct.NVIC_IRQChannelSubPriority = 2;
+	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
+	LPLD_NVIC_Init(nvic_init_struct);
+
+	nvic_init_struct.NVIC_IRQChannel = PORTC_IRQn;
+	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_2;
+	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 1;
+	nvic_init_struct.NVIC_IRQChannelSubPriority = 2;
+	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
+	LPLD_NVIC_Init(nvic_init_struct);
+
 }
 
 /*时序控制核心函数*/

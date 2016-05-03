@@ -58,17 +58,19 @@ int16 Encoder_GetPulseNum(EncoderPosition position)
 
 float32 PulseNum_To_PWM(float32 pulseNum)
 {
-	/* This function convert pulse number to rotational speed */
+	/* This function convert pulse number to pwm */
 
 	float32 pwm;
-	pwm = (pulseNum + 319.8) / 0.5724;
+	pwm = (pulseNum + B_CONST) / B_COF;
 	return pwm;
 }
 
 float32 PWM_To_Pulse(uint32 pwm)
 {
+	/* This function convert pwm to pulse number */
+
 	float32 pulse;
-	pulse = 0.5724 * pwm - 319.8;
+	pulse = B_COF * pwm - B_CONST;
 
 	if (pulse < 0)
 	{
