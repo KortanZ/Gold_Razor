@@ -1,0 +1,663 @@
+###############################################################################
+#
+# IAR ELF Linker V7.40.3.8902/W32 for ARM                 11/May/2016  19:33:34
+# Copyright 2007-2015 IAR Systems AB.
+#
+#    Output file  =  
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Exe\Gold_Razor_A_K60DZ10.out
+#    Map file     =  
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\List\Gold_Razor_A_K60DZ10.map
+#    Command line =  
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\alloc.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\assert.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\DebugerDriver.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\DEV_SCCB.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\Eagle_ov7725.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\EncoderDriver.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\Gold_Razor_A.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_ADC.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_DMA.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_FTM.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_GPIO.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_LPTMR.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_MCG.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_NVIC.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_PIT.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\HW_UART.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\ImgProcess.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\io.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\Menu.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\MotorDriver.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\oled.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\PID.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\printf.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\queue.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\relocate.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\SequenceCtrl.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\startup_K60DZ10.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\stdlib.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\SteerDriver.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\system_MK60.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\uif.o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\VirtualOsc.o
+#        --redirect _Printf=_PrintfFull --redirect _Scanf=_ScanfFull -o
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Exe\Gold_Razor_A_K60DZ10.out
+#        --map
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\List\Gold_Razor_A_K60DZ10.map
+#        --config
+#        E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\iar_config_files\LPLD_K60DN512_FLASH.icf
+#        --semihosting --entry __iar_program_start
+#        D:\IAR\arm\CMSIS\Lib\IAR\iar_cortexM4l_math.a
+#        --merge_duplicate_sections --vfe
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at 0x00000000 { ro section .intvec };
+"A2":  place at 0x00000410 { ro section .noinit };
+"P1":  place in [from 0x00000000 to 0x00080000] { ro, block CodeRelocate };
+"P2":  place in [from 0x1fff0410 to 0x20010000] {
+          rw, block CodeRelocateRam, block CSTACK, block HEAP };
+
+  Section              Kind        Address     Size  Object
+  -------              ----        -------     ----  ------
+"A1":                                         0x400
+  .intvec              ro code  0x00000000    0x400  startup_K60DZ10.o [1]
+                              - 0x00000400    0x400
+
+"P1", part 1 of 2:                              0x0
+  .rodata              const    0x00000400      0x0  zero_init3.o [5]
+
+"A2":                                          0x14
+  .noinit              ro code  0x00000410     0x10  startup_K60DZ10.o [1]
+  .noinit              ro code  0x00000420      0x4  startup_K60DZ10.o [1]
+                              - 0x00000424     0x14
+
+"P1", part 2 of 2:                           0x627c
+  .text                ro code  0x00000424    0xab4  ImgProcess.o [1]
+  .text                ro code  0x00000ed8    0x30c  Eagle_ov7725.o [1]
+  .text                ro code  0x000011e4    0x974  HW_FTM.o [1]
+  .text                ro code  0x00001b58    0x420  oled.o [1]
+  .text                ro code  0x00001f78     0x32  I32ToFlt.o [4]
+  .rodata              const    0x00001faa      0x2  Eagle_ov7725.o [1]
+  .text                ro code  0x00001fac     0x84  FltAdd.o [4]
+  .text                ro code  0x00002030     0xd8  FltMul.o [4]
+  .text                ro code  0x00002108     0x44  FltToS32.o [4]
+  .text                ro code  0x0000214c    0x33c  DEV_SCCB.o [1]
+  .text                ro code  0x00002488     0x56  ABImemcpy_unaligned.o [5]
+  .text                ro code  0x000024e0    0x204  HW_GPIO.o [1]
+  .text                ro code  0x000026e4    0x4b4  HW_DMA.o [1]
+  .text                ro code  0x00002b98     0x14  assert.o [1]
+  .text                ro code  0x00002bac     0xe6  FltSub.o [4]
+  .text                ro code  0x00002c94    0x4e4  printf.o [1]
+  .text                ro code  0x00003178     0x1c  stdlib.o [1]
+  .text                ro code  0x00003194    0x714  HW_UART.o [1]
+  .text                ro code  0x000038a8    0x614  system_MK60.o [1]
+  .text                ro code  0x00003ebc     0xa0  relocate.o [1]
+  Veneer               ro code  0x00003f5c      0x8  - Linker created -
+  .text                ro code  0x00003f64    0x198  HW_MCG.o [1]
+  .text                ro code  0x000040fc    0x3b4  PID.o [1]
+  .text                ro code  0x000044b0     0x24  FltCmpGe.o [4]
+  .text                ro code  0x000044d4     0x24  FltCmpLe.o [4]
+  .text                ro code  0x000044f8    0x148  MotorDriver.o [1]
+  .text                ro code  0x00004640     0x80  alloc.o [1]
+  .text                ro code  0x000046c0     0x24  FltToU32.o [4]
+  .text                ro code  0x000046e4     0x4e  FltToDbl.o [4]
+  .text                ro code  0x00004734     0xe8  DblAdd.o [4]
+  .text                ro code  0x0000481c    0x256  DblDiv.o [4]
+  .text                ro code  0x00004a74     0x90  DblToFlt.o [4]
+  .text                ro code  0x00004b04     0x30  I32ToDbl.o [4]
+  .text                ro code  0x00004b34    0x1a2  DblMul.o [4]
+  .text                ro code  0x00004cd8    0x16c  DblSub.o [4]
+  .text                ro code  0x00004e44    0x2d4  Menu.o [1]
+  .rodata              const    0x00005118    0x228  oled.o [1]
+  .text                ro code  0x00005340    0x1f0  SequenceCtrl.o [1]
+  .text                ro code  0x00005530    0x174  HW_PIT.o [1]
+  .text                ro code  0x000056a4    0x1c4  HW_NVIC.o [1]
+  .text                ro code  0x00005868     0x98  EncoderDriver.o [1]
+  .text                ro code  0x00005900    0x138  HW_LPTMR.o [1]
+  .data_init                    0x00005a38    0x1ac  <Block>
+    Initializer bytes  const    0x00005a38    0x1ac  <for .data-1>
+  .text                ro code  0x00005be4    0x170  DebugerDriver.o [1]
+  .text                ro code  0x00005d54     0x50  SteerDriver.o [1]
+  CodeRelocate                  0x00005da4     0x4c  <Block>
+    Initializer bytes  const    0x00005da4     0x4c  <for CodeRelocateRam-1>
+  .rodata              const    0x00005df0     0x48  system_MK60.o [1]
+  .rodata              const    0x00005e38     0x44  HW_DMA.o [1]
+  .rodata              const    0x00005e7c     0x44  HW_FTM.o [1]
+  .rodata              const    0x00005ec0     0x44  HW_GPIO.o [1]
+  .rodata              const    0x00005f04     0x44  HW_LPTMR.o [1]
+  .rodata              const    0x00005f48     0x44  HW_NVIC.o [1]
+  .rodata              const    0x00005f8c     0x44  HW_PIT.o [1]
+  .rodata              const    0x00005fd0     0x44  system_MK60.o [1]
+  .rodata              const    0x00006014     0x44  system_MK60.o [1]
+  .text                ro code  0x00006058     0x44  Gold_Razor_A.o [1]
+  .text                ro code  0x0000609c     0x40  zero_init3.o [5]
+  .rodata              const    0x000060dc     0x30  assert.o [1]
+  .rodata              const    0x0000610c     0x30  system_MK60.o [1]
+  .rodata              const    0x0000613c     0x30  system_MK60.o [1]
+  .rodata              const    0x0000616c     0x28  system_MK60.o [1]
+  .text                ro code  0x00006194     0x28  data_init.o [5]
+  .rodata              const    0x000061bc     0x24  system_MK60.o [1]
+  .rodata              const    0x000061e0     0x24  system_MK60.o [1]
+  .iar.init_table      const    0x00006204     0x10  - Linker created -
+  .rodata              const    0x00006214     0x20  system_MK60.o [1]
+  .rodata              const    0x00006234     0x20  system_MK60.o [1]
+  .rodata              const    0x00006254     0x20  system_MK60.o [1]
+  .rodata              const    0x00006274     0x20  system_MK60.o [1]
+  .rodata              const    0x00006294     0x1c  system_MK60.o [1]
+  .rodata              const    0x000062b0     0x1c  system_MK60.o [1]
+  .rodata              const    0x000062cc     0x1c  system_MK60.o [1]
+  .text                ro code  0x000062e8     0x1c  HW_ADC.o [1]
+  .text                ro code  0x00006304     0x1a  cmain.o [5]
+  .text                ro code  0x0000631e      0x4  low_level_init.o [3]
+  .text                ro code  0x00006322      0x4  exit.o [3]
+  .text                ro code  0x00006328      0xa  cexit.o [5]
+  .text                ro code  0x00006334     0x14  exit.o [6]
+  .rodata              const    0x00006348     0x18  PID.o [1]
+  .rodata              const    0x00006360     0x18  system_MK60.o [1]
+  .rodata              const    0x00006378     0x18  system_MK60.o [1]
+  .rodata              const    0x00006390     0x18  system_MK60.o [1]
+  .rodata              const    0x000063a8     0x18  system_MK60.o [1]
+  .rodata              const    0x000063c0     0x18  system_MK60.o [1]
+  .rodata              const    0x000063d8     0x18  system_MK60.o [1]
+  .rodata              const    0x000063f0     0x18  system_MK60.o [1]
+  .rodata              const    0x00006408     0x18  system_MK60.o [1]
+  .rodata              const    0x00006420     0x18  system_MK60.o [1]
+  .rodata              const    0x00006438     0x18  system_MK60.o [1]
+  .rodata              const    0x00006450     0x14  PID.o [1]
+  .rodata              const    0x00006464     0x14  system_MK60.o [1]
+  .rodata              const    0x00006478     0x14  system_MK60.o [1]
+  .rodata              const    0x0000648c     0x14  system_MK60.o [1]
+  .rodata              const    0x000064a0     0x14  system_MK60.o [1]
+  .rodata              const    0x000064b4     0x14  system_MK60.o [1]
+  .rodata              const    0x000064c8     0x14  system_MK60.o [1]
+  .text                ro code  0x000064dc     0x14  io.o [1]
+  .rodata              const    0x000064f0     0x10  ImgProcess.o [1]
+  .rodata              const    0x00006500     0x10  Menu.o [1]
+  .rodata              const    0x00006510     0x10  system_MK60.o [1]
+  .rodata              const    0x00006520     0x10  system_MK60.o [1]
+  .rodata              const    0x00006530     0x10  system_MK60.o [1]
+  .rodata              const    0x00006540      0xc  Menu.o [1]
+  .rodata              const    0x0000654c      0xc  Menu.o [1]
+  .rodata              const    0x00006558      0xc  Menu.o [1]
+  .rodata              const    0x00006564      0xc  Menu.o [1]
+  .rodata              const    0x00006570      0xc  Menu.o [1]
+  .rodata              const    0x0000657c      0xc  Menu.o [1]
+  .rodata              const    0x00006588      0xc  Menu.o [1]
+  .rodata              const    0x00006594      0xc  Menu.o [1]
+  .rodata              const    0x000065a0      0xc  Menu.o [1]
+  .rodata              const    0x000065ac      0xc  Menu.o [1]
+  .rodata              const    0x000065b8      0xc  Menu.o [1]
+  .rodata              const    0x000065c4      0xc  system_MK60.o [1]
+  .rodata              const    0x000065d0      0xc  system_MK60.o [1]
+  .text                ro code  0x000065dc      0xc  cstartup_M.o [5]
+  .rodata              const    0x000065e8      0x8  Menu.o [1]
+  .rodata              const    0x000065f0      0x8  Menu.o [1]
+  .rodata              const    0x000065f8      0x8  Menu.o [1]
+  .rodata              const    0x00006600      0x8  SequenceCtrl.o [1]
+  .rodata              const    0x00006608      0x8  system_MK60.o [1]
+  .rodata              const    0x00006610      0x8  system_MK60.o [1]
+  .rodata              const    0x00006618      0x8  system_MK60.o [1]
+  .rodata              const    0x00006620      0x8  system_MK60.o [1]
+  .rodata              const    0x00006628      0x8  system_MK60.o [1]
+  .rodata              const    0x00006630      0x8  system_MK60.o [1]
+  .rodata              const    0x00006638      0x8  system_MK60.o [1]
+  .rodata              const    0x00006640      0x8  system_MK60.o [1]
+  .rodata              const    0x00006648      0x8  system_MK60.o [1]
+  .rodata              const    0x00006650      0x8  system_MK60.o [1]
+  .rodata              const    0x00006658      0x8  system_MK60.o [1]
+  .rodata              const    0x00006660      0x8  system_MK60.o [1]
+  .rodata              const    0x00006668      0x8  system_MK60.o [1]
+  .rodata              const    0x00006670      0x8  system_MK60.o [1]
+  .rodata              const    0x00006678      0x8  system_MK60.o [1]
+  .rodata              const    0x00006680      0x8  system_MK60.o [1]
+  .rodata              const    0x00006688      0x8  system_MK60.o [1]
+  .rodata              const    0x00006690      0x8  system_MK60.o [1]
+  .rodata              const    0x00006698      0x8  system_MK60.o [1]
+                              - 0x000066a0   0x627c
+
+"P2":                                       0x17110
+  .data                         0x1fff0410    0x1ac  <Block>
+    .data-1                     0x1fff0410    0x1ac  <Init block>
+      .data            inited   0x1fff0410     0x64  Eagle_ov7725.o [1]
+      .data            inited   0x1fff0474      0x1  Eagle_ov7725.o [1]
+      .data            inited   0x1fff0475      0x1  Eagle_ov7725.o [1]
+      .data            inited   0x1fff0478      0x4  HW_MCG.o [1]
+      .data            inited   0x1fff047c      0x4  HW_MCG.o [1]
+      .data            inited   0x1fff0480      0x4  HW_MCG.o [1]
+      .data            inited   0x1fff0484      0x4  HW_MCG.o [1]
+      .data            inited   0x1fff0488    0x12c  Menu.o [1]
+      .data            inited   0x1fff05b4      0x4  MotorDriver.o [1]
+      .data            inited   0x1fff05b8      0x4  system_MK60.o [1]
+  CodeRelocateRam               0x1fff05bc     0x4c  <Block>
+    CodeRelocateRam-1           0x1fff05bc     0x4c  <Init block>
+      .textrw          inited   0x1fff05bc     0x4c  HW_MCG.o [1]
+  .bss                          0x1fff0608   0x6f18  <Block>
+    .bss               zero     0x1fff0608     0x10  alloc.o [1]
+    .bss               zero     0x1fff0618      0x4  alloc.o [1]
+    .bss               zero     0x1fff061c    0x960  Eagle_ov7725.o [1]
+    .bss               zero     0x1fff0f7c   0x4b00  Eagle_ov7725.o [1]
+    .bss               zero     0x1fff5a7c      0xc  EncoderDriver.o [1]
+    .bss               zero     0x1fff5a88      0x8  HW_ADC.o [1]
+    .bss               zero     0x1fff5a90     0x40  HW_DMA.o [1]
+    .bss               zero     0x1fff5ad0      0xc  HW_FTM.o [1]
+    .bss               zero     0x1fff5adc     0x14  HW_GPIO.o [1]
+    .bss               zero     0x1fff5af0      0x4  HW_LPTMR.o [1]
+    .bss               zero     0x1fff5af4     0x10  HW_PIT.o [1]
+    .bss               zero     0x1fff5b04     0x18  HW_UART.o [1]
+    .bss               zero     0x1fff5b1c     0x18  HW_UART.o [1]
+    .bss               zero     0x1fff5b34   0x19cc  ImgProcess.o [1]
+    .bss               zero     0x1fff7500      0x8  ImgProcess.o [1]
+    .bss               zero     0x1fff7508      0x8  ImgProcess.o [1]
+    .bss               zero     0x1fff7510      0x4  PID.o [1]
+    .bss               zero     0x1fff7514      0x4  PID.o [1]
+    .bss               zero     0x1fff7518      0x4  PID.o [1]
+    .bss               zero     0x1fff751c      0x2  ImgProcess.o [1]
+    .bss               zero     0x1fff751e      0x1  Menu.o [1]
+    .bss               zero     0x1fff751f      0x1  SequenceCtrl.o [1]
+  CSTACK                        0x1fff7520   0x1000  <Block>
+    CSTACK             uninit   0x1fff7520   0x1000  <Block tail>
+  HEAP                          0x1fff8520   0xf000  <Block>
+    HEAP               uninit   0x1fff8520   0xf000  <Block tail>
+                              - 0x20007520  0x17110
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0x6f18:
+          0x1fff0608  0x6f18
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                 ro code  rw code  ro data  rw data
+    ------                 -------  -------  -------  -------
+E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj: [1]
+    DEV_SCCB.o                 828
+    DebugerDriver.o            368
+    Eagle_ov7725.o             780               104   21 702
+    EncoderDriver.o            152                         12
+    Gold_Razor_A.o              68
+    HW_ADC.o                    28                          8
+    HW_DMA.o                 1 204                68       64
+    HW_FTM.o                 2 420                68       12
+    HW_GPIO.o                  516                68       20
+    HW_LPTMR.o                 312                68        4
+    HW_MCG.o                   408       76       94       16
+    HW_NVIC.o                  452                68
+    HW_PIT.o                   372                68       16
+    HW_UART.o                1 812                         48
+    ImgProcess.o             2 740                16    6 622
+    Menu.o                     724               472      301
+    MotorDriver.o              328                 4        4
+    PID.o                      948                44       12
+    SequenceCtrl.o             496                 8        1
+    SteerDriver.o               80
+    alloc.o                    128                         20
+    assert.o                    20                48
+    io.o                        20
+    oled.o                   1 056               552
+    printf.o                 1 252
+    relocate.o                 160
+    startup_K60DZ10.o        1 044
+    stdlib.o                    28
+    system_MK60.o            1 556             1 216        4
+    ---------------------------------------------------------
+    Total:                  20 300       76    2 966   28 866
+
+command line: [2]
+    ---------------------------------------------------------
+    Total:
+
+dl7M_tln.a: [3]
+    exit.o                       4
+    low_level_init.o             4
+    ---------------------------------------------------------
+    Total:                       8
+
+m7M_tl.a: [4]
+    DblAdd.o                   232
+    DblDiv.o                   598
+    DblMul.o                   418
+    DblSub.o                   364
+    DblToFlt.o                 144
+    FltAdd.o                   132
+    FltCmpGe.o                  36
+    FltCmpLe.o                  36
+    FltMul.o                   216
+    FltSub.o                   230
+    FltToDbl.o                  78
+    FltToS32.o                  68
+    FltToU32.o                  36
+    I32ToDbl.o                  48
+    I32ToFlt.o                  50
+    ---------------------------------------------------------
+    Total:                   2 686
+
+rt7M_tl.a: [5]
+    ABImemcpy_unaligned.o       86
+    cexit.o                     10
+    cmain.o                     26
+    cstartup_M.o                12
+    data_init.o                 40
+    zero_init3.o                64
+    ---------------------------------------------------------
+    Total:                     238
+
+shb_l.a: [6]
+    exit.o                      20
+    ---------------------------------------------------------
+    Total:                      20
+
+    Gaps                        14                          2
+    Linker created               8                16   65 536
+-------------------------------------------------------------
+    Grand Total:            23 274       76    2 982   94 404
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address    Size  Type      Object
+-----                      -------    ----  ----      ------
+.bss$$Base              0x1fff0608           --   Gb  - Linker created -
+.bss$$Limit             0x1fff7520           --   Gb  - Linker created -
+.data$$Base             0x1fff0410           --   Gb  - Linker created -
+.data$$Limit            0x1fff05bc           --   Gb  - Linker created -
+.data_init$$Base        0x00005a38           --   Gb  - Linker created -
+.data_init$$Limit       0x00005be4           --   Gb  - Linker created -
+.iar.init_table$$Base   0x00006204           --   Gb  - Linker created -
+.iar.init_table$$Limit  0x00006214           --   Gb  - Linker created -
+?main                   0x00006305          Code  Gb  cmain.o [5]
+ADC0_IRQHandler         0x000062e9     0xa  Code  Gb  HW_ADC.o [1]
+ADC1_IRQHandler         0x000062f3     0xa  Code  Gb  HW_ADC.o [1]
+ADC_ISR                 0x1fff5a88     0x8  Data  Gb  HW_ADC.o [1]
+ASSERT_FAILED_STR       0x000060dc    0x30  Data  Gb  assert.o [1]
+Bef_Scan                0x0000063f   0x392  Code  Gb  ImgProcess.o [1]
+CSTACK$$Base            0x1fff7520           --   Gb  - Linker created -
+CSTACK$$Limit           0x1fff8520           --   Gb  - Linker created -
+Camera_init             0x00000eed    0x1a  Code  Gb  Eagle_ov7725.o [1]
+CodeRelocate$$Base      0x00005da4           --   Gb  - Linker created -
+CodeRelocate$$Limit     0x00005df0           --   Gb  - Linker created -
+CodeRelocateRam$$Base   0x1fff05bc           --   Gb  - Linker created -
+CodeRelocateRam$$Limit  0x1fff0608           --   Gb  - Linker created -
+DMA0_IRQHandler         0x00002a13    0x16  Code  Gb  HW_DMA.o [1]
+DMA10_IRQHandler        0x00002aef    0x16  Code  Gb  HW_DMA.o [1]
+DMA11_IRQHandler        0x00002b05    0x16  Code  Gb  HW_DMA.o [1]
+DMA12_IRQHandler        0x00002b1b    0x16  Code  Gb  HW_DMA.o [1]
+DMA13_IRQHandler        0x00002b31    0x16  Code  Gb  HW_DMA.o [1]
+DMA14_IRQHandler        0x00002b47    0x16  Code  Gb  HW_DMA.o [1]
+DMA15_IRQHandler        0x00002b5d    0x16  Code  Gb  HW_DMA.o [1]
+DMA1_IRQHandler         0x00002a29    0x16  Code  Gb  HW_DMA.o [1]
+DMA2_IRQHandler         0x00002a3f    0x16  Code  Gb  HW_DMA.o [1]
+DMA3_IRQHandler         0x00002a55    0x16  Code  Gb  HW_DMA.o [1]
+DMA4_IRQHandler         0x00002a6b    0x16  Code  Gb  HW_DMA.o [1]
+DMA5_IRQHandler         0x00002a81    0x16  Code  Gb  HW_DMA.o [1]
+DMA6_IRQHandler         0x00002a97    0x16  Code  Gb  HW_DMA.o [1]
+DMA7_IRQHandler         0x00002aad    0x16  Code  Gb  HW_DMA.o [1]
+DMA8_IRQHandler         0x00002ac3    0x16  Code  Gb  HW_DMA.o [1]
+DMA9_IRQHandler         0x00002ad9    0x16  Code  Gb  HW_DMA.o [1]
+DMA_ISR                 0x1fff5a90    0x40  Data  Gb  HW_DMA.o [1]
+DMA_ov7725_init         0x00001009    0x96  Code  Lc  Eagle_ov7725.o [1]
+DefaultISR              0x00003a1f    0x18  Code  Gb  system_MK60.o [1]
+Diagnostic_Reset_Source
+                        0x00003cd5    0x82  Code  Lc  system_MK60.o [1]
+DifferCtrler_Init       0x000043eb    0x68  Code  Gb  PID.o [1]
+Differ_Controller       0x00004365    0x86  Code  Gb  PID.o [1]
+Encoder_GetPulseNum     0x000058c1    0x38  Code  Gb  EncoderDriver.o [1]
+Encoder_Init            0x00005869    0x58  Code  Gb  EncoderDriver.o [1]
+F6x8                    0x00005118   0x228  Data  Gb  oled.o [1]
+FTM0_IRQHandler         0x00001ac1     0xa  Code  Gb  HW_FTM.o [1]
+FTM1_IRQHandler         0x00001acb     0xa  Code  Gb  HW_FTM.o [1]
+FTM2_IRQHandler         0x00001ad5     0xa  Code  Gb  HW_FTM.o [1]
+FTM_ISR                 0x1fff5ad0     0xc  Data  Gb  HW_FTM.o [1]
+First_Process           0x00005487    0x26  Code  Gb  SequenceCtrl.o [1]
+GPIO_ISR                0x1fff5adc    0x14  Data  Gb  HW_GPIO.o [1]
+GPIO_ov7725_init        0x00000f83    0x86  Code  Lc  Eagle_ov7725.o [1]
+Get_Img                 0x00000e57    0x3e  Code  Gb  ImgProcess.o [1]
+Get_MidAve              0x00000d9d    0xba  Code  Gb  ImgProcess.o [1]
+Get_MidLine             0x0000043b   0x204  Code  Gb  ImgProcess.o [1]
+HEAP$$Base              0x1fff8520           --   Gb  - Linker created -
+HEAP$$Limit             0x20007520           --   Gb  - Linker created -
+HardFault_Handler       0x00003a13     0xc  Code  Gb  system_MK60.o [1]
+Keyboard_GPIO_Init      0x00005c15    0x90  Code  Gb  DebugerDriver.o [1]
+Keyboard_Isr            0x00005ca5    0x90  Code  Gb  DebugerDriver.o [1]
+LPLD_DMA_EnableIrq      0x000029fd    0x16  Code  Gb  HW_DMA.o [1]
+LPLD_DMA_Init           0x000026fb   0x302  Code  Gb  HW_DMA.o [1]
+LPLD_FTM_ClearCounter   0x000013c5     0x6  Code  Gb  HW_FTM.o [1]
+LPLD_FTM_DEC_Init       0x00001ab9     0x8  Code  Lc  HW_FTM.o [1]
+LPLD_FTM_GetCounter     0x000013bf     0x6  Code  Gb  HW_FTM.o [1]
+LPLD_FTM_IC_Init        0x00001523    0x96  Code  Lc  HW_FTM.o [1]
+LPLD_FTM_Init           0x000011e5   0x120  Code  Gb  HW_FTM.o [1]
+LPLD_FTM_PWM_ChangeDuty
+                        0x0000136f    0x50  Code  Gb  HW_FTM.o [1]
+LPLD_FTM_PWM_Enable     0x00001305    0x6a  Code  Gb  HW_FTM.o [1]
+LPLD_FTM_PWM_Init       0x000013fd   0x126  Code  Lc  HW_FTM.o [1]
+LPLD_FTM_PinInit        0x000015b9   0x4a4  Code  Lc  HW_FTM.o [1]
+LPLD_FTM_QD_Enable      0x000013cb    0x32  Code  Gb  HW_FTM.o [1]
+LPLD_FTM_QD_Init        0x00001a7d    0x3c  Code  Lc  HW_FTM.o [1]
+LPLD_GPIO_EnableIrq     0x000025d9    0x4e  Code  Gb  HW_GPIO.o [1]
+LPLD_GPIO_Init          0x000024f5    0xe4  Code  Gb  HW_GPIO.o [1]
+LPLD_GPIO_Output_b      0x00002627    0x18  Code  Gb  HW_GPIO.o [1]
+LPLD_LPTMR_GetPulseAcc  0x000059f5     0x8  Code  Gb  HW_LPTMR.o [1]
+LPLD_LPTMR_Init         0x00005901    0xda  Code  Gb  HW_LPTMR.o [1]
+LPLD_LPTMR_ResetCounter
+                        0x000059db    0x1a  Code  Gb  HW_LPTMR.o [1]
+LPLD_NVIC_Init          0x00005749   0x104  Code  Gb  HW_NVIC.o [1]
+LPLD_PIT_EnableIrq      0x000055f7    0x26  Code  Gb  HW_PIT.o [1]
+LPLD_PIT_Init           0x00005545    0xb2  Code  Gb  HW_PIT.o [1]
+LPLD_PLL_Setup          0x00003f65   0x198  Code  Gb  HW_MCG.o [1]
+LPLD_SCCB_Ack           0x000022e3    0x3c  Code  Lc  DEV_SCCB.o [1]
+LPLD_SCCB_Delay         0x0000247d     0xc  Code  Lc  DEV_SCCB.o [1]
+LPLD_SCCB_Init          0x0000214d    0x34  Code  Gb  DEV_SCCB.o [1]
+LPLD_SCCB_NoAck         0x0000231f    0x3c  Code  Lc  DEV_SCCB.o [1]
+LPLD_SCCB_ReadReg       0x000021c9    0x84  Code  Gb  DEV_SCCB.o [1]
+LPLD_SCCB_ReceiveByte   0x00002407    0x62  Code  Lc  DEV_SCCB.o [1]
+LPLD_SCCB_SendByte      0x000023b5    0x52  Code  Lc  DEV_SCCB.o [1]
+LPLD_SCCB_Start         0x0000224d    0x6a  Code  Lc  DEV_SCCB.o [1]
+LPLD_SCCB_Stop          0x000022b7    0x2c  Code  Lc  DEV_SCCB.o [1]
+LPLD_SCCB_WaitAck       0x0000235b    0x5a  Code  Lc  DEV_SCCB.o [1]
+LPLD_SCCB_WriteReg      0x00002181    0x48  Code  Gb  DEV_SCCB.o [1]
+LPLD_Set_SYS_DIV        0x1fff05bd    0x4c  Code  Gb  HW_MCG.o [1]
+LPLD_UART_Init          0x00003195   0x40a  Code  Gb  HW_UART.o [1]
+LPLD_UART_PutChar       0x0000359f     0xa  Code  Gb  HW_UART.o [1]
+LPTMR_ISR               0x1fff5af0     0x4  Data  Gb  HW_LPTMR.o [1]
+LPT_IRQHandler          0x000059fd    0x16  Code  Gb  HW_LPTMR.o [1]
+LeftFlag_Switch         0x1fff7500     0x8  Data  Gb  ImgProcess.o [1]
+MainCtrl_Pit_Init       0x00005341    0x44  Code  Gb  SequenceCtrl.o [1]
+Main_Isr                0x00005461    0x26  Code  Gb  SequenceCtrl.o [1]
+Menu_Data_Decrease      0x00005079    0x76  Code  Gb  Menu.o [1]
+Menu_Data_Increase      0x00005003    0x76  Code  Gb  Menu.o [1]
+Menu_Data_Link          0x00004f95    0x6e  Code  Gb  Menu.o [1]
+Menu_Num_Show           0x00004efb    0x9a  Code  Gb  Menu.o [1]
+Menu_Show               0x00004e45    0xb6  Code  Gb  Menu.o [1]
+MidAve                  0x1fff751c     0x2  Data  Gb  ImgProcess.o [1]
+Motor_Duty_Change       0x00004573    0x6e  Code  Gb  MotorDriver.o [1]
+Motor_Init              0x000044f9    0x7a  Code  Gb  MotorDriver.o [1]
+NVIC_DisableIRQ         0x00000ed9    0x14  Code  Lc  Eagle_ov7725.o [1]
+NVIC_DisableIRQ         0x000056d5    0x14  Code  Lc  HW_NVIC.o [1]
+NVIC_EnableIRQ          0x000026e5    0x16  Code  Lc  HW_DMA.o [1]
+NVIC_EnableIRQ          0x000024e1    0x14  Code  Lc  HW_GPIO.o [1]
+NVIC_EnableIRQ          0x000056c1    0x14  Code  Lc  HW_NVIC.o [1]
+NVIC_EnableIRQ          0x00005531    0x14  Code  Lc  HW_PIT.o [1]
+NVIC_EnableIRQ          0x00000425    0x16  Code  Lc  ImgProcess.o [1]
+NVIC_EncodePriority     0x0000570b    0x3e  Code  Lc  HW_NVIC.o [1]
+NVIC_Init               0x00005385    0xda  Code  Gb  SequenceCtrl.o [1]
+NVIC_SetPriority        0x000056e9    0x22  Code  Lc  HW_NVIC.o [1]
+NVIC_SetPriorityGrouping
+                        0x000056a5    0x1c  Code  Lc  HW_NVIC.o [1]
+OLED_Clear              0x00001c35    0x40  Code  Gb  oled.o [1]
+OLED_ClearLine          0x00001c75    0x24  Code  Gb  oled.o [1]
+OLED_Init               0x00001e51   0x11a  Code  Gb  oled.o [1]
+OLED_PinInit            0x00001df1    0x60  Code  Gb  oled.o [1]
+OLED_Set_Pos            0x00001c09    0x2c  Code  Gb  oled.o [1]
+OLED_ShowChar           0x00001c99    0x40  Code  Gb  oled.o [1]
+OLED_ShowNum            0x00001cef    0xce  Code  Gb  oled.o [1]
+OLED_ShowString         0x00001dbd    0x34  Code  Gb  oled.o [1]
+OLED_WR_Byte            0x00001b6f    0x9a  Code  Gb  oled.o [1]
+PIC_DateBlock           0x1fff5b34  0x19cc  Data  Gb  ImgProcess.o [1]
+PIT0_IRQHandler         0x0000561d    0x16  Code  Gb  HW_PIT.o [1]
+PIT1_IRQHandler         0x00005633    0x16  Code  Gb  HW_PIT.o [1]
+PIT2_IRQHandler         0x00005649    0x16  Code  Gb  HW_PIT.o [1]
+PIT3_IRQHandler         0x0000565f    0x16  Code  Gb  HW_PIT.o [1]
+PIT_ISR                 0x1fff5af4    0x10  Data  Gb  HW_PIT.o [1]
+PORTA_IRQHandler        0x0000263f    0x12  Code  Gb  HW_GPIO.o [1]
+PORTB_IRQHandler        0x00002651    0x12  Code  Gb  HW_GPIO.o [1]
+PORTC_IRQHandler        0x00002663    0x12  Code  Gb  HW_GPIO.o [1]
+PORTD_IRQHandler        0x00002675    0x12  Code  Gb  HW_GPIO.o [1]
+PORTE_IRQHandler        0x00002687    0x12  Code  Gb  HW_GPIO.o [1]
+PWM_Expect              0x1fff05b4     0x4  Data  Gb  MotorDriver.o [1]
+PWM_To_Pulse            0x000045fd    0x26  Code  Gb  MotorDriver.o [1]
+PulseNum_To_PWM         0x000045e1    0x1c  Code  Gb  MotorDriver.o [1]
+RazorDMA_Isr            0x00001179    0x14  Code  Gb  Eagle_ov7725.o [1]
+Region$$Table$$Base     0x00006204           --   Gb  - Linker created -
+Region$$Table$$Limit    0x00006214           --   Gb  - Linker created -
+RightFlag_Switch        0x1fff7508     0x8  Data  Gb  ImgProcess.o [1]
+Right_Encoder_init_param
+                        0x1fff5a7c     0xc  Data  Gb  EncoderDriver.o [1]
+Second_Process          0x000054ad    0x68  Code  Gb  SequenceCtrl.o [1]
+SpeedCtrler_Init        0x000041f7    0x70  Code  Gb  PID.o [1]
+Speed_Controller        0x000040fd    0xfa  Code  Gb  PID.o [1]
+SteerCtrler_Init        0x000042fb    0x6a  Code  Gb  PID.o [1]
+Steer_Controller        0x00004267    0x94  Code  Gb  PID.o [1]
+Steer_Init              0x00005d55    0x4a  Code  Gb  SteerDriver.o [1]
+SystemCoreClock         0x1fff05b8     0x4  Data  Gb  system_MK60.o [1]
+SystemCoreClockUpdate   0x000039e5    0x2e  Code  Gb  system_MK60.o [1]
+SystemInit              0x000038a9   0x13c  Code  Gb  system_MK60.o [1]
+TwinLine_Deal           0x000009d1   0x3cc  Code  Gb  ImgProcess.o [1]
+UART0_ERR_IRQHandler    0x0000389d     0x2  Code  Gb  HW_UART.o [1]
+UART0_IRQHandler        0x000035a9    0x58  Code  Gb  HW_UART.o [1]
+UART1_ERR_IRQHandler    0x0000389f     0x2  Code  Gb  HW_UART.o [1]
+UART1_IRQHandler        0x00003601    0x58  Code  Gb  HW_UART.o [1]
+UART2_ERR_IRQHandler    0x000038a1     0x2  Code  Gb  HW_UART.o [1]
+UART2_IRQHandler        0x00003659    0x58  Code  Gb  HW_UART.o [1]
+UART3_ERR_IRQHandler    0x000038a3     0x2  Code  Gb  HW_UART.o [1]
+UART3_IRQHandler        0x000036b1    0x58  Code  Gb  HW_UART.o [1]
+UART4_ERR_IRQHandler    0x000038a5     0x2  Code  Gb  HW_UART.o [1]
+UART4_IRQHandler        0x00003709    0x58  Code  Gb  HW_UART.o [1]
+UART5_ERR_IRQHandler    0x000038a7     0x2  Code  Gb  HW_UART.o [1]
+UART5_IRQHandler        0x00003761    0x58  Code  Gb  HW_UART.o [1]
+UART_Debuger_Init       0x00005be5    0x30  Code  Gb  DebugerDriver.o [1]
+UART_R_ISR              0x1fff5b04    0x18  Data  Gb  HW_UART.o [1]
+UART_T_ISR              0x1fff5b1c    0x18  Data  Gb  HW_UART.o [1]
+__BOOT_STACK_ADDRESS {Abs}
+                        0x2000fff8           --   Gb  command line/config [2]
+__VECTOR_RAM {Abs}      0x1fff0000           --   Gb  command line/config [2]
+__VECTOR_TABLE {Abs}    0x00000000           --   Gb  command line/config [2]
+__Vectors               0x00000000           --   Gb  startup_K60DZ10.o [1]
+__Vectors_End           0x00000400          Data  Gb  startup_K60DZ10.o [1]
+__Vectors_Size {Abs}    0x00000400           --   Gb  startup_K60DZ10.o [1]
+__aeabi_cfcmple         0x000044d5          Code  Gb  FltCmpLe.o [4]
+__aeabi_cfrcmple        0x000044b1          Code  Gb  FltCmpGe.o [4]
+__aeabi_d2f             0x00004a75          Code  Gb  DblToFlt.o [4]
+__aeabi_dadd            0x00004735          Code  Gb  DblAdd.o [4]
+__aeabi_ddiv            0x0000481d          Code  Gb  DblDiv.o [4]
+__aeabi_dmul            0x00004b35          Code  Gb  DblMul.o [4]
+__aeabi_f2d             0x000046e5          Code  Gb  FltToDbl.o [4]
+__aeabi_f2iz            0x00002109          Code  Gb  FltToS32.o [4]
+__aeabi_f2uiz           0x000046c1          Code  Gb  FltToU32.o [4]
+__aeabi_fadd            0x00001fad          Code  Gb  FltAdd.o [4]
+__aeabi_fmul            0x00002031          Code  Gb  FltMul.o [4]
+__aeabi_fsub            0x00002bad          Code  Gb  FltSub.o [4]
+__aeabi_i2d             0x00004b05          Code  Gb  I32ToDbl.o [4]
+__aeabi_i2f             0x00001f79          Code  Gb  I32ToFlt.o [4]
+__aeabi_ui2d            0x00004b19          Code  Gb  I32ToDbl.o [4]
+__aeabi_ui2f            0x00001f8d          Code  Gb  I32ToFlt.o [4]
+__cmain                 0x00006305          Code  Gb  cmain.o [5]
+__exit                  0x00006335    0x14  Code  Gb  exit.o [6]
+__iar_dadd              0x00004749          Code  Gb  DblAdd.o [4]
+__iar_data_init3        0x00006195    0x28  Code  Gb  data_init.o [5]
+__iar_dsub              0x00004cd9          Code  Gb  DblSub.o [4]
+__iar_dsubStart         0x00004ceb          Code  Gb  DblSub.o [4]
+__iar_fadd              0x00001fbd          Code  Gb  FltAdd.o [4]
+__iar_fsub              0x00002bbd          Code  Gb  FltSub.o [4]
+__iar_fsubStart         0x00002bcd          Code  Gb  FltSub.o [4]
+__iar_program_start     0x000065dd          Code  Gb  cstartup_M.o [5]
+__iar_ui2d              0x00004b1d          Code  Gb  I32ToDbl.o [4]
+__iar_ui2f              0x00001f91          Code  Gb  I32ToFlt.o [4]
+__iar_unaligned___aeabi_memcpy4
+                        0x00002489          Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_unaligned___aeabi_memcpy8
+                        0x00002489          Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_zero_init3        0x0000609d    0x40  Code  Gb  zero_init3.o [5]
+__low_level_init        0x0000631f     0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x00000000          Data  Gb  startup_K60DZ10.o [1]
+__vector_table_0x1c     0x0000001c          Data  Gb  startup_K60DZ10.o [1]
+_call_main              0x00006311          Code  Gb  cmain.o [5]
+_exit                   0x00006329          Code  Gb  cexit.o [5]
+_main                   0x0000631b          Code  Gb  cmain.o [5]
+assert_failed           0x00002b99    0x14  Code  Gb  assert.o [1]
+base                    0x1fff0608    0x10  Data  Lc  alloc.o [1]
+camera_delay            0x000011c5    0x20  Code  Gb  Eagle_ov7725.o [1]
+common_relocate         0x00003ebd    0xa0  Code  Gb  relocate.o [1]
+cpu_identify            0x00003a3d   0x1f2  Code  Lc  system_MK60.o [1]
+currentList             0x1fff751e     0x1  Data  Gb  Menu.o [1]
+delay_ms                0x00001b59    0x16  Code  Gb  oled.o [1]
+differCtrler            0x1fff7518     0x4  Data  Gb  PID.o [1]
+exit                    0x00006323     0x4  Code  Gb  exit.o [3]
+flash_identify          0x00003c2f    0xa6  Code  Lc  system_MK60.o [1]
+freep                   0x1fff0618     0x4  Data  Lc  alloc.o [1]
+g_bus_clock             0x1fff047c     0x4  Data  Gb  HW_MCG.o [1]
+g_core_clock            0x1fff0478     0x4  Data  Gb  HW_MCG.o [1]
+g_flash_clock           0x1fff0480     0x4  Data  Gb  HW_MCG.o [1]
+g_flexbus_clock         0x1fff0484     0x4  Data  Gb  HW_MCG.o [1]
+img                     0x1fff0f7c  0x4b00  Data  Gb  Eagle_ov7725.o [1]
+img_extract             0x0000109f    0x8a  Code  Gb  Eagle_ov7725.o [1]
+imgbuff                 0x1fff061c   0x960  Data  Gb  Eagle_ov7725.o [1]
+main                    0x00006059    0x44  Code  Gb  Gold_Razor_A.o [1]
+malloc                  0x00004641    0x6e  Code  Gb  alloc.o [1]
+menuList                0x1fff0488   0x12c  Data  Gb  Menu.o [1]
+oled_pow                0x00001cd9    0x16  Code  Gb  oled.o [1]
+out_char                0x000064dd     0xe  Code  Gb  io.o [1]
+ov7725_eagle_cfgnum     0x1fff0474     0x1  Data  Gb  Eagle_ov7725.o [1]
+ov7725_eagle_img_flag   0x1fff0475     0x1  Data  Gb  Eagle_ov7725.o [1]
+ov7725_eagle_reg        0x1fff0410    0x64  Data  Gb  Eagle_ov7725.o [1]
+ov7725_eagle_reg_init   0x00000f07    0x7c  Code  Lc  Eagle_ov7725.o [1]
+pitCounter              0x1fff751f     0x1  Data  Gb  SequenceCtrl.o [1]
+porta_isr               0x00001129    0x50  Code  Gb  Eagle_ov7725.o [1]
+printf                  0x00003155    0x1e  Code  Gb  printf.o [1]
+printk                  0x00002d6d   0x3e8  Code  Gb  printf.o [1]
+printk_mknumstr         0x00002cc1    0x70  Code  Lc  printf.o [1]
+printk_pad_space        0x00002d4f    0x1e  Code  Lc  printf.o [1]
+printk_pad_zero         0x00002d31    0x1e  Code  Lc  printf.o [1]
+printk_putc             0x00002c95    0x2c  Code  Lc  printf.o [1]
+speedCtrler             0x1fff7510     0x4  Data  Gb  PID.o [1]
+steerCtrler             0x1fff7514     0x4  Data  Gb  PID.o [1]
+strlen                  0x00003179    0x1c  Code  Gb  stdlib.o [1]
+
+
+[1] = E:\11ΩÏFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj
+[2] = command line
+[3] = dl7M_tln.a
+[4] = m7M_tl.a
+[5] = rt7M_tl.a
+[6] = shb_l.a
+
+  23 274 bytes of readonly  code memory
+      76 bytes of readwrite code memory
+   2 982 bytes of readonly  data memory
+  94 404 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

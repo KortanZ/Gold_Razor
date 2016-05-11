@@ -132,7 +132,7 @@ typedef unsigned char   boolean;      /* 8-bit*/
 #include "LPLD_Drivers.h"
 
 /*用户头文件*/
-
+/*
 #include "ImgProcess.h"
 #include "oled.h"
 #include "Eagle_ov7725.h"
@@ -145,7 +145,7 @@ typedef unsigned char   boolean;      /* 8-bit*/
 #include "PID.h"
 #include "VirtualOsc.h"
 #include "Menu.h"
-
+*/
 /*
  * 包含实时系统头文件
  */

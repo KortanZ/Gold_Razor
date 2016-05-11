@@ -1,0 +1,154 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.40.3.8902/W32 for ARM        11/May/2016  19:33:34
+# Copyright 1999-2015 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\app\Gold_Razor_A.c
+#    Command line =  
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\app\Gold_Razor_A.c
+#        -D LPLD_K60 -D USE_K60DZ10 -lCN
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\List\
+#        -lB
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\List\
+#        -o
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M4 -e --fpu=None --dlib_config
+#        D:\IAR\arm\INC\c\DLib_Config_Normal.h -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\app\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\app\Source\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\CPU\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\common\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\LPLD\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\LPLD\HW\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\LPLD\DEV\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\LPLD\FUNC\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\uCOS-II\Ports\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\uCOS-II\Source\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\FatFs\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\FatFs\option\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\USB\common\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\USB\driver\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\USB\descriptor\
+#        -I
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\..\..\..\lib\USB\class\
+#        -Ol -I D:\IAR\arm\CMSIS\Include\ -D ARM_MATH_CM4
+#    List file    =  
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\List\Gold_Razor_A.lst
+#    Object file  =  
+#        E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\iar\FLASH\Obj\Gold_Razor_A.o
+#
+###############################################################################
+
+E:\11½ìFreescale\Gold_Razor_A\Gold_Razor_A\project\Gold_Razor_A\app\Gold_Razor_A.c
+      1          #include "Oled.h"
+      2          #include "SequenceCtrl.h"
+      3          #include "SteerDriver.h"
+      4          #include "MotorDriver.h"
+      5          #include "EncoderDriver.h"
+      6          #include "DebugerDriver.h"
+      7          #include "PID.h"
+      8          #include "Eagle_ov7725.h"
+      9          #include "Menu.h"
+     10          
+     11          /*     main function entrance    */
+     12          
+
+   \                                 In section .text, align 2, keep-with-next
+     13          void main(void)
+     14          {
+   \                     main: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     15          	DisableInterrupts;
+   \   00000002   0xB672             CPSID    I
+     16          	OLED_Init();
+   \   00000004   0x.... 0x....      BL       OLED_Init
+     17          	OLED_Clear();
+   \   00000008   0x.... 0x....      BL       OLED_Clear
+     18          	NVIC_Init();
+   \   0000000C   0x.... 0x....      BL       NVIC_Init
+     19          	MainCtrl_Pit_Init();
+   \   00000010   0x.... 0x....      BL       MainCtrl_Pit_Init
+     20          	Steer_Init();
+   \   00000014   0x.... 0x....      BL       Steer_Init
+     21          	Motor_Init();
+   \   00000018   0x.... 0x....      BL       Motor_Init
+     22          	Encoder_Init();
+   \   0000001C   0x.... 0x....      BL       Encoder_Init
+     23          	Keyboard_GPIO_Init();
+   \   00000020   0x.... 0x....      BL       Keyboard_GPIO_Init
+     24          	UART_Debuger_Init();
+   \   00000024   0x.... 0x....      BL       UART_Debuger_Init
+     25          	SpeedCtrler_Init();
+   \   00000028   0x.... 0x....      BL       SpeedCtrler_Init
+     26          	SteerCtrler_Init();
+   \   0000002C   0x.... 0x....      BL       SteerCtrler_Init
+     27          	DifferCtrler_Init();
+   \   00000030   0x.... 0x....      BL       DifferCtrler_Init
+     28          	Camera_init();
+   \   00000034   0x.... 0x....      BL       Camera_init
+     29          	Menu_Data_Link();
+   \   00000038   0x.... 0x....      BL       Menu_Data_Link
+     30          	Menu_Show();
+   \   0000003C   0x.... 0x....      BL       Menu_Show
+     31          	EnableInterrupts;
+   \   00000040   0xB662             CPSIE    I
+     32          	while (1);
+   \                     ??main_0: (+1)
+   \   00000042   0xE7FE             B.N      ??main_0
+     33          }
+     34          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   main
+         8   -> Camera_init
+         8   -> DifferCtrler_Init
+         8   -> Encoder_Init
+         8   -> Keyboard_GPIO_Init
+         8   -> MainCtrl_Pit_Init
+         8   -> Menu_Data_Link
+         8   -> Menu_Show
+         8   -> Motor_Init
+         8   -> NVIC_Init
+         8   -> OLED_Clear
+         8   -> OLED_Init
+         8   -> SpeedCtrler_Init
+         8   -> SteerCtrler_Init
+         8   -> Steer_Init
+         8   -> UART_Debuger_Init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      68  main
+
+ 
+ 68 bytes in section .text
+ 
+ 68 bytes of CODE memory
+
+Errors: none
+Warnings: none
