@@ -14,18 +14,18 @@ MenuType menuList[] = {
 	{PID_MOTOR, PID_STEER, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
 
 	{STEER_KI, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, NULL, 0},
-	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_kd:", NULL, NULL, 1},
+	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_Kd:", NULL, NULL, 1},
 	{STEER_KD, STEER_KP, PID_STEER, STEER_KI, "Steer_Ki:", NULL, NULL, 2},
 
-	{MOTOR_KI, MOTOR_KD, PID_MOTOR, MOTOR_KP, "Motro_Kp:", NULL, NULL, 0},
-	{MOTOR_KP, MOTOR_KI, PID_MOTOR, MOTOR_KD, "Motor_kd:", NULL, NULL, 1},
+	{MOTOR_SPEED, MOTOR_KD, PID_MOTOR, MOTOR_KP, "Motro_Kp:", NULL, NULL, 0},
+	{MOTOR_KP, MOTOR_KI, PID_MOTOR, MOTOR_KD, "Motor_Kd:", NULL, NULL, 1},
 	{MOTOR_KD, MOTOR_SPEED, PID_MOTOR, MOTOR_KI, "Motor_Ki:", NULL, NULL, 2},
 
 	{DIFF_KI, DIFF_KD, PID_DIFF, DIFF_KP, "Diff_Kp:", NULL, NULL, 0},
-	{DIFF_KP, DIFF_KI, PID_DIFF, DIFF_KD, "Diff_kd:", NULL, NULL, 1},
+	{DIFF_KP, DIFF_KI, PID_DIFF, DIFF_KD, "Diff_Kd:", NULL, NULL, 1},
 	{DIFF_KD, DIFF_KP, PID_DIFF, DIFF_KI, "Diff_Ki:", NULL, NULL, 2},
 	
-	{MOTOR_KD, MOTOR_KP, PID_MOTOR, MOTOR_SPEED, "Motor_Speed:", NULL, NULL, 3},
+	{MOTOR_KI, MOTOR_KP, PID_MOTOR, MOTOR_SPEED, "Motor_Speed:", NULL, NULL, 3},
 };
 
 void Menu_Show(void)
@@ -86,7 +86,7 @@ void Menu_Data_Increase(ListType lst)
 		if(lst >= STEER_KP && lst <= DIFF_KI)
 			*((float32 *)menuList[lst].data) += 0.1;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
-		  	*((int32 *)menuList[lst].data) += 1000;
+		  	*((int32 *)menuList[lst].data) += 100;
 	}
 }
 
