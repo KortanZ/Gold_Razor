@@ -1,14 +1,14 @@
 //#include "common.h"
 #include "Eagle_ov7725.h"
 #include "Eagle_ov7725_reg.h"
-/*OV7725³õÊ¼»¯ÅäÖÃ±í*/
+/*OV7725Â³ÃµÃŠÂ¼Â»Â¯Ã…Ã¤Ã–ÃƒÂ±Ã­*/
 reg_s ov7725_eagle_reg[] =
 {
-    //¼Ä´æÆ÷£¬¼Ä´æÆ÷Öµ´Î
-    { OV7725_COM4, 0xC1 },   //PLLÊ±ÖÓÉèÖÃ:8xÊ±ÖÓ   AECÉèÖÃ:Full Window
-    { OV7725_CLKRC, 0x00 },   //Ê¹ÓÃÍâ²¿Ê±ÖÓ
-    { OV7725_COM2, 0x03 },   //ÅäÖÃÊä³öÇý¶¯ÄÜÁ¦:4xÇý¶¯ÄÜÁ¦
-    { OV7725_COM3, 0xD0 },   //7:´¹Ö±·­×ª¿ª¹Ø 6:Ë®Æ½¾µÏñ¿ª¹Ø
+    //Â¼Ã„Â´Ã¦Ã†Ã·Â£Â¬Â¼Ã„Â´Ã¦Ã†Ã·Ã–ÂµÂ´ÃŽ
+    { OV7725_COM4, 0xC1 },   //PLLÃŠÂ±Ã–Ã“Ã‰Ã¨Ã–Ãƒ:8xÃŠÂ±Ã–Ã“   AECÃ‰Ã¨Ã–Ãƒ:Full Window
+    { OV7725_CLKRC, 0x00 },   //ÃŠÂ¹Ã“ÃƒÃÃ¢Â²Â¿ÃŠÂ±Ã–Ã“
+    { OV7725_COM2, 0x03 },   //Ã…Ã¤Ã–ÃƒÃŠÃ¤Â³Ã¶Ã‡Ã½Â¶Â¯Ã„ÃœÃÂ¦:4xÃ‡Ã½Â¶Â¯Ã„ÃœÃÂ¦
+    { OV7725_COM3, 0xD0 },   //7:Â´Â¹Ã–Â±Â·Â­Ã—ÂªÂ¿ÂªÂ¹Ã˜ 6:Ã‹Â®Ã†Â½Â¾ÂµÃÃ±Â¿ÂªÂ¹Ã˜
     { OV7725_COM7, 0x40 },   //SCCB : No Change
     { OV7725_HSTART, 0x3F },
     { OV7725_HSIZE, 0x50 },
@@ -81,7 +81,7 @@ reg_s ov7725_eagle_reg[] =
 };
 
 
-uint8 ov7725_eagle_cfgnum = ARR_SIZE(ov7725_eagle_reg); /*½á¹¹ÌåÊý×é³ÉÔ±ÊýÄ¿*/
+uint8 ov7725_eagle_cfgnum = ARR_SIZE(ov7725_eagle_reg); /*Â½Ã¡Â¹Â¹ÃŒÃ¥ÃŠÃ½Ã—Ã©Â³Ã‰Ã”Â±ÃŠÃ½Ã„Â¿*/
 
 
 uint8 imgbuff[CAMERA_SIZE];
@@ -145,21 +145,21 @@ static void GPIO_ov7725_init(void)
 {
     
     GPIO_InitTypeDef ov7725_gpio_init;
-    /*------------ov7725Êý¾ÝIO³õÊ¼»¯(PTB0_PTB7)-------------*/
+    /*------------ov7725ÃŠÃ½Â¾ÃIOÂ³ÃµÃŠÂ¼Â»Â¯(PTB0_PTB7)-------------*/
     ov7725_gpio_init.GPIO_PTx = PTB;
     ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
     ov7725_gpio_init.GPIO_Pins = GPIO_Pin0_7;
 	ov7725_gpio_init.GPIO_Output = OUTPUT_L;
     ov7725_gpio_init.GPIO_PinControl = IRQC_DIS | INPUT_PULL_DIS;
     LPLD_GPIO_Init(ov7725_gpio_init);
-    /*------------ov7725³¡ÐÅºÅIO³õÊ¼»¯(PTA29)---------------*/
+    /*------------ov7725Â³Â¡ÃÃ…ÂºÃ…IOÂ³ÃµÃŠÂ¼Â»Â¯(PTA29)---------------*/
     ov7725_gpio_init.GPIO_PTx = PTA;
     ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
     ov7725_gpio_init.GPIO_Pins = GPIO_Pin29;
     ov7725_gpio_init.GPIO_PinControl = IRQC_RI | INPUT_PULL_DOWN | INPUT_PF_EN;
     ov7725_gpio_init.GPIO_Isr = porta_isr;
     LPLD_GPIO_Init(ov7725_gpio_init);
-    /*------------ov7725_PCLK_IO³õÊ¼»¯(PTA27)---------------*/
+    /*------------ov7725_PCLK_IOÂ³ÃµÃŠÂ¼Â»Â¯(PTA27)---------------*/
     ov7725_gpio_init.GPIO_PTx = PTA;
     ov7725_gpio_init.GPIO_Pins = GPIO_Pin27;
     ov7725_gpio_init.GPIO_Dir = DIR_INPUT;
@@ -172,25 +172,25 @@ void DMA_ov7725_init(void)
 {
 
     DMA_InitTypeDef dma_init_struct;
-    //DMA²ÎÊýÅäÖÃ
-    dma_init_struct.DMA_CHx = DMA_CH0;    //CH0Í¨µÀ
-    dma_init_struct.DMA_Req = PORTA_DMAREQ;       //PORTAÎªÇëÇóÔ´
+    //DMAÂ²ÃŽÃŠÃ½Ã…Ã¤Ã–Ãƒ
+    dma_init_struct.DMA_CHx = DMA_CH0;    //CH0ÃÂ¨ÂµÃ€
+    dma_init_struct.DMA_Req = PORTA_DMAREQ;       //PORTAÃŽÂªÃ‡Ã«Ã‡Ã³Ã”Â´
     dma_init_struct.DMA_PeriodicTriggerEnable = FALSE;
-    dma_init_struct.DMA_MajorLoopCnt = CAMERA_SIZE; //Ö÷Ñ­»·¼ÆÊýÖµ
-    dma_init_struct.DMA_MinorByteCnt = 1; //´ÎÑ­»·×Ö½Ú¼ÆÊý£ºÃ¿´Î¶ÁÈë1×Ö½Ú
+    dma_init_struct.DMA_MajorLoopCnt = CAMERA_SIZE; //Ã–Ã·Ã‘Â­Â»Â·Â¼Ã†ÃŠÃ½Ã–Âµ
+    dma_init_struct.DMA_MinorByteCnt = 1; //Â´ÃŽÃ‘Â­Â»Â·Ã—Ã–Â½ÃšÂ¼Ã†ÃŠÃ½Â£ÂºÃƒÂ¿Â´ÃŽÂ¶ÃÃˆÃ«1Ã—Ã–Â½Ãš
     dma_init_struct.DMA_SourceDataSize = DMA_SRC_8BIT;
-    dma_init_struct.DMA_SourceAddr = (uint32)&PTB->PDIR;        //Ô´µØÖ·£ºPTD8~15
+    dma_init_struct.DMA_SourceAddr = (uint32)&PTB->PDIR;        //Ã”Â´ÂµÃ˜Ã–Â·Â£ÂºPTD8~15
     dma_init_struct.DMA_SourceAddrOffset = 0;
     dma_init_struct.DMA_LastSourceAddrAdj = 0;
-    dma_init_struct.DMA_DestAddr = (uint32)imgbuff;      //Ä¿µÄµØÖ·£º´æ·ÅÍ¼ÏñµÄÊý×é
+    dma_init_struct.DMA_DestAddr = (uint32)imgbuff;      //Ã„Â¿ÂµÃ„ÂµÃ˜Ã–Â·Â£ÂºÂ´Ã¦Â·Ã…ÃÂ¼ÃÃ±ÂµÃ„ÃŠÃ½Ã—Ã©
     dma_init_struct.DMA_DestDataSize = DMA_DST_8BIT;
-    dma_init_struct.DMA_DestAddrOffset = 1;       //Ä¿µÄµØÖ·Æ«ÒÆ£ºÃ¿´Î¶ÁÈëÔö¼Ó1
+    dma_init_struct.DMA_DestAddrOffset = 1;       //Ã„Â¿ÂµÃ„ÂµÃ˜Ã–Â·Ã†Â«Ã’Ã†Â£ÂºÃƒÂ¿Â´ÃŽÂ¶ÃÃˆÃ«Ã”Ã¶Â¼Ã“1
     dma_init_struct.DMA_LastDestAddrAdj = 0;
-    dma_init_struct.DMA_AutoDisableReq = TRUE;    //×Ô¶¯½ûÓÃÇëÇó
+    dma_init_struct.DMA_AutoDisableReq = TRUE;    //Ã—Ã”Â¶Â¯Â½Ã»Ã“ÃƒÃ‡Ã«Ã‡Ã³
     dma_init_struct.DMA_MajorCompleteIntEnable = TRUE;
     dma_init_struct.DMA_MajorHalfCompleteIntEnable = FALSE;
     dma_init_struct.DMA_Isr = RazorDMA_Isr;
-    //³õÊ¼»¯DMA
+    //Â³ÃµÃŠÂ¼Â»Â¯DMA
     LPLD_DMA_Init(dma_init_struct);
     DMA0->INT |= 0x1u << 0;
     LPLD_DMA_EnableIrq(dma_init_struct);
@@ -200,21 +200,21 @@ void DMA_ov7725_init(void)
 void vcan_sendimg(void *imgaddr, uint32_t imgsize)
 {
 #define CMD_IMG     1
-    int8 cmdf[2] = { CMD_IMG, ~CMD_IMG };    //É½ÍâÉÏÎ»»ú Ê¹ÓÃµÄÃüÁî
-    int8 cmdr[2] = { ~CMD_IMG, CMD_IMG };    //É½ÍâÉÏÎ»»ú Ê¹ÓÃµÄÃüÁî
+    int8 cmdf[2] = { CMD_IMG, ~CMD_IMG };    //Ã‰Â½ÃÃ¢Ã‰ÃÃŽÂ»Â»Ãº ÃŠÂ¹Ã“ÃƒÂµÃ„ÃƒÃ¼ÃÃ®
+    int8 cmdr[2] = { ~CMD_IMG, CMD_IMG };    //Ã‰Â½ÃÃ¢Ã‰ÃÃŽÂ»Â»Ãº ÃŠÂ¹Ã“ÃƒÂµÃ„ÃƒÃ¼ÃÃ®
 
-    LPLD_UART_PutCharArr(UART2, cmdf, sizeof(cmdf));    //ÏÈ·¢ËÍÃüÁî
+    LPLD_UART_PutCharArr(UART2, cmdf, sizeof(cmdf));    //ÃÃˆÂ·Â¢Ã‹ÃÃƒÃ¼ÃÃ®
 
-    LPLD_UART_PutCharArr(UART2, (int8 *)imgaddr, imgsize); //ÔÙ·¢ËÍÍ¼Ïñ
+    LPLD_UART_PutCharArr(UART2, (int8 *)imgaddr, imgsize); //Ã”Ã™Â·Â¢Ã‹ÃÃÂ¼ÃÃ±
 
-    LPLD_UART_PutCharArr(UART2, cmdr, sizeof(cmdr));    //ÏÈ·¢ËÍÃüÁî
+    LPLD_UART_PutCharArr(UART2, cmdr, sizeof(cmdr));    //ÃÃˆÂ·Â¢Ã‹ÃÃƒÃ¼ÃÃ®
 }
 void img_extract(void *dst, void *src, uint32 srclen)
 {
-    uint8 colour[2] = { 255, 0 }; //0 ºÍ 1 ·Ö±ð¶ÔÓ¦µÄÑÕÉ«
+    uint8 colour[2] = { 255, 0 }; //0 ÂºÃ 1 Â·Ã–Â±Ã°Â¶Ã”Ã“Â¦ÂµÃ„Ã‘Ã•Ã‰Â«
     uint8 * mdst = dst;
     uint8 * msrc = src;
-    //×¢£ºÉ½ÍâµÄÉãÏñÍ· 0 ±íÊ¾ °×É«£¬1±íÊ¾ ºÚÉ«
+    //Ã—Â¢Â£ÂºÃ‰Â½ÃÃ¢ÂµÃ„Ã‰Ã£ÃÃ±ÃÂ· 0 Â±Ã­ÃŠÂ¾ Â°Ã—Ã‰Â«Â£Â¬1Â±Ã­ÃŠÂ¾ ÂºÃšÃ‰Â«
     uint8 tmpsrc;
     while (srclen--)
     {
@@ -235,14 +235,14 @@ void porta_isr(void)
 {
     if (LPLD_GPIO_IsPinxExt(PORTA, GPIO_Pin29))
     {
-        //³¡ÖÐ¶ÏÐèÒªÅÐ¶ÏÊÇ³¡½áÊø»¹ÊÇ³¡¿ªÊ¼
-        if (ov7725_eagle_img_flag == IMG_START)                   //ÐèÒª¿ªÊ¼²É¼¯Í¼Ïñ
+        //Â³Â¡Ã–ÃÂ¶ÃÃÃ¨Ã’ÂªÃ…ÃÂ¶ÃÃŠÃ‡Â³Â¡Â½Ã¡ÃŠÃ¸Â»Â¹ÃŠÃ‡Â³Â¡Â¿ÂªÃŠÂ¼
+        if (ov7725_eagle_img_flag == IMG_START)                   //ÃÃ¨Ã’ÂªÂ¿ÂªÃŠÂ¼Â²Ã‰Â¼Â¯ÃÂ¼ÃÃ±
         {
-            ov7725_eagle_img_flag = IMG_GATHER;                  //±ê¼ÇÍ¼Ïñ²É¼¯ÖÐ
+            ov7725_eagle_img_flag = IMG_GATHER;                  //Â±ÃªÂ¼Ã‡ÃÂ¼ÃÃ±Â²Ã‰Â¼Â¯Ã–Ã
             disable_irq(PORTA_IRQn);
-            PORTA->ISFR = 1 << 27;            //Çå¿ÕPCLK±êÖ¾Î»
+            PORTA->ISFR = 1 << 27;            //Ã‡Ã¥Â¿Ã•PCLKÂ±ÃªÃ–Â¾ÃŽÂ»
             DMA0->ERQ |= DMA_ERQ_ERQ0_MASK << 0;
-            PORTA->ISFR = 1 << 27;            //Çå¿ÕPCLK±êÖ¾Î»
+            PORTA->ISFR = 1 << 27;            //Ã‡Ã¥Â¿Ã•PCLKÂ±ÃªÃ–Â¾ÃŽÂ»
             DMA0->TCD[0].DADDR = DMA_DADDR_DADDR(imgbuff);
         }
         else
@@ -260,7 +260,7 @@ void RazorDMA_Isr(void)
     //img_extract(img, imgbuff, CAMERA_SIZE);
     //imgEdge(img);
     //vcan_sendimg(imgbuff, CAMERA_SIZE);
-    //vcan_sendimg(img, CAMERA_W * CAMERA_H);                  //·¢ËÍµ½ÉÏÎ»»ú
+    //vcan_sendimg(img, CAMERA_W * CAMERA_H);                  //Â·Â¢Ã‹ÃÂµÂ½Ã‰ÃÃŽÂ»Â»Ãº
     DMA0->INT |= 0x1u << 0;
 }
 

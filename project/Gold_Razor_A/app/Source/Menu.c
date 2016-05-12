@@ -97,6 +97,6 @@ void Menu_Data_Decrease(ListType lst)
 		if(lst >= STEER_KP && lst <= DIFF_KI)
 			*((float32 *)menuList[lst].data) -= 0.1 ;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
-		  	*((int32 *)menuList[lst].data) -= 1000;
+		  	*((int32 *)menuList[lst].data) -= 100;
 	}
 }

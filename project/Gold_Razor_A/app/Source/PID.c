@@ -111,7 +111,7 @@ void SteerCtrler_Init(void)
 	}
 	else
 	{
-		steerCtrler -> Kp = 5;
+		steerCtrler -> Kp = 5.3;
 		steerCtrler -> Kd = 1;
 		steerCtrler -> Ki = 0;
 		for(i = 0; i < 3; i++)
@@ -140,8 +140,8 @@ float32 Differ_Controller(PIDStruct *DifferCon_Data, float32 expect, float32 rea
 	DifferCon_Data -> u[1] = DifferCon_Data -> u[0];
 	DifferCon_Data -> u[0] = DifferCon_Data -> u[1] + incrementU;
 
-	(DifferCon_Data -> u[0] > 2000) ? (DifferCon_Data -> u[0] = 1000) : (NULL);
-	(DifferCon_Data -> u[0] < -2000) ? (DifferCon_Data -> u[0] = -1000) : (NULL);
+	(DifferCon_Data -> u[0] > 3000) ? (DifferCon_Data -> u[0] = 3000) : (NULL);
+	(DifferCon_Data -> u[0] < -3000) ? (DifferCon_Data -> u[0] = -3000) : (NULL);
 
 	return (DifferCon_Data -> u[0]);
 }
@@ -156,8 +156,8 @@ void DifferCtrler_Init(void)
 	}
 	else
 	{
-		differCtrler -> Kp = 10;
-		differCtrler -> Kd = 0;
+		differCtrler -> Kp = 15;
+		differCtrler -> Kd = 2;
 		differCtrler -> Ki = 0;
 		for(i = 0;i < 3; i++)
 		{
