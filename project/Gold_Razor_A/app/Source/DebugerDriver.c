@@ -118,6 +118,8 @@ void Keyboard_Isr(void)
 	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin14))
   	{
   		currentList = menuList[currentList].child;
+  		if(NULL != menuList[currentList].function)
+  			(*menuList[currentList].function)();
   	}
 
   	//返回

@@ -88,6 +88,8 @@ uint8 imgbuff[CAMERA_SIZE];
 uint8 img[CAMERA_H * CAMERA_W];
 uint8 ov7725_eagle_img_flag = IMG_FINISH;
 
+
+
 uint8 Camera_init(void)
 {
     while (ov7725_eagle_reg_init() == 0);

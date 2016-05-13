@@ -15,6 +15,7 @@ typedef enum{
 	PID_STEER,
 	PID_MOTOR,
 	PID_DIFF,
+	CAMERA_SEND,
 	STEER_KP,
 	STEER_KD,
 	STEER_KI,
@@ -26,6 +27,8 @@ typedef enum{
 	DIFF_KI,
 	
 	MOTOR_SPEED,
+
+	STEER_MID,
 }ListType;
 
 typedef struct
@@ -35,7 +38,7 @@ typedef struct
 	ListType parent;
 	ListType child;
 	uint8 *str;
-	void (*function);
+	void (*function)();
 	void *data;
 	uint8 indexInPage;
 }MenuType;
@@ -48,5 +51,7 @@ void Menu_Num_Show(ListType lst);
 void Menu_Data_Link(void);
 void Menu_Data_Increase(ListType lst);
 void Menu_Data_Decrease(ListType lst);
+
+void Img_Send_Change(void);
 
 #endif

@@ -13,6 +13,7 @@
 #include "PID.h"
 
 uint8 pitCounter=0; //时序控制变量
+uint8 imgSendFlag = 0;
 
 /*     process functiong declare   */
 void First_Process(void);
@@ -97,7 +98,10 @@ void Main_Isr(void)
 void First_Process(void)
 {
 	Get_Img();
-    //vcan_sendimg(imgbuff, CAMERA_SIZE);
+	if(0 != imgSendFlag)
+	{
+    	vcan_sendimg(imgbuff, CAMERA_SIZE);
+	}
 	Get_MidLine();
 	OLED_ShowString(0,0,"MidAve");
 	OLED_ShowNum(70,0,MidAve,3);
@@ -115,7 +119,7 @@ void Second_Process(void)
 		rightPulse = -rightPulse;
 
 	Steer_Controller(steerCtrler , \
-					 STEER_MIDVALUE , \
+					 steerMidValue , \
 					 MidAve);
 
 	Speed_Controller(speedCtrler, \
