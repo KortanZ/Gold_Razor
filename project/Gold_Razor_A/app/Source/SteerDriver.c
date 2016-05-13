@@ -35,5 +35,6 @@ void Steer_Duty_Change(uint32 tagetDuty)
     {
         tagetDuty = STEER_RIGHT_DUTY;
     }
+    
     LPLD_FTM_PWM_ChangeDuty(FTM2, FTM_Ch0, tagetDuty);
 }
