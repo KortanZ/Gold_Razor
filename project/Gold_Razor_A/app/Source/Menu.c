@@ -4,6 +4,7 @@
 #include "MotorDriver.h"
 #include "SteerDriver.h"
 #include "SequenceCtrl.h"
+#include "ImgProcess.h"
 
 ListType currentList = DEBUG;
 
@@ -11,10 +12,11 @@ MenuType menuList[] = {
 	{RACE, RACE, DEBUG, PID_STEER, "Debug Mode", NULL, NULL, 0}, 			//调试模式
 	{DEBUG, DEBUG, RACE, RACE, "Race Mode", NULL, NULL, 1}, 					//比赛模式
 
-	{CAMERA_SEND, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, NULL, 0},
+	{BROKEN_RESTART, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, NULL, 0},
 	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, NULL, 1},
 	{PID_MOTOR, CAMERA_SEND, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
-	{PID_DIFF, PID_STEER, DEBUG, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 3},
+	{PID_DIFF, BROKEN_RESTART, DEBUG, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 3},
+	{CAMERA_SEND, PID_STEER, DEBUG, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 4},
 
 	{STEER_MID, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, NULL, 0},
 	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_Kd:", NULL, NULL, 1},
@@ -122,4 +124,10 @@ void Img_Send_Change(void)
 		menuList[currentList].str = "Img Send Stoped";
 	else
 		menuList[currentList].str = "Img Send Begin";
+}
+
+void Broken_Down_Restart(void)
+{
+	brokeDownFlag = 0;
+	OLED_ClearLine(5);
 }
