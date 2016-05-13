@@ -95,10 +95,7 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 	SteerCon_Data -> u[1] = SteerCon_Data -> u[0];
 	SteerCon_Data -> u[0] = SteerCon_Data -> u[1] + incrementU;
 
-	(SteerCon_Data -> u[0] > STEER_RIGHT_DUTY) ? (SteerCon_Data -> u[0] = STEER_RIGHT_DUTY) : (NULL);
-	(SteerCon_Data -> u[0] < STEER_LEFT_DUTY) ? (SteerCon_Data -> u[0] = STEER_LEFT_DUTY) : (NULL);
-
-	LPLD_FTM_PWM_ChangeDuty(FTM2, FTM_Ch0, (uint32) (SteerCon_Data -> u[0]));
+	Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
 }
 void SteerCtrler_Init(void)
 {
