@@ -8,7 +8,7 @@
 #include "common.h"
 
 #define STEER_MID_DUTY 1635
-#define STEER_LEFT_DUTY 1490
+#define STEER_LEFT_DUTY 1460
 #define STEER_RIGHT_DUTY 1760
 //#define STEER_MIDVALUE 85
 
