@@ -17,6 +17,7 @@ LeftFlag_Struct LeftFlag_Switch;
 RightFlag_Struct RightFlag_Switch;
 
 int16 MidAve = 0;
+uint8 brokeDownFlag = 0;
 
 void Get_MidLine(void)
 {
@@ -189,9 +190,10 @@ uint8 Bef_Scan(uint8 *pic_buff)
 		LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch2, 0);
 		LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch3, 0);
 		LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch4, 0);
-		OLED_Clear();
-		OLED_ShowString(0 , 3 , "Car Broke Down!");
-		while(1);
+		OLED_ClearLine(5);
+		OLED_ShowString(0 ,5 ,"Car Broke Down!");
+		brokeDownFlag = 1;
+		while(brokeDownFlag);
 	}
 	return Row;
 }

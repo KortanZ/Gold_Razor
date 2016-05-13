@@ -45,6 +45,7 @@ typedef struct
 }RightFlag_Struct;
 
 extern int16 MidAve;
+extern uint8 brokeDownFlag;
 
 extern void Get_Img(void);
 extern void Get_MidLine(void);

@@ -16,6 +16,7 @@ typedef enum{
 	PID_MOTOR,
 	PID_DIFF,
 	CAMERA_SEND,
+	BROKEN_RESTART,
 	STEER_KP,
 	STEER_KD,
 	STEER_KI,
@@ -53,5 +54,6 @@ void Menu_Data_Increase(ListType lst);
 void Menu_Data_Decrease(ListType lst);
 
 void Img_Send_Change(void);
+void Broken_Down_Restart(void);
 
 #endif
