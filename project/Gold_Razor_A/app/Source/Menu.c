@@ -2,6 +2,8 @@
 #include "oled.h"
 #include "PID.h"
 #include "MotorDriver.h"
+#include "SteerDriver.h"
+#include "SequenceCtrl.h"
 
 ListType currentList = DEBUG;
 
@@ -9,13 +11,14 @@ MenuType menuList[] = {
 	{RACE, RACE, DEBUG, PID_STEER, "Debug Mode", NULL, NULL, 0}, 			//调试模式
 	{DEBUG, DEBUG, RACE, RACE, "Race Mode", NULL, NULL, 1}, 					//比赛模式
 
-	{PID_DIFF, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, NULL, 0},
+	{CAMERA_SEND, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, NULL, 0},
 	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, NULL, 1},
-	{PID_MOTOR, PID_STEER, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
+	{PID_MOTOR, CAMERA_SEND, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
+	{PID_DIFF, PID_STEER, DEBUG, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 3},
 
-	{STEER_KI, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, NULL, 0},
+	{STEER_MID, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, NULL, 0},
 	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_Kd:", NULL, NULL, 1},
-	{STEER_KD, STEER_KP, PID_STEER, STEER_KI, "Steer_Ki:", NULL, NULL, 2},
+	{STEER_KD, STEER_MID, PID_STEER, STEER_KI, "Steer_Ki:", NULL, NULL, 2},
 
 	{MOTOR_SPEED, MOTOR_KD, PID_MOTOR, MOTOR_KP, "Motro_Kp:", NULL, NULL, 0},
 	{MOTOR_KP, MOTOR_KI, PID_MOTOR, MOTOR_KD, "Motor_Kd:", NULL, NULL, 1},
@@ -26,6 +29,8 @@ MenuType menuList[] = {
 	{DIFF_KD, DIFF_KP, PID_DIFF, DIFF_KI, "Diff_Ki:", NULL, NULL, 2},
 	
 	{MOTOR_KI, MOTOR_KP, PID_MOTOR, MOTOR_SPEED, "Motor_Sp:", NULL, NULL, 3},
+
+	{STEER_KI, STEER_KP, PID_STEER, STEER_MID, "Steer_Mid:", NULL, NULL, 3},
 };
 
 void Menu_Show(void)
@@ -58,6 +63,8 @@ void Menu_Num_Show(ListType lst)
 			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((float32 *)menuList[lst].data) * 10), Num_Len);
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((int32 *)menuList[lst].data)), Num_Len);
+		else if(lst >= STEER_MID && lst <= STEER_MID)
+			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((uint8 *)menuList[lst].data)), Num_Len);
 	}
 }
 
@@ -77,6 +84,9 @@ void Menu_Data_Link(void)
 	
 	menuList[MOTOR_SPEED].data = (void *)(&PWM_Expect);
 
+	menuList[STEER_MID].data = (void *)(&steerMidValue);
+	
+
 }
 
 void Menu_Data_Increase(ListType lst)
@@ -87,6 +97,8 @@ void Menu_Data_Increase(ListType lst)
 			*((float32 *)menuList[lst].data) += 0.1;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) += 100;
+		else if(lst >= STEER_MID && lst <= STEER_MID)
+			*((uint8 *)menuList[lst].data) += 1;
 	}
 }
 
@@ -98,5 +110,16 @@ void Menu_Data_Decrease(ListType lst)
 			*((float32 *)menuList[lst].data) -= 0.1 ;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) -= 100;
+		else if(lst >= STEER_MID && lst <= STEER_MID)
+			*((uint8 *)menuList[lst].data) -= 1;
 	}
+}
+
+void Img_Send_Change(void)
+{
+	imgSendFlag = ~imgSendFlag;
+	if(0 == imgSendFlag)
+		menuList[currentList].str = "Img Send Stoped";
+	else
+		menuList[currentList].str = "Img Send Begin";
 }

@@ -7,4 +7,6 @@ extern void MainCtrl_Pit_Init(void);
 extern void NVIC_Init(void);
 extern void Main_Isr(void);
 
+extern uint8 imgSendFlag;
+
 #endif

@@ -3,6 +3,8 @@
 *include initial and control
 */
 #include "SteerDriver.h"
+
+uint8 steerMidValue = 85;
 void Steer_Init(void)
 {
 

@@ -42,7 +42,7 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	/*          Differ PID Control  Block      */
 	float32 Differ_Temp = 0;
 	Differ_Temp = Differ_Controller(differCtrler , \
-					 				STEER_MIDVALUE , \
+					 				steerMidValue , \
 	 				 				MidAve);
 	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;
 	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp;
