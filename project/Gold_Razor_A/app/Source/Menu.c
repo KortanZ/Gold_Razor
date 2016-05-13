@@ -26,9 +26,10 @@ MenuType menuList[] = {
 	{MOTOR_KP, MOTOR_KI, PID_MOTOR, MOTOR_KD, "Motor_Kd:", NULL, NULL, 1},
 	{MOTOR_KD, MOTOR_SPEED, PID_MOTOR, MOTOR_KI, "Motor_Ki:", NULL, NULL, 2},
 
-	{DIFF_KI, DIFF_KD, PID_DIFF, DIFF_KP, "Diff_Kp:", NULL, NULL, 0},
+	{DIFF_EN, DIFF_KD, PID_DIFF, DIFF_KP, "Diff_Kp:", NULL, NULL, 0},
 	{DIFF_KP, DIFF_KI, PID_DIFF, DIFF_KD, "Diff_Kd:", NULL, NULL, 1},
-	{DIFF_KD, DIFF_KP, PID_DIFF, DIFF_KI, "Diff_Ki:", NULL, NULL, 2},
+	{DIFF_KD, DIFF_EN, PID_DIFF, DIFF_KI, "Diff_Ki:", NULL, NULL, 2},
+	{DIFF_KI, DIFF_KP, PID_DIFF, DIFF_EN, "Diff_En:", NULL, NULL, 3},
 	
 	{MOTOR_KI, MOTOR_KP, PID_MOTOR, MOTOR_SPEED, "Motor_Sp:", NULL, NULL, 3},
 
@@ -61,7 +62,7 @@ void Menu_Num_Show(ListType lst)
 
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_KP && lst <= DIFF_KI)
+		if(lst >= STEER_KP && lst <= DIFF_EN)
 			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((float32 *)menuList[lst].data) * 10), Num_Len);
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((int32 *)menuList[lst].data)), Num_Len);
@@ -83,6 +84,7 @@ void Menu_Data_Link(void)
 	menuList[DIFF_KP].data = (void *)(&(differCtrler -> Kp));
 	menuList[DIFF_KD].data = (void *)(&(differCtrler -> Kd));
 	menuList[DIFF_KI].data = (void *)(&(differCtrler -> Ki));
+	menuList[DIFF_EN].data = (void *)(&enhance);
 	
 	menuList[MOTOR_SPEED].data = (void *)(&PWM_Expect);
 
@@ -95,7 +97,7 @@ void Menu_Data_Increase(ListType lst)
 {
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_KP && lst <= DIFF_KI)
+		if(lst >= STEER_KP && lst <= DIFF_EN)
 			*((float32 *)menuList[lst].data) += 0.1;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) += 100;
@@ -108,7 +110,7 @@ void Menu_Data_Decrease(ListType lst)
 {
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_KP && lst <= DIFF_KI)
+		if(lst >= STEER_KP && lst <= DIFF_EN)
 			*((float32 *)menuList[lst].data) -= 0.1 ;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) -= 100;

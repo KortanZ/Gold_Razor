@@ -98,7 +98,7 @@ void Main_Isr(void)
 void First_Process(void)
 {
 	Get_Img();
-	if(0 != imgSendFlag)
+	if(imgSendFlag)
 	{
     	vcan_sendimg(imgbuff, CAMERA_SIZE);
 	}

@@ -16,6 +16,7 @@ typedef struct{
 extern PIDStruct *speedCtrler;
 extern PIDStruct *steerCtrler;
 extern PIDStruct *differCtrler;
+extern float32 enhance;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real);
 void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real);

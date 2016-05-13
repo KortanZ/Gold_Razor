@@ -26,6 +26,7 @@ typedef enum{
 	DIFF_KP,
 	DIFF_KD,
 	DIFF_KI,
+	DIFF_EN,
 	
 	MOTOR_SPEED,
 
