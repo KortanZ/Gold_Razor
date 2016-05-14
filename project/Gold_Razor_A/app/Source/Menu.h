@@ -15,8 +15,10 @@ typedef enum{
 	PID_STEER,
 	PID_MOTOR,
 	PID_DIFF,
+	IMG_WEIGHT,
 	CAMERA_SEND,
 	BROKEN_RESTART,
+
 	STEER_KP,
 	STEER_KD,
 	STEER_KI,
@@ -27,6 +29,11 @@ typedef enum{
 	DIFF_KD,
 	DIFF_KI,
 	DIFF_EN,
+
+	BLOCK0,
+	BLOCK1,
+	BLOCK2,
+	BLOCK3,
 	
 	MOTOR_SPEED,
 

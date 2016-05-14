@@ -14,9 +14,10 @@ MenuType menuList[] = {
 
 	{BROKEN_RESTART, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, NULL, 0},
 	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, NULL, 1},
-	{PID_MOTOR, CAMERA_SEND, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
-	{PID_DIFF, BROKEN_RESTART, DEBUG, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 3},
-	{CAMERA_SEND, PID_STEER, DEBUG, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 4},
+	{PID_MOTOR, IMG_WEIGHT, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
+	{PID_DIFF, CAMERA_SEND, DEBUG, BLOCK0, "Img Weight", NULL , NULL, 3},
+	{IMG_WEIGHT, BROKEN_RESTART, DEBUG, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 4},
+	{CAMERA_SEND, PID_STEER, DEBUG, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 5},
 
 	{STEER_MID, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, NULL, 0},
 	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_Kd:", NULL, NULL, 1},
@@ -30,6 +31,11 @@ MenuType menuList[] = {
 	{DIFF_KP, DIFF_KI, PID_DIFF, DIFF_KD, "Diff_Kd:", NULL, NULL, 1},
 	{DIFF_KD, DIFF_EN, PID_DIFF, DIFF_KI, "Diff_Ki:", NULL, NULL, 2},
 	{DIFF_KI, DIFF_KP, PID_DIFF, DIFF_EN, "Diff_En:", NULL, NULL, 3},
+
+	{BLOCK3, BLOCK1, IMG_WEIGHT, BLOCK0, "BLOCK0:", NULL, NULL, 0},
+	{BLOCK0, BLOCK2, IMG_WEIGHT, BLOCK1, "BLOCK1:", NULL, NULL, 1},
+	{BLOCK1, BLOCK3, IMG_WEIGHT, BLOCK2, "BLOCK2:", NULL, NULL, 2},
+	{BLOCK2, BLOCK0, IMG_WEIGHT, BLOCK3, "BLOCK3:", NULL, NULL, 3},
 	
 	{MOTOR_KI, MOTOR_KP, PID_MOTOR, MOTOR_SPEED, "Motor_Sp:", NULL, NULL, 3},
 
@@ -64,6 +70,8 @@ void Menu_Num_Show(ListType lst)
 	{
 		if(lst >= STEER_KP && lst <= DIFF_EN)
 			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((float32 *)menuList[lst].data) * 10), Num_Len);
+		else if(lst >= BLOCK0 && lst <= BLOCK3)
+			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((float32 *)menuList[lst].data) * 100), Num_Len);
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((int32 *)menuList[lst].data)), Num_Len);
 		else if(lst >= STEER_MID && lst <= STEER_MID)
@@ -85,6 +93,11 @@ void Menu_Data_Link(void)
 	menuList[DIFF_KD].data = (void *)(&(differCtrler -> Kd));
 	menuList[DIFF_KI].data = (void *)(&(differCtrler -> Ki));
 	menuList[DIFF_EN].data = (void *)(&enhance);
+
+	menuList[BLOCK0].data = (void *)(&weight[0]);
+	menuList[BLOCK1].data = (void *)(&weight[1]);
+	menuList[BLOCK2].data = (void *)(&weight[2]);
+	menuList[BLOCK3].data = (void *)(&weight[3]);
 	
 	menuList[MOTOR_SPEED].data = (void *)(&PWM_Expect);
 
@@ -99,6 +112,8 @@ void Menu_Data_Increase(ListType lst)
 	{
 		if(lst >= STEER_KP && lst <= DIFF_EN)
 			*((float32 *)menuList[lst].data) += 0.1;
+		else if(lst >= BLOCK0 && lst <= BLOCK3)
+		  	*((float32 *)menuList[lst].data) += 0.01;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) += 100;
 		else if(lst >= STEER_MID && lst <= STEER_MID)
@@ -112,6 +127,8 @@ void Menu_Data_Decrease(ListType lst)
 	{
 		if(lst >= STEER_KP && lst <= DIFF_EN)
 			*((float32 *)menuList[lst].data) -= 0.1 ;
+		else if(lst >= BLOCK0 && lst <= BLOCK3)
+		  	*((float32 *)menuList[lst].data) -= 0.01;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) -= 100;
 		else if(lst >= STEER_MID && lst <= STEER_MID)

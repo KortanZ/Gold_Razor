@@ -46,6 +46,7 @@ typedef struct
 
 extern int16 MidAve;
 extern uint8 brokeDownFlag;
+extern float32 weight[];
 
 extern void Get_Img(void);
 extern void Get_MidLine(void);
