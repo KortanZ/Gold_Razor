@@ -18,6 +18,7 @@ RightFlag_Struct RightFlag_Switch;
 
 int16 MidAve = 0;
 uint8 brokeDownFlag = 0;
+float32 weight[4] = {0.01, 0.04, 0.03, 0.02};
 
 void Get_MidLine(void)
 {
@@ -78,10 +79,10 @@ void Get_MidLine(void)
 	RightFlag_Switch.RightTurn = 0;
 	RightFlag_Switch.RightTurnFlag = 0;
 	Get_MidAve(PIC_DateBlock.TrackInf_DataBlock.MidLine  \
-		       , 0.01    \
-		       , 0.04    \
-		       , 0.03    \
-		       , 0.02);
+		       , weight[0]    \
+		       , weight[1]    \
+		       , weight[2]    \
+		       , weight[3]);
 }
 
 uint8 Bef_Scan(uint8 *pic_buff)

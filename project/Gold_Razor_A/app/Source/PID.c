@@ -11,7 +11,8 @@ float32 Differ_Controller(PIDStruct *, float32 , float32 );
 PIDStruct *speedCtrler;
 PIDStruct *steerCtrler;
 PIDStruct *differCtrler;
-float32 enhance = 2.2;
+
+float32 enhance = 2.1;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
