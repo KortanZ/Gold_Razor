@@ -7,6 +7,7 @@
 #include "PID.h"
 #include "Eagle_ov7725.h"
 #include "Menu.h"
+#include "ImgProcess.h"
 
 /*     main function entrance    */
 
@@ -29,6 +30,9 @@ void main(void)
 	Menu_Data_Link();
 	Menu_Show();
 	EnableInterrupts;
-	while (1);
+	while (1)
+	{
+		Get_Img();
+	}
 }
 

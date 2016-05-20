@@ -6,7 +6,7 @@ reg_s ov7725_eagle_reg[] =
 {
     //¼Ä´æÆ÷£¬¼Ä´æÆ÷Öµ´Î
     { OV7725_COM4, 0xC1 },   //PLLÊ±ÖÓÉèÖÃ:8xÊ±ÖÓ   AECÉèÖÃ:Full Window
-    { OV7725_CLKRC, 0x00 },   //Ê¹ÓÃÍâ²¿Ê±ÖÓ
+    { OV7725_CLKRC, 0x02 },   //Ê¹ÓÃÍâ²¿Ê±ÖÓ
     { OV7725_COM2, 0x03 },   //ÅäÖÃÊä³öÇý¶¯ÄÜÁ¦:4xÇý¶¯ÄÜÁ¦
     { OV7725_COM3, 0xD0 },   //7:´¹Ö±·­×ª¿ª¹Ø 6:Ë®Æ½¾µÏñ¿ª¹Ø
     { OV7725_COM7, 0x40 },   //SCCB : No Change
@@ -73,7 +73,7 @@ reg_s ov7725_eagle_reg[] =
     { OV7725_BDMStep, 0x03 },
     { OV7725_SDE, 0x04 },
     { OV7725_BRIGHT, 0x00 },
-    { OV7725_CNST, 0x3C },
+    { OV7725_CNST, 0x46 },
     { OV7725_SIGN, 0x06 },
     { OV7725_UVADJ0, 0x11 },
     { OV7725_UVADJ1, 0x02 },
@@ -98,6 +98,7 @@ uint8 Camera_init(void)
 	GPIO_ov7725_init();
 	DMA_ov7725_init();
 
+    ov7725_eagle_img_flag = IMG_START;
 
     return 0;
 }

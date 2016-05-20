@@ -26,6 +26,21 @@ typedef struct
 	TrackInf_DataStruct TrackInf_DataBlock;
 }PIC_DateStruct;
 
+typedef struct
+{
+	uint8 LeftCrossStart_H;
+	uint8 LeftCrossStart_L;
+	uint8 LeftCrossEnd_H;
+	uint8 LeftCrossEnd_L;
+
+	uint8 RightCrossStart_H;
+	uint8 RightCrossStart_L;
+	uint8 RightCrossEnd_H;
+	uint8 RightCrossEnd_L;
+
+	uint8 SpeCross;
+} CrossInf_Struct;
+
 typedef struct 
 {
 	_Bool LeftBlackLost;
@@ -33,6 +48,11 @@ typedef struct
 	_Bool LeftLost;
 	uint8 LeftTurn;
 	_Bool LeftTurnFlag;
+
+	_Bool LeftIncrease;
+	_Bool Leftreduce;
+	_Bool Left_1Con;
+	_Bool LeftCrossFlag;
 }LeftFlag_Struct;
 
 typedef struct 
@@ -42,6 +62,11 @@ typedef struct
 	_Bool RightLost;
 	uint8 RightTurn;
 	_Bool RightTurnFlag;
+
+	_Bool RightIncrease;
+	_Bool Rightreduce;
+	_Bool Right_1Con;
+	_Bool RightCrossFlag;	
 }RightFlag_Struct;
 
 extern int16 MidAve;

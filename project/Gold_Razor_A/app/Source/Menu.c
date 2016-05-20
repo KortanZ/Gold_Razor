@@ -94,10 +94,10 @@ void Menu_Data_Link(void)
 	menuList[DIFF_KI].data = (void *)(&(differCtrler -> Ki));
 	menuList[DIFF_EN].data = (void *)(&enhance);
 
-	menuList[BLOCK0].data = (void *)(&weight[0]);
-	menuList[BLOCK1].data = (void *)(&weight[1]);
-	menuList[BLOCK2].data = (void *)(&weight[2]);
-	menuList[BLOCK3].data = (void *)(&weight[3]);
+//	menuList[BLOCK0].data = (void *)(&weight[0]);
+//	menuList[BLOCK1].data = (void *)(&weight[1]);
+//	menuList[BLOCK2].data = (void *)(&weight[2]);
+//	menuList[BLOCK3].data = (void *)(&weight[3]);
 	
 	menuList[MOTOR_SPEED].data = (void *)(&PWM_Expect);
 

@@ -12,7 +12,7 @@ PIDStruct *speedCtrler;
 PIDStruct *steerCtrler;
 PIDStruct *differCtrler;
 
-float32 enhance = 2.1;
+float32 enhance = 2;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
@@ -43,9 +43,9 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 
 	/*          Differ PID Control  Block      */
 	float32 Differ_Temp = 0;
-	Differ_Temp = enhance * Differ_Controller(differCtrler , \
-					 					steerMidValue , \
-	 				 					MidAve);
+	// Differ_Temp = enhance * Differ_Controller(differCtrler , \
+	// 				 					steerMidValue , \
+	//  				 					MidAve);
 	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;
 	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp;
 
@@ -68,8 +68,8 @@ void SpeedCtrler_Init(void)
 	}
 	else
 	{
-		speedCtrler -> Kp = 3.2;
-		speedCtrler -> Kd = 0.5;
+		speedCtrler -> Kp = 8.5;
+		speedCtrler -> Kd = 0;
 		speedCtrler -> Ki = 0.8;
 		for (i = 0; i < 3; ++i)
 		{
@@ -111,7 +111,7 @@ void SteerCtrler_Init(void)
 	else
 	{
 		steerCtrler -> Kp = 3.4;
-		steerCtrler -> Kd = 0.8;
+		steerCtrler -> Kd = 1.2;
 		steerCtrler -> Ki = 0;
 		for(i = 0; i < 3; i++)
 		{
@@ -155,8 +155,8 @@ void DifferCtrler_Init(void)
 	}
 	else
 	{
-		differCtrler -> Kp = 29;
-		differCtrler -> Kd = 6;
+		differCtrler -> Kp = 26;
+		differCtrler -> Kd = 3.2;
 		differCtrler -> Ki = 0;
 		for(i = 0;i < 3; i++)
 		{

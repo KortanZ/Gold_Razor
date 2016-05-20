@@ -11,6 +11,7 @@
 #include "DebugerDriver.h"
 #include "Oled.h"
 #include "PID.h"
+#include "VirtualOsc.h"
 
 uint8 pitCounter=0; //时序控制变量
 uint8 imgSendFlag = 0;
@@ -28,7 +29,7 @@ void MainCtrl_Pit_Init(void)
 	PIT_InitTypeDef pit3_init_struct;
 	//配置PIT3参数
 	pit3_init_struct.PIT_Pitx = PIT3;
-	pit3_init_struct.PIT_PeriodMs = 1;//定时周期
+	pit3_init_struct.PIT_PeriodMs = 20;//定时周期
 	pit3_init_struct.PIT_PeriodUs = 0;
 	pit3_init_struct.PIT_PeriodS = 0;
 	pit3_init_struct.PIT_Isr = Main_Isr;  //设置中断函数
@@ -86,31 +87,46 @@ void NVIC_Init(void)
 
 void Main_Isr(void)
 {
-	switch(++pitCounter)
-	{
-		case 1 : First_Process();break;
+	First_Process();
+	// switch(++pitCounter)
+	// {
+	// 	//case 1 : First_Process();break;
 
-		case 15 : Second_Process(); break;
+	// 	case 20 : Second_Process(); break;
+	// }
+
+	if (!brokeDownFlag)
+	{
+		Second_Process();
 	}
+	
 }
 
 /*    process function prototype     */
 void First_Process(void)
 {
-	Get_Img();
+	// Get_Img();
+	//Steer_Controller(steerCtrler, steerMidValue, MidAve);
 	if(imgSendFlag)
 	{
     	vcan_sendimg(imgbuff, CAMERA_SIZE);
 	}
-	Get_MidLine();
-	OLED_ShowString(0,0,"MidAve");
-	OLED_ShowNum(70,0,MidAve,3);
+	// if (IMG_FAIL == ov7725_eagle_img_flag)
+	// {
+	// 	ov7725_eagle_img_flag = IMG_START;           
+	// 	PORTA->ISFR = 0xFFFFFFFFu;                
+	// 	enable_irq(PORTA_IRQn);                 
+	// }
+	// Get_MidLine();
+	// OLED_ShowString(0,0,"MidAve");
+	// OLED_ShowNum(70,0,MidAve,3);
 }
+
 void Second_Process(void)
 {
 	int16 leftPulse, rightPulse;
 
-	pitCounter=0;
+	pitCounter = 0;
 
 	leftPulse = Encoder_GetPulseNum(ENCODER_LEFT);
 	rightPulse = Encoder_GetPulseNum(ENCODER_RIGHT);
@@ -118,14 +134,21 @@ void Second_Process(void)
 	if(leftPulse < 0)
 		rightPulse = -rightPulse;
 
-	Steer_Controller(steerCtrler , \
-					 steerMidValue , \
-					 MidAve);
+	// Steer_Controller(steerCtrler , \
+	// 				 steerMidValue , \
+	// 				 MidAve);
 
 	Speed_Controller(speedCtrler, \
 					 PWM_To_Pulse(PWM_Expect), \
 					 (leftPulse + rightPulse) / 2.0);
+
+	VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);
+	VirtualSignal[1] = (leftPulse + rightPulse) / 2.0;
+    // VirtualSignal[2] = rightPulse;
+    // VirtualSignal[3] = PWM_Expect;
+    OutPut_Data();
 }
+
 void Third_Process(void)
 {
 
