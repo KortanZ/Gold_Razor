@@ -12,7 +12,7 @@
 /*     main function entrance    */
 
 void main(void)
-{
+{  
 	DisableInterrupts;
 	OLED_Init();
 	OLED_Clear();

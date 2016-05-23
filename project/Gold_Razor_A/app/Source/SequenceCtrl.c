@@ -12,6 +12,7 @@
 #include "Oled.h"
 #include "PID.h"
 #include "VirtualOsc.h"
+#include "math.h"
 
 uint8 pitCounter=0; //时序控制变量
 uint8 imgSendFlag = 0;
@@ -105,21 +106,27 @@ void Main_Isr(void)
 /*    process function prototype     */
 void First_Process(void)
 {
-	// Get_Img();
-	//Steer_Controller(steerCtrler, steerMidValue, MidAve);
+	int16 invSlope;
 	if(imgSendFlag)
 	{
     	vcan_sendimg(imgbuff, CAMERA_SIZE);
 	}
-	// if (IMG_FAIL == ov7725_eagle_img_flag)
-	// {
-	// 	ov7725_eagle_img_flag = IMG_START;           
-	// 	PORTA->ISFR = 0xFFFFFFFFu;                
-	// 	enable_irq(PORTA_IRQn);                 
-	// }
-	// Get_MidLine();
-	// OLED_ShowString(0,0,"MidAve");
-	// OLED_ShowNum(70,0,MidAve,3);
+	// VirtualSignal[0] = (int32)(MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9));
+	// OutPut_Data();
+	// printf("%d\n", MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9));
+
+	invSlope = MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 8);
+	if(fabs(invSlope) < 4 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
+	{
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Straight");
+	}
+	else if(fabs(invSlope) > 8 || LeftFlag_Switch.LeftLost || RightFlag_Switch.RightLost)
+	{
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Curv");
+	}
+
 }
 
 void Second_Process(void)
@@ -142,11 +149,11 @@ void Second_Process(void)
 					 PWM_To_Pulse(PWM_Expect), \
 					 (leftPulse + rightPulse) / 2.0);
 
-	VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);
-	VirtualSignal[1] = (leftPulse + rightPulse) / 2.0;
-    // VirtualSignal[2] = rightPulse;
-    // VirtualSignal[3] = PWM_Expect;
-    OutPut_Data();
+	// VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);
+	// VirtualSignal[1] = (leftPulse + rightPulse) / 2.0;
+ //    // VirtualSignal[2] = rightPulse;
+ //    // VirtualSignal[3] = PWM_Expect;
+ //    OutPut_Data();
 }
 
 void Third_Process(void)

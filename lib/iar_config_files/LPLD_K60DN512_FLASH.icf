@@ -10,38 +10,38 @@ define symbol __ICFEDIT_region_RAM_start__ = 0x1FFF0410;
 define symbol __ICFEDIT_region_RAM_end__   = 0x20000000;
 /*-Sizes-*/
 define symbol __ICFEDIT_size_cstack__ = 0x1000;
-/*define symbol __ICFEDIT_size_heap__   = 0x200;*/
-define symbol __ICFEDIT_size_heap__   = 0xF000;
+define symbol __ICFEDIT_size_heap__   = 0x200;
+/*define symbol __ICFEDIT_size_heap__   = 0xF000;*/
 /**** End of ICF editor section. ###ICF###*/
 
-/**** MK60DN512ZVLQ10 存储空间分配 ****/
-/*MK60DN512ZVLQ10 的RAM 分为SRAM_L和SRAM_U 共128KB*/
-/*RAM 寻址空间必须连续 如果不连续内核会进入异常模式*/
-/*SRAM_L 从 0x1fff,0000 到 0x1fff,ffff 共64KB;(此部分已在ICF editor中定义)*/
-/*SRAM_U 从 0x2000,0000 到 0x2000,ffff 共64KB;*/
+/**** MK60DN512ZVLQ10 麓忙麓垄驴脮录盲路脰脜盲 ****/
+/*MK60DN512ZVLQ10 碌脛RAM 路脰脦陋SRAM_L潞脥SRAM_U 鹿虏128KB*/
+/*RAM 脩掳脰路驴脮录盲卤脴脨毛脕卢脨酶 脠莽鹿没虏禄脕卢脨酶脛脷潞脣禄谩陆酶脠毛脪矛鲁拢脛拢脢陆*/
+/*SRAM_L 麓脫 0x1fff,0000 碌陆 0x1fff,ffff 鹿虏64KB;(麓脣虏驴路脰脪脩脭脷ICF editor脰脨露篓脪氓)*/
+/*SRAM_U 麓脫 0x2000,0000 碌陆 0x2000,ffff 鹿虏64KB;*/
 define symbol __region_RAM2_start__        = 0x20000000;
 define symbol __region_RAM2_end__          = 0x20010000;
 
-/*配置SP和PC 用于启动程序*/
-/*默认分配的中断向量表起始位置为ROM中的   0x00000000 */
+/*脜盲脰脙SP潞脥PC 脫脙脫脷脝么露炉鲁脤脨貌*/
+/*脛卢脠脧路脰脜盲碌脛脰脨露脧脧貌脕驴卤铆脝冒脢录脦禄脰脙脦陋ROM脰脨碌脛   0x00000000 */
 define exported symbol __VECTOR_TABLE = 0x00000000;
-/*程序会将中断向量表从ROM中的0x00000000复制到RAM中起始地址为 0x1fff0000*/
+/*鲁脤脨貌禄谩陆芦脰脨露脧脧貌脕驴卤铆麓脫ROM脰脨碌脛0x00000000赂麓脰脝碌陆RAM脰脨脝冒脢录碌脴脰路脦陋 0x1fff0000*/
 define exported symbol __VECTOR_RAM   = 0x1fff0000;
-/*指定SP指针的起始位置 0x2000FFF8*/
-/*将SP指针指向RAM的最顶端*/
+/*脰赂露篓SP脰赂脮毛碌脛脝冒脢录脦禄脰脙 0x2000FFF8*/
+/*陆芦SP脰赂脮毛脰赂脧貌RAM碌脛脳卯露楼露脣*/
 define exported symbol __BOOT_STACK_ADDRESS = __region_RAM2_end__ - 8;	//0x2000FFF8;
 
-/*定义代码段起始区域为0x000410  */
-/*0x000   --- 0x3FF 为中断向量存储区*/
-/*0x400   --- 0x40F 为FLASH版本信息不能破坏*/
-/*0x410 以后为实际的代码段 */
+/*露篓脪氓麓煤脗毛露脦脝冒脢录脟酶脫貌脦陋0x000410  */
+/*0x000   --- 0x3FF 脦陋脰脨露脧脧貌脕驴麓忙麓垄脟酶*/
+/*0x400   --- 0x40F 脦陋FLASH掳忙卤戮脨脜脧垄虏禄脛脺脝脝禄碌*/
+/*0x410 脪脭潞贸脦陋脢碌录脢碌脛麓煤脗毛露脦 */
 define symbol __code_start__ = 0x00000410;
 
-/*分配4G的寻址空间*/
+/*路脰脜盲4G碌脛脩掳脰路驴脮录盲*/
 define memory mem with size = 4G;
 define region ROM_region   = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
 define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__] | mem:[from __region_RAM2_start__ to __region_RAM2_end__];
-/*设置堆栈的大小 8字节对齐*/
+/*脡猫脰脙露脩脮禄碌脛麓贸脨隆 8脳脰陆脷露脭脝毛*/
 define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
 define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
 
@@ -53,13 +53,13 @@ do not initialize   { section .noinit };
 define block CodeRelocate { section .textrw_init };
 define block CodeRelocateRam { section .textrw };
 
-/*将中断向量表起始地址放在 只读段.intvec，也就是对应ROM区的起始地址0x00000000*/
+/*陆芦脰脨露脧脧貌脕驴卤铆脝冒脢录碌脴脰路路脜脭脷 脰禄露脕露脦.intvec拢卢脪虏戮脥脢脟露脭脫娄ROM脟酶碌脛脝冒脢录碌脴脰路0x00000000*/
 place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
-/*定义代码执行地址为 0x0000000*/
+/*露篓脪氓麓煤脗毛脰麓脨脨碌脴脰路脦陋 0x0000000*/
 place at address mem:__code_start__ { readonly section .noinit };
-/*将编译后的只读readonly变量，和CodeRelocate块存到ROM区中，编译器动态分配*/
+/*陆芦卤脿脪毛潞贸碌脛脰禄露脕readonly卤盲脕驴拢卢潞脥CodeRelocate驴茅麓忙碌陆ROM脟酶脰脨拢卢卤脿脪毛脝梅露炉脤卢路脰脜盲*/
 place in ROM_region   { readonly, block CodeRelocate};
-/*将编译后的可读可写readwrite变量，和CodeRelocateRam块一节堆和栈存到RAM区中，编译器动态分配*/
+/*陆芦卤脿脪毛潞贸碌脛驴脡露脕驴脡脨麓readwrite卤盲脕驴拢卢潞脥CodeRelocateRam驴茅脪禄陆脷露脩潞脥脮禄麓忙碌陆RAM脟酶脰脨拢卢卤脿脪毛脝梅露炉脤卢路脰脜盲*/
 place in RAM_region   { readwrite, block CodeRelocateRam,
                         block CSTACK, block HEAP };
 /************************************************************************/

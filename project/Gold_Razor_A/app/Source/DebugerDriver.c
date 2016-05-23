@@ -34,14 +34,14 @@ void LED_Debuger_Init(void)
 	gpioInitStruct.GPIO_PTx = PTA;
 	gpioInitStruct.GPIO_Pins = GPIO_Pin17;
 	gpioInitStruct.GPIO_Dir = DIR_OUTPUT;
-	gpioInitStruct.GPIO_Output = OUTPUT_H;
+	gpioInitStruct.GPIO_Output = OUTPUT_L;
 	gpioInitStruct.GPIO_PinControl = IRQC_DIS;
 	LPLD_GPIO_Init(gpioInitStruct);   /* */
 	//---------------------Razor_LED----------------
 	gpioInitStruct.GPIO_PTx = PTE;
 	gpioInitStruct.GPIO_Pins = GPIO_Pin10;
 	gpioInitStruct.GPIO_Dir = DIR_OUTPUT;
-	gpioInitStruct.GPIO_Output = OUTPUT_L;
+	gpioInitStruct.GPIO_Output = OUTPUT_H;
 	gpioInitStruct.GPIO_PinControl = IRQC_DIS;
 	LPLD_GPIO_Init(gpioInitStruct);
 }
@@ -119,39 +119,63 @@ void Keyboard_Isr(void)
 	//确定
 	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin14))
   	{
-  		if(NULL != menuList[currentList].function)
+	  	Keybord_Delay();
+		if(PTC14_I == 0)
+		{
+			if(NULL != menuList[currentList].function)
   			(*menuList[currentList].function)();
-  		currentList = menuList[currentList].child;
+  			currentList = menuList[currentList].child;		
+		}  		
   	}
 
   	//返回
   	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin15))
   	{
-  		currentList = menuList[currentList].parent;
+	  	Keybord_Delay();
+		if(PTC15_I == 0)
+		{
+		  	currentList = menuList[currentList].parent;
+		}  		
   	}
 
   	//向下翻
   	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin10))
 	{
-		currentList = menuList[currentList].next;
+	  	Keybord_Delay();
+		if(PTD10_I == 0)
+		{
+		 	currentList = menuList[currentList].next; 
+		}		
 	}
 
 	//值减
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin11))
 	{
-		Menu_Data_Decrease(currentList);
+	  	Keybord_Delay();
+		if(PTD11_I == 0)
+		{
+		 	Menu_Data_Decrease(currentList); 
+		}
 	}
 
 	//向上翻
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin12))
 	{
-		currentList = menuList[currentList].previous;
+	  	Keybord_Delay();
+		if(PTD12_I == 0)
+		{
+		 	currentList = menuList[currentList].previous; 
+		}
 	}
 
 	//值增
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin13))
 	{
-		Menu_Data_Increase(currentList);
+	  	Keybord_Delay();
+		if(PTD13_I == 0)
+		{
+		 	Menu_Data_Increase(currentList); 
+		}
 	}
 	Menu_Show();
 }

@@ -72,9 +72,17 @@ typedef struct
 extern int16 MidAve;
 extern uint8 brokeDownFlag;
 extern float32 weight[];
+extern float32 midLine[];
+extern PIC_DateStruct PIC_DateBlock;
+extern LeftFlag_Struct LeftFlag_Switch;
+extern RightFlag_Struct RightFlag_Switch;
 
 extern void Get_Img(void);
 extern void Get_MidLine(void);
+float32 Calc_Curv(uint8 *MidLine_Buff, uint8 index);
+float32 Carmark_InvSqrt(float32 x);
+float32 InvSlope_Calc(uint8 *MidLine_Buff, uint8 y1, uint8 y2);
+int16 MidError_InvSlope(uint8 *MidLine_Buff, uint8 y);
 
 
 #endif

@@ -120,7 +120,7 @@
 /* 
  * 选择调试信息输出所有的串口号和波特率
  */
-#define TERM_PORT           UART5
+#define TERM_PORT           UART2
 #define TERMINAL_BAUD       115200
 
 /*

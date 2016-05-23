@@ -6,13 +6,13 @@
 #include "ImgProcess.h"
 #include "SteerDriver.h"
 
-float32 Differ_Controller(PIDStruct *, float32 , float32 );
+float32 Differ_Controller(PIDStruct *, float32, float32);
 
 PIDStruct *speedCtrler;
 PIDStruct *steerCtrler;
 PIDStruct *differCtrler;
 
-float32 enhance = 2;
+float32 enhance = 0;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
@@ -43,9 +43,9 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 
 	/*          Differ PID Control  Block      */
 	float32 Differ_Temp = 0;
-	// Differ_Temp = enhance * Differ_Controller(differCtrler , \
-	// 				 					steerMidValue , \
-	//  				 					MidAve);
+	Differ_Temp = enhance * Differ_Controller(differCtrler , \
+					 					steerMidValue , \
+	 				 					MidAve);
 	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;
 	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp;
 
@@ -68,8 +68,8 @@ void SpeedCtrler_Init(void)
 	}
 	else
 	{
-		speedCtrler -> Kp = 8.5;
-		speedCtrler -> Kd = 0;
+		speedCtrler -> Kp = 4.5;
+		speedCtrler -> Kd = 0.2;
 		speedCtrler -> Ki = 0.8;
 		for (i = 0; i < 3; ++i)
 		{
@@ -87,17 +87,13 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 	SteerCon_Data -> error[1] = SteerCon_Data -> error[0];
 	SteerCon_Data -> error[0] = real - expect;
 
-	incrementU = (SteerCon_Data -> Kp) * ((SteerCon_Data -> error[0])           \
-										   - (SteerCon_Data -> error[1]))  		\
-			   + (SteerCon_Data -> Kd) * ((SteerCon_Data -> error[0])      		\
-											- 2 * (SteerCon_Data -> error[1])   \
-											+ (SteerCon_Data -> error[2]));
+	incrementU = (SteerCon_Data -> Kp) * ((SteerCon_Data -> error[0]))           
+			   + (SteerCon_Data -> Kd) * ((SteerCon_Data -> error[0]) - (SteerCon_Data -> error[1]));
 
-	SteerCon_Data -> u[2] = SteerCon_Data -> u[1];
-	SteerCon_Data -> u[1] = SteerCon_Data -> u[0];
-	SteerCon_Data -> u[0] = SteerCon_Data -> u[1] + incrementU;
+	SteerCon_Data -> u[0] = STEER_MID_DUTY + incrementU;
 
 	Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
+	//Steer_Duty_Change(STEER_MID_DUTY);
 }
 void SteerCtrler_Init(void)
 {
@@ -110,8 +106,8 @@ void SteerCtrler_Init(void)
 	}
 	else
 	{
-		steerCtrler -> Kp = 3.4;
-		steerCtrler -> Kd = 1.2;
+		steerCtrler -> Kp = 1.8;
+		steerCtrler -> Kd = 0;
 		steerCtrler -> Ki = 0;
 		for(i = 0; i < 3; i++)
 		{
@@ -139,8 +135,8 @@ float32 Differ_Controller(PIDStruct *DifferCon_Data, float32 expect, float32 rea
 	DifferCon_Data -> u[1] = DifferCon_Data -> u[0];
 	DifferCon_Data -> u[0] = DifferCon_Data -> u[1] + incrementU;
 
-	(DifferCon_Data -> u[0] > 3000) ? (DifferCon_Data -> u[0] = 3000) : (NULL);
-	(DifferCon_Data -> u[0] < -3000) ? (DifferCon_Data -> u[0] = -3000) : (NULL);
+	(DifferCon_Data -> u[0] > 4000) ? (DifferCon_Data -> u[0] = 4000) : (NULL);
+	(DifferCon_Data -> u[0] < -4000) ? (DifferCon_Data -> u[0] = -4000) : (NULL);
 
 	return (DifferCon_Data -> u[0]);
 }
@@ -155,8 +151,8 @@ void DifferCtrler_Init(void)
 	}
 	else
 	{
-		differCtrler -> Kp = 26;
-		differCtrler -> Kd = 3.2;
+		differCtrler -> Kp = 6;
+		differCtrler -> Kd = 1;
 		differCtrler -> Ki = 0;
 		for(i = 0;i < 3; i++)
 		{

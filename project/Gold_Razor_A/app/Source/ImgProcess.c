@@ -31,7 +31,7 @@ void clearflag();
 
 int16 MidAve = 0;
 uint8 brokeDownFlag = 0;
-float32 weight[4] = {0.01, 0.04, 0.03, 0.02};
+float32 weight[4] = {0.02, 0.04, 0.02, 0.02};
 
 void Get_MidLine(void)
 {
@@ -343,34 +343,24 @@ void Get_MidAve(uint8 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,fl
 
 void Get_Img(void)
 {
-    //ov7725_eagle_img_flag = IMG_START;                   //
-    PORTA->ISFR = ~0;
+    ov7725_eagle_img_flag = IMG_START;                   //
+	PORTA->ISFR = ~0;
     enable_irq((IRQn_Type)(PORTA_IRQn));
-    // while (ov7725_eagle_img_flag != IMG_FINISH)
-    // {
-    //     if (ov7725_eagle_img_flag == IMG_FAIL)            //
-    //     {
-    //         ov7725_eagle_img_flag = IMG_START;           //
-    //         PORTA->ISFR = 0xFFFFFFFFu;                //
-    //         enable_irq(PORTA_IRQn);                 //
-    //     }
-    // }
-    if (IMG_FINISH == ov7725_eagle_img_flag)
+    while (ov7725_eagle_img_flag != IMG_FINISH)
     {
-    	Get_MidLine();
-    	Steer_Controller(steerCtrler, steerMidValue, MidAve);
-    	OLED_ShowString(0,0,"MidAve");
-    	OLED_ShowNum(70,0,MidAve,3);
-    	ov7725_eagle_img_flag = IMG_START;
+        if (ov7725_eagle_img_flag == IMG_FAIL)            //
+        {
+            ov7725_eagle_img_flag = IMG_START;           //
+            PORTA->ISFR = 0xFFFFFFFFu;                //
+            enable_irq(PORTA_IRQn);                 //
+        }
     }
-    
-    if (ov7725_eagle_img_flag == IMG_FAIL) 
-    {
-        ov7725_eagle_img_flag = IMG_START; 
-        PORTA->ISFR = 0xFFFFFFFFu;         
-        enable_irq(PORTA_IRQn);            
-    }
+	Get_MidLine();
+	Steer_Controller(steerCtrler, steerMidValue, MidAve);
+	OLED_ShowString(0,0,"MidAve");
+	OLED_ShowNum(70,0,MidAve,3);
 }
+
 void Cross_Check(int8 Row_buff)
 {
 	if(39 == Row_buff) return;
@@ -674,3 +664,64 @@ void clearflag(CrossInf_Struct *CrossInf_Databuff)
 	RightFlag_Switch.Right_1Con = 0;
 }
 
+float32 Calc_Curv(uint8 *MidLine_Buff, uint8 index)
+{
+	float32 det, result, mod;
+	int16 matrix[2][3];
+
+	matrix[0][0] = 3 * (index - 1) + 1;
+	matrix[1][0] = MidLine_Buff[index - 1];
+
+	matrix[0][1] = 3 * (index) + 1;
+	matrix[1][1] = MidLine_Buff[index];
+
+	matrix[0][2] = 3 * (index + 1) + 1;
+	matrix[1][2] = MidLine_Buff[index + 1];
+
+	det = (matrix[0][2] - matrix[0][1]) * (matrix[1][0] - matrix[1][1])
+		 - (matrix[0][0] - matrix[0][1]) * (matrix[1][2] - matrix[1][1]); // det
+
+	mod = Carmark_InvSqrt(
+				(pow((matrix[0][0] - matrix[0][1]), 2) + pow((matrix[1][0] - matrix[1][1]), 2)) 
+				* (pow((matrix[0][0] - matrix[0][2]), 2) + pow((matrix[1][0] - matrix[1][2]), 2))
+				* (pow((matrix[0][1] - matrix[0][2]), 2) + pow((matrix[1][1] - matrix[1][2]), 2))
+				);
+
+	if (fabs(mod - 0) < 1e-4)
+	{
+		mod = 1e-4;
+	}
+
+	result = (2 * det) * mod;
+
+	return result;
+}
+
+float32 Carmark_InvSqrt(float32 x)
+{
+	float xhalf = 0.5f * x;
+	int i = *(int *) & x;
+	i = 0x5f3759df - (i >> 1); // 计算第一个近似根
+	x = *(float *) &i;
+	x = x * (1.5f - xhalf * x * x); // 牛顿迭代法
+	return x;
+
+}
+
+float32 InvSlope_Calc(uint8 *MidLine_Buff, uint8 y1, uint8 y2)
+{
+	float32 invSlope;
+
+	invSlope = (MidLine_Buff[y1] - MidLine_Buff[y2]) / (3 * (y1 - y2));
+
+	return invSlope;
+}
+
+int16 MidError_InvSlope(uint8 *MidLine_Buff, uint8 y)
+{
+	int16 midErrInvSlp;
+
+	midErrInvSlp = (MidLine_Buff[y - 5] - steerMidValue) - 2 * (MidLine_Buff[y] - steerMidValue) + (MidLine_Buff[y + 5] - steerMidValue);
+
+	return midErrInvSlp;
+}
