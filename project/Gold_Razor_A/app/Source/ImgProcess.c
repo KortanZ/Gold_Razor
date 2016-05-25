@@ -10,6 +10,7 @@
 #include "Oled.h"
 #include "PID.h"
 #include "SteerDriver.h"
+#include "MotorDriver.h"
 
 PIC_DateStruct PIC_DateBlock;
 CrossInf_Struct CrossInf_Data;
@@ -356,6 +357,8 @@ void Get_Img(void)
         }
     }
 	Get_MidLine();
+	Mode_Change(steerCtrler);
+	
 	Steer_Controller(steerCtrler, steerMidValue, MidAve);
 	OLED_ShowString(0,0,"MidAve");
 	OLED_ShowNum(70,0,MidAve,3);
@@ -717,11 +720,45 @@ float32 InvSlope_Calc(uint8 *MidLine_Buff, uint8 y1, uint8 y2)
 	return invSlope;
 }
 
-int16 MidError_InvSlope(uint8 *MidLine_Buff, uint8 y)
+int8 Is_Straight(uint8 *MidLine_Buff, uint8 y)
 {
+	int8 isStraight = 1;
 	int16 midErrInvSlp;
 
 	midErrInvSlp = (MidLine_Buff[y - 5] - steerMidValue) - 2 * (MidLine_Buff[y] - steerMidValue) + (MidLine_Buff[y + 5] - steerMidValue);
 
-	return midErrInvSlp;
+	if(fabs(midErrInvSlp) < 4 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
+	{
+		// OLED_ClearLine(5);
+		// OLED_ShowString(0, 5, "Straight");
+		isStraight = 1;
+	}
+	else if(fabs(midErrInvSlp) > 8 || LeftFlag_Switch.LeftLost || RightFlag_Switch.RightLost)
+	{
+		// OLED_ClearLine(5);
+		// OLED_ShowString(0, 5, "Curv");
+		isStraight = 0;
+	}
+
+	return isStraight;
+}
+
+void Mode_Change(PIDStruct *steerCtrler)
+{
+	if (Is_Straight(PIC_DateBlock.TrackInf_DataBlock.MidLine, 7))
+	{
+		steerCtrler -> Kp = 1.1;
+		steerCtrler -> Kd = 0.25;
+		PWM_Expect = 3500;
+		Motor_Duty_Change(MOTOR_LEFT, PWM_Expect);
+		Motor_Duty_Change(MOTOR_RIGHT, PWM_Expect);
+	}
+	else
+	{
+		steerCtrler -> Kp = 2.1;
+		steerCtrler -> Kd = 0.25;
+		PWM_Expect = 1500;
+		Motor_Duty_Change(MOTOR_LEFT, PWM_Expect + 100);
+		Motor_Duty_Change(MOTOR_RIGHT, PWM_Expect + 100);
+	}
 }

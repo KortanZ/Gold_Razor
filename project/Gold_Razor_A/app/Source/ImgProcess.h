@@ -8,6 +8,7 @@
 
 #include "common.h"
 #include "Eagle_ov7725.h"
+#include "PID.h"
 
 #define Black 0
 #define White 255
@@ -82,7 +83,8 @@ extern void Get_MidLine(void);
 float32 Calc_Curv(uint8 *MidLine_Buff, uint8 index);
 float32 Carmark_InvSqrt(float32 x);
 float32 InvSlope_Calc(uint8 *MidLine_Buff, uint8 y1, uint8 y2);
-int16 MidError_InvSlope(uint8 *MidLine_Buff, uint8 y);
+int8 Is_Straight(uint8 *MidLine_Buff, uint8 y);
+void Mode_Change(PIDStruct *steerCtrler);
 
 
 #endif
