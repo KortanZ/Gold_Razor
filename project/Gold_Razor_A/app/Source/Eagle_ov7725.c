@@ -258,10 +258,6 @@ void RazorDMA_Isr(void)
 {
     ov7725_eagle_img_flag = IMG_FINISH;
 
-    //img_extract(img, imgbuff, CAMERA_SIZE);
-    //imgEdge(img);
-    //vcan_sendimg(imgbuff, CAMERA_SIZE);
-    //vcan_sendimg(img, CAMERA_W * CAMERA_H);                  //·¢ËÍµ½ÉÏÎ»»ú
     DMA0->INT |= 0x1u << 0;
 }
 
