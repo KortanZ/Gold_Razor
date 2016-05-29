@@ -111,6 +111,8 @@ void First_Process(void)
 	{
     	vcan_sendimg(imgbuff, CAMERA_SIZE);
 	}
+
+	Keyboard_Locker();
 	// VirtualSignal[0] = (int32)(MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9));
 	// OutPut_Data();
 	// printf("%d\n", MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9));

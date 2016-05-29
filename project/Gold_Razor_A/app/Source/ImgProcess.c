@@ -747,18 +747,14 @@ void Mode_Change(PIDStruct *steerCtrler)
 {
 	if (Is_Straight(PIC_DateBlock.TrackInf_DataBlock.MidLine, 7))
 	{
-		steerCtrler -> Kp = 1.1;
-		steerCtrler -> Kd = 0.25;
-		PWM_Expect = 3500;
-		Motor_Duty_Change(MOTOR_LEFT, PWM_Expect);
-		Motor_Duty_Change(MOTOR_RIGHT, PWM_Expect);
+		steerCtrler -> para = steerCtrlerStPara;
+		differCtrler -> para = differCtrlerStPara;
+		PWM_Expect = PWM_Expect_Base + 1000;
 	}
 	else
 	{
-		steerCtrler -> Kp = 2.1;
-		steerCtrler -> Kd = 0.25;
-		PWM_Expect = 1500;
-		Motor_Duty_Change(MOTOR_LEFT, PWM_Expect + 100);
-		Motor_Duty_Change(MOTOR_RIGHT, PWM_Expect + 100);
+		steerCtrler -> para = steerCtrlerCurvPara;
+		differCtrler -> para = differCtrlerCurvPara;
+		PWM_Expect = PWM_Expect_Base - 1000;
 	}
 }

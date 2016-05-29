@@ -17,12 +17,12 @@
  * 但应在遵守此协议的基础上，开放源代码、不得出售代码本身。
  * 拉普兰德不负责由于使用本代码所带来的任何事故、法律责任或相关不良影响。
  * 拉普兰德无义务解释、说明本代码的具体原理、功能、实现方法。
- * 除非拉普兰德[LPLD]授权，开发者不得将本代码用于商业产品。
+ * 除非拉普兰德[LPLD]授权，开发者不得将本代码用于商业产品。 
  *
  * 版权说明:
  *  SDHC模块驱动程序摘取自飞思卡尔MQX底层驱动，部分功能由拉普兰德修改。
  *  HW_SDHC.h及HW_SDHC.c内的代码版权归飞思卡尔公司享有。
- *
+ * 
  * 3.01-2013-10-21 修复低容量SD卡无法初始化BUG
  */
 #include "common.h"
@@ -34,7 +34,7 @@ SDCARD_STRUCT_PTR sdcard_ptr;
 /*
  * LPLD_SDHC_InitGPIO
  * 初始化SDHC模块相关的GPIO引脚,并使能SDHC寄存器时钟
- *
+ * 
  * 参数:
  *    init--PCR寄存器掩码
  *
@@ -42,15 +42,15 @@ SDCARD_STRUCT_PTR sdcard_ptr;
  *    无
  */
 static void LPLD_SDHC_InitGPIO(uint32 init)
-{
-  PORTE->PCR[0] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.D1  */
-  PORTE->PCR[1] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.D0  */
-  PORTE->PCR[2] = init & (PORT_PCR_MUX(4) | PORT_PCR_DSE_MASK);                                          /* SDHC.CLK */
-  PORTE->PCR[3] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.CMD */
-  PORTE->PCR[4] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.D3  */
-  PORTE->PCR[5] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.D2  */
-#if defined(CPU_MK60DZ10) || defined(CPU_MK60D10)
-  SIM->SCGC3 |= SIM_SCGC3_SDHC_MASK;
+{  
+	  PORTE->PCR[0] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.D1  */
+	  PORTE->PCR[1] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.D0  */
+	  PORTE->PCR[2] = init & (PORT_PCR_MUX(4) | PORT_PCR_DSE_MASK);                                          /* SDHC.CLK */
+	  PORTE->PCR[3] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.CMD */
+	  PORTE->PCR[4] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.D3  */
+	  PORTE->PCR[5] = init & (PORT_PCR_MUX(4) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK);    /* SDHC.D2  */
+#if defined(CPU_MK60DZ10) || defined(CPU_MK60D10)   
+  SIM->SCGC3 |= SIM_SCGC3_SDHC_MASK; 
 #elif defined(CPU_MK60F12) || defined(CPU_MK60F15)
   SIM->SCGC3 |= SIM_SCGC3_ESDHC_MASK;
 #endif
@@ -60,7 +60,7 @@ static void LPLD_SDHC_InitGPIO(uint32 init)
 /*
  * LPLD_SDHC_SetBaudrate
  * 设置SDHC波特率
- *
+ * 
  * 参数:
  *    clock--模块输入时钟，即g_core_clock*1000，单位Hz
  *    baud--SDHC期望时钟频率，单位Hz
@@ -72,7 +72,7 @@ static void LPLD_SDHC_SetBaudrate(uint32 clock, uint32 baud)
 {
   uint32 pres, div, min, minpres = 0x80, mindiv = 0x0F;
   int32  val;
-
+  
   //找到相近的分频因子
   min = (uint32)-1;
   for (pres = 2; pres <= 256; pres <<= 1)
@@ -91,18 +91,18 @@ static void LPLD_SDHC_SetBaudrate(uint32 clock, uint32 baud)
       }
     }
   }
-
+  
   //禁止SDHC模块时钟
   SDHC->SYSCTL &= (~ SDHC_SYSCTL_SDCLKEN_MASK);
-
+  
   //修改分频因子
   div = SDHC->SYSCTL & (~ (SDHC_SYSCTL_DTOCV_MASK | SDHC_SYSCTL_SDCLKFS_MASK | SDHC_SYSCTL_DVS_MASK));
   SDHC->SYSCTL = div | (SDHC_SYSCTL_DTOCV(0x0E) | SDHC_SYSCTL_SDCLKFS(minpres >> 1) | SDHC_SYSCTL_DVS(mindiv - 1));
-
+  
   //等在时钟稳定
   while (0 == (SDHC->PRSSTAT & SDHC_PRSSTAT_SDSTB_MASK))
   {};
-
+  
   //使能SDHC模块时钟
   SDHC->SYSCTL |= SDHC_SYSCTL_SDCLKEN_MASK;
   SDHC->IRQSTAT |= SDHC_IRQSTAT_DTOE_MASK;
@@ -111,7 +111,7 @@ static void LPLD_SDHC_SetBaudrate(uint32 clock, uint32 baud)
 /*
  * LPLD_SDHC_IsRunning
  * 获取SDHC模块运行状态
- *
+ * 
  * 参数:
  *    无
  *
@@ -127,7 +127,7 @@ static boolean LPLD_SDHC_IsRunning(void)
 /*
  * LPLD_SDHC_WaitStatus
  * 等待指定状态标志位置位
- *
+ * 
  * 参数:
  *    mask--状态标志位掩码
  *
@@ -148,7 +148,7 @@ static uint32 LPLD_SDHC_WaitStatus(uint32 mask)
 /*
  * LPLD_SDHC_Init
  * SDHC模块初始化函数
- *
+ * 
  * 参数:
  *    coreClk--系統主频，单位Hz
  *    baud--SDHC期望时钟频率，单位Hz
@@ -161,45 +161,45 @@ static uint32 LPLD_SDHC_WaitStatus(uint32 mask)
  */
 static SDHCRES LPLD_SDHC_Init(uint32 coreClk, uint32 baud)
 {
-
+  
   sdcard_ptr->CARD = ESDHC_CARD_NONE;
-
+  
   //禁用GPIO的SDHC复用功能
   LPLD_SDHC_InitGPIO (0);
-
+  
   //复位SDHC模块
   SDHC->SYSCTL = SDHC_SYSCTL_RSTA_MASK | SDHC_SYSCTL_SDCLKFS(0x80);
   while (SDHC->SYSCTL & SDHC_SYSCTL_RSTA_MASK)
   { };
-
+  
   //初始化寄存器值
   SDHC->VENDOR = 0;
   SDHC->BLKATTR = SDHC_BLKATTR_BLKCNT(1) | SDHC_BLKATTR_BLKSIZE(512);
   SDHC->PROCTL = SDHC_PROCTL_EMODE(ESDHC_PROCTL_EMODE_LITTLE) | SDHC_PROCTL_D3CD_MASK;
   SDHC->WML = SDHC_WML_RDWML(2) | SDHC_WML_WRWML(1);
-
+  
   //设置SDHC初始化时钟，最好不要超过400kHz
   LPLD_SDHC_SetBaudrate (coreClk, baud);
-
+  
   //等待
   while (SDHC->PRSSTAT & (SDHC_PRSSTAT_CIHB_MASK | SDHC_PRSSTAT_CDIHB_MASK))
   { };
-
+  
   //使能GPIO的SDHC复用
   LPLD_SDHC_InitGPIO (0xFFFF);
-
+  
   //使能各种请求
   SDHC->IRQSTAT = 0xFFFF;
   SDHC->IRQSTATEN = SDHC_IRQSTATEN_DEBESEN_MASK | SDHC_IRQSTATEN_DCESEN_MASK | SDHC_IRQSTATEN_DTOESEN_MASK
     | SDHC_IRQSTATEN_CIESEN_MASK | SDHC_IRQSTATEN_CEBESEN_MASK | SDHC_IRQSTATEN_CCESEN_MASK | SDHC_IRQSTATEN_CTOESEN_MASK
       | SDHC_IRQSTATEN_BRRSEN_MASK | SDHC_IRQSTATEN_BWRSEN_MASK | SDHC_IRQSTATEN_CRMSEN_MASK
         | SDHC_IRQSTATEN_TCSEN_MASK | SDHC_IRQSTATEN_CCSEN_MASK;
-
+  
   //等待80个初始时钟
   SDHC->SYSCTL |= SDHC_SYSCTL_INITA_MASK;
   while (SDHC->SYSCTL & SDHC_SYSCTL_INITA_MASK)
   { };
-
+  
   //检查卡是否插入
   if (SDHC->PRSSTAT & SDHC_PRSSTAT_CINS_MASK)
   {
@@ -210,14 +210,14 @@ static SDHCRES LPLD_SDHC_Init(uint32 coreClk, uint32 baud)
     sdcard_ptr->STATUS = SDHCSTA_NODISK;
   }
   SDHC->IRQSTAT |= SDHC_IRQSTAT_CRM_MASK;
-
+  
   return SDHCRES_OK;
 }
 
 /*
  * LPLD_SDHC_SendCommand
  * 向SD卡发送指定CMD命令
- *
+ * 
  * 参数:
  *    command--SDHC命令信息结构体
  *
@@ -228,16 +228,16 @@ static SDHCRES LPLD_SDHC_SendCommand(ESDHC_COMMAND_STRUCT_PTR command)
 {
   uint32 xfertyp;
   uint32 blkattr;
-
+  
   //检查命令
   xfertyp = command->COMMAND;
-
+  
   if (ESDHC_XFERTYP_CMDTYP_RESUME == ((xfertyp & SDHC_XFERTYP_CMDTYP_MASK) >> SDHC_XFERTYP_CMDTYP_SHIFT))
   {
     //恢复类型命令必须设置DPSEL位
     xfertyp |= SDHC_XFERTYP_DPSEL_MASK;
   }
-
+  
   if ((0 != command->BLOCKS) && (0 != command->BLOCKSIZE))
   {
     xfertyp |= SDHC_XFERTYP_DPSEL_MASK;
@@ -261,29 +261,29 @@ static SDHCRES LPLD_SDHC_SendCommand(ESDHC_COMMAND_STRUCT_PTR command)
   {
     blkattr = 0;
   }
-
+  
   //卡移除状态清除
   SDHC->IRQSTAT |= SDHC_IRQSTAT_CRM_MASK;
-
+  
   //等待CMD线空闲
   while (SDHC->PRSSTAT & SDHC_PRSSTAT_CIHB_MASK)
   { };
-
+  
   //初始化命令
   SDHC->CMDARG = command->ARGUMENT;
   SDHC->BLKATTR = blkattr;
   SDHC->DSADDR = 0;
-
+  
   //发送命令
   SDHC->XFERTYP = xfertyp;
-
+  
   //等待响应
   if (LPLD_SDHC_WaitStatus (SDHC_IRQSTAT_CIE_MASK | SDHC_IRQSTAT_CEBE_MASK | SDHC_IRQSTAT_CCE_MASK | SDHC_IRQSTAT_CC_MASK) != SDHC_IRQSTAT_CC_MASK)
   {
     SDHC->IRQSTAT |= SDHC_IRQSTAT_CTOE_MASK | SDHC_IRQSTAT_CIE_MASK | SDHC_IRQSTAT_CEBE_MASK | SDHC_IRQSTAT_CCE_MASK | SDHC_IRQSTAT_CC_MASK;
     return SDHCRES_ERROR;
   }
-
+  
   //检查卡是否移除
   if (SDHC->IRQSTAT & SDHC_IRQSTAT_CRM_MASK)
   {
@@ -291,7 +291,7 @@ static SDHCRES LPLD_SDHC_SendCommand(ESDHC_COMMAND_STRUCT_PTR command)
     sdcard_ptr->STATUS = SDHCSTA_NODISK;
     return SDHCRES_NOTRDY;
   }
-
+  
   //获取响应
   if (SDHC->IRQSTAT & SDHC_IRQSTAT_CTOE_MASK)
   {
@@ -309,7 +309,7 @@ static SDHCRES LPLD_SDHC_SendCommand(ESDHC_COMMAND_STRUCT_PTR command)
     }
   }
   SDHC->IRQSTAT |= SDHC_IRQSTAT_CC_MASK;
-
+  
   return SDHCRES_OK;
 }
 
@@ -317,7 +317,7 @@ static SDHCRES LPLD_SDHC_SendCommand(ESDHC_COMMAND_STRUCT_PTR command)
 /*
  * LPLD_SDHC_IOC
  * SDHC模块其他控制服务函数
- *
+ * 
  * 参数:
  *    cmd--SDHC模块控制命令
  *    *param_ptr--控制参数
@@ -327,30 +327,31 @@ static SDHCRES LPLD_SDHC_SendCommand(ESDHC_COMMAND_STRUCT_PTR command)
  */
 SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
 {
-
+  
   ESDHC_COMMAND_STRUCT    command;
   boolean                 mem, io, mmc, ceata, mp, hc;
   int32                  val;
   SDHCRES                 result = SDHCRES_OK;
   uint32 *             param32_ptr = param_ptr;
-
+  
   switch (cmd)
   {
-  case IO_IOCTL_ESDHC_INIT:
+  case IO_IOCTL_ESDHC_INIT:  
     //初始化SDHC模块
-    result = LPLD_SDHC_Init (g_core_clock*1000, 400000);    //400000
+    //result = LPLD_SDHC_Init (g_core_clock*1000, 400000);
+	result = LPLD_SDHC_Init (g_core_clock*1000, 100000);
     if (SDHCRES_OK != result)
     {
       break;
     }
-
+    
     mem = FALSE;
     io = FALSE;
     mmc = FALSE;
     ceata = FALSE;
     hc = FALSE;
     mp = FALSE;
-
+    
     //CMD0 - 空闲命令，复位卡
     command.COMMAND = ESDHC_CMD0;
     command.ARGUMENT = 0;
@@ -361,7 +362,7 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
       sdcard_ptr->STATUS = SDHCSTA_NOINIT;
       break;
     }
-
+    
     //CMD8 - 发送接口状态，检查是否支持高容量
     command.COMMAND = ESDHC_CMD8;
     command.ARGUMENT = 0x000001AA;
@@ -382,11 +383,11 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
       }
       hc = TRUE;
     }
-
+    
     //CMD5 - 发送操作状态，测试IO
     command.COMMAND = ESDHC_CMD5;
     command.ARGUMENT = 0;
-    command.BLOCKS = 0;
+    command.BLOCKS = 0;      
     result = LPLD_SDHC_SendCommand (&command);
     if (result==SDHCRES_ERROR)
     {
@@ -427,7 +428,7 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
     {
       mp = TRUE;
     }
-
+    
     if (mp)
     {
       //CMD55 - 特殊应用命令，检查MMC卡
@@ -444,7 +445,7 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
         io = FALSE;
         mem = FALSE;
         hc = FALSE;
-
+        
         //CMD1 - 发送测试命令，检查高容量支持
         command.COMMAND = ESDHC_CMD1;
         command.ARGUMENT = 0x40300000;
@@ -458,7 +459,7 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
           hc = TRUE;
         }
         mmc = TRUE;
-
+        
         //CMD39 - 快速IO，检查CE-ATA的CE签名 */
         command.COMMAND = ESDHC_CMD39;
         command.ARGUMENT = 0x0C00;
@@ -502,7 +503,7 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
           do
           {
             val++;
-
+            
             //CMD55 + ACMD41 - 发送OCR
             command.COMMAND = ESDHC_CMD55;
             command.ARGUMENT = 0;
@@ -511,7 +512,7 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
             {
               break;
             }
-
+            
             command.COMMAND = ESDHC_ACMD41;
             if (hc)
             {
@@ -578,16 +579,17 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
         sdcard_ptr->CARD = ESDHC_CARD_SDHCCOMBO;
       }
     }
-
+    
     //禁用GPIO的SDHC复用
     LPLD_SDHC_InitGPIO (0);
-
+    
     //设置SDHC工作状态下的默认波特率
-    LPLD_SDHC_SetBaudrate (g_core_clock*1000, 25000000);
-
+    //LPLD_SDHC_SetBaudrate (g_core_clock*1000, 25000000);
+	LPLD_SDHC_SetBaudrate (g_core_clock*1000, 100000);
+    
     //使能GPIO的SDHC复用
     LPLD_SDHC_InitGPIO (0xFFFF);
-
+    
     if(result == SDHCRES_OK)
     {
       sdcard_ptr->STATUS = SDHCSTA_OK;
@@ -624,10 +626,10 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
       {
         //禁用GPIO的SDHC复用
         LPLD_SDHC_InitGPIO (0);
-
+        
         //设置波特率
         LPLD_SDHC_SetBaudrate (g_core_clock*1000, *param32_ptr);
-
+        
         //使能GPIO的SDHC复用
         LPLD_SDHC_InitGPIO (0xFFFF);
       }
@@ -711,7 +713,7 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
       SDHC->SYSCTL |= SDHC_SYSCTL_INITA_MASK;
       while (SDHC->SYSCTL & SDHC_SYSCTL_INITA_MASK)
       { };
-
+      
       //更新并返回卡实际状态
       if (SDHC->IRQSTAT & SDHC_IRQSTAT_CRM_MASK)
       {
@@ -733,7 +735,7 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
       *param32_ptr = sdcard_ptr->CARD;
     }
     break;
-
+    
   case IO_IOCTL_FLUSH_OUTPUT:
     //等待传输完成
     LPLD_SDHC_WaitStatus (SDHC_IRQSTAT_TC_MASK);
@@ -748,15 +750,15 @@ SDHCRES LPLD_SDHC_IOC(uint32 cmd, void *param_ptr)
     result = SDHCRES_ERROR;
     break;
   }
-
-
+  
+  
   return result;
 }
 
 /*
  * LPLD_SDHC_Read
  * SDHC读操作
- *
+ * 
  * 参数:
  *    *data_ptr--存储数据地址指针
  *    n--待读的数据长度
@@ -768,10 +770,10 @@ static SDHCSTATUS LPLD_SDHC_Read(uint8 *data_ptr, int32 n)
 {
   uint32 buffer;
   int32 remains;
-
+  
   remains = n;
   if (((uint32)data_ptr & 0x03) == 0)
-  {
+  {    
     //数据位字对齐，可以以最快的速度直接从寄存器拷贝
     while (remains >= 4)
     {
@@ -780,11 +782,11 @@ static SDHCSTATUS LPLD_SDHC_Read(uint8 *data_ptr, int32 n)
         SDHC->IRQSTAT |= SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK | SDHC_IRQSTAT_BRR_MASK;
         return SDHCRES_ERROR;
       }
-
+      
       //等待，直到收到的数据达到水印长度或传输完成
       while ((0 == (SDHC->PRSSTAT & SDHC_PRSSTAT_BREN_MASK)) && (SDHC->PRSSTAT & SDHC_PRSSTAT_DLA_MASK))
       { };
-
+      
       *((uint32 *)data_ptr) = SDHC->DATPORT;
       data_ptr += 4;
       remains -= 4;
@@ -800,22 +802,22 @@ static SDHCSTATUS LPLD_SDHC_Read(uint8 *data_ptr, int32 n)
         SDHC->IRQSTAT |= SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK | SDHC_IRQSTAT_BRR_MASK;
         return SDHCRES_ERROR;
       }
-
+      
       //等待，直到收到的数据达到水印长度或传输完成
       while ((0 == (SDHC->PRSSTAT & SDHC_PRSSTAT_BREN_MASK)) && (SDHC->PRSSTAT & SDHC_PRSSTAT_DLA_MASK))
       { };
-
+      
       buffer = SDHC->DATPORT;
-
+      
       *data_ptr++ = buffer & 0xFF;
       *data_ptr++ = (buffer >> 8) & 0xFF;
       *data_ptr++ = (buffer >> 16) & 0xFF;
       *data_ptr++ = (buffer >> 24) & 0xFF;
-
+      
       remains -= 4;
-    }
+    }      
   }
-
+  
   if (remains)
   {
     //剩下的少于单字长度数据
@@ -824,35 +826,35 @@ static SDHCSTATUS LPLD_SDHC_Read(uint8 *data_ptr, int32 n)
       SDHC->IRQSTAT |= SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK | SDHC_IRQSTAT_BRR_MASK;
       return SDHCRES_ERROR;
     }
-
+    
     //等待，直到收到的数据达到水印长度或传输完成
     while ((0 == (SDHC->PRSSTAT & SDHC_PRSSTAT_BREN_MASK)) && (SDHC->PRSSTAT & SDHC_PRSSTAT_DLA_MASK))
     { };
-
+    
     buffer = SDHC->DATPORT;
     while (remains)
     {
-
+      
       *data_ptr++ = buffer & 0xFF;
       buffer >>= 8;
-
+      
       remains--;
     }
   }
-
+  
   if (SDHC->IRQSTAT & (SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK))
   {
     SDHC->IRQSTAT |= SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK | SDHC_IRQSTAT_BRR_MASK;
     return SDHCRES_ERROR;
   }
-
+  
   return (n - remains);
 }
 
 /*
  * LPLD_SDHC_Write
  * SDHC写操作
- *
+ * 
  * 参数:
  *    *data_ptr--存储数据地址指针
  *    n--待写的数据长度
@@ -865,10 +867,10 @@ static SDHCSTATUS LPLD_SDHC_Write(uint8 *data_ptr, int32 n)
   uint8 *udata_ptr;
   uint32 buffer;
   int32 remains;
-
+  
   //复制数据指针
   udata_ptr = (uint8 *)data_ptr;
-
+  
   remains = n;
   if (((uint32)udata_ptr & 0x03) == 0)
   {
@@ -880,11 +882,11 @@ static SDHCSTATUS LPLD_SDHC_Write(uint8 *data_ptr, int32 n)
         SDHC->IRQSTAT |= SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK | SDHC_IRQSTAT_BWR_MASK;
         return SDHCRES_ERROR;
       }
-
-      //等待，直到水印空间可用
+      
+      //等待，直到水印空间可用 
       while (0 == (SDHC->PRSSTAT & SDHC_PRSSTAT_BWEN_MASK))
       { };
-
+      
       SDHC->DATPORT = *((uint32 *)udata_ptr);
       udata_ptr += 4;
       remains -= 4;
@@ -900,25 +902,25 @@ static SDHCSTATUS LPLD_SDHC_Write(uint8 *data_ptr, int32 n)
         SDHC->IRQSTAT |= SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK | SDHC_IRQSTAT_BWR_MASK;
         return SDHCRES_ERROR;
       }
-
-      //等待，直到水印空间可用
+      
+      //等待，直到水印空间可用 
       while (0 == (SDHC->PRSSTAT & SDHC_PRSSTAT_BWEN_MASK))
       { };
-
+      
       buffer  = (*udata_ptr++);
       buffer |= (*udata_ptr++) << 8;
       buffer |= (*udata_ptr++) << 16;
       buffer |= (*udata_ptr++) << 24;
-
-      //等待，直到水印空间可用
+      
+      //等待，直到水印空间可用 
       while (0 == (SDHC->PRSSTAT & SDHC_PRSSTAT_BWEN_MASK))
       { };
-
+      
       SDHC->DATPORT = buffer;
       remains -= 4;
-    }
+    }      
   }
-
+  
   if (remains)
   {
     //剩余少于单字长度的数据
@@ -927,7 +929,7 @@ static SDHCSTATUS LPLD_SDHC_Write(uint8 *data_ptr, int32 n)
       SDHC->IRQSTAT |= SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK | SDHC_IRQSTAT_BWR_MASK;
       return SDHCRES_ERROR;
     }
-
+    
     buffer = 0xFFFFFFFF;
     while (remains)
     {
@@ -935,27 +937,27 @@ static SDHCSTATUS LPLD_SDHC_Write(uint8 *data_ptr, int32 n)
       buffer |= udata_ptr[remains];
       remains--;
     }
-
-    //等待，直到水印空间可用
+    
+    //等待，直到水印空间可用 
     while (0 == (SDHC->PRSSTAT & SDHC_PRSSTAT_BWEN_MASK))
     { };
-
-    SDHC->DATPORT = buffer;
+    
+    SDHC->DATPORT = buffer;        
   }
-
+  
   if (SDHC->IRQSTAT & (SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK))
   {
     SDHC->IRQSTAT |= SDHC_IRQSTAT_DEBE_MASK | SDHC_IRQSTAT_DCE_MASK | SDHC_IRQSTAT_DTOE_MASK | SDHC_IRQSTAT_BWR_MASK;
     return SDHCRES_ERROR;
   }
-
+  
   return (n - remains);
 }
 
 /*
  * LPLD_SDHC_InitCard
  * 初始化SDHC模块及SD卡，设置正常工作波特率为40MHz
- *
+ * 
  * 参数:
  *    无
  *
@@ -970,7 +972,7 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
   uint32 param, c_size, c_size_mult, read_bl_len, time_out = 0;
   ESDHC_COMMAND_STRUCT command;
   SDHCSTATUS result;
-
+  
   //分配SD卡信息结构体的数据空间并初始化
   sdcard_ptr = (SDCARD_STRUCT_PTR)malloc(sizeof(SDCARD_STRUCT));
   sdcard_ptr->CARD = ESDHC_CARD_NONE;
@@ -980,16 +982,16 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
   sdcard_ptr->HC = FALSE;
   sdcard_ptr->VERSION2 = FALSE;
   sdcard_ptr->STATUS = SDHCSTA_OK;
-
+   
   while(time_out < 1000)
   {
-
+    
     //初始化SDHC模块并检测卡
-    /*if (SDHCRES_OK != (result=LPLD_SDHC_IOC (IO_IOCTL_ESDHC_INIT, NULL)))
+    if (SDHCRES_OK != (result=LPLD_SDHC_IOC (IO_IOCTL_ESDHC_INIT, NULL)))
     {
       continue;
-    }     */
-
+    }
+    
     //SDHC检查
     param = 0;
     if (SDHCRES_OK != (result=LPLD_SDHC_IOC (IO_IOCTL_ESDHC_GET_CARD, &param)))
@@ -1014,10 +1016,10 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
     }
     time_out++;
   }
-
+  
   if(time_out >= 1000)
     return SDHCRES_NOTRDY;
-
+  
   //卡识别
   command.COMMAND = ESDHC_CMD2;
   command.ARGUMENT = 0;
@@ -1026,7 +1028,7 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
   {
     return result;
   }
-
+  
   //获取卡地址
   command.COMMAND = ESDHC_CMD3;
   command.ARGUMENT = 0;
@@ -1036,7 +1038,7 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
     return result;
   }
   sdcard_ptr->ADDRESS = command.RESPONSE[0] & 0xFFFF0000;
-
+  
   //获取卡参数
   command.COMMAND = ESDHC_CMD9;
   command.ARGUMENT = sdcard_ptr->ADDRESS;
@@ -1059,15 +1061,15 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
     c_size = (command.RESPONSE[1] >> 8) & 0x003FFFFF;
     sdcard_ptr->NUM_BLOCKS = (c_size + 1) << 10;
   }
-
+  
   //设置正常工作波特率为40MHz
-  //param = 40000000;
-  param = 25000000;
+  //param = 40000000;    
+  param = 25000000;      
   if (SDHCRES_OK != (result=LPLD_SDHC_IOC (IO_IOCTL_ESDHC_SET_BAUDRATE, &param)))
   {
     return result;
   }
-
+  
   //选择卡
   command.COMMAND = ESDHC_CMD7;
   command.ARGUMENT = sdcard_ptr->ADDRESS;
@@ -1076,7 +1078,7 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
   {
     return result;
   }
-
+  
   //设置块大小为512字节
   command.COMMAND = ESDHC_CMD16;
   command.ARGUMENT = IO_SDCARD_BLOCK_SIZE;
@@ -1085,7 +1087,7 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
   {
     return result;
   }
-
+  
   if (ESDHC_BUS_WIDTH_4BIT == ESDHC_BUS_WIDTH_4BIT)
   {
     //特殊应用命令
@@ -1096,7 +1098,7 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
     {
       return result;
     }
-
+    
     //设置总线宽度为4bit
     command.COMMAND = ESDHC_ACMD6;
     command.ARGUMENT = 2;
@@ -1105,14 +1107,14 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
     {
       return result;
     }
-
+    
     param = ESDHC_BUS_WIDTH_4BIT;
     if (SDHCRES_OK != (result=LPLD_SDHC_IOC (IO_IOCTL_ESDHC_SET_BUS_WIDTH, &param)))
     {
       return result;
     }
   }
-
+  
   return SDHCRES_OK;
 }
 
@@ -1120,7 +1122,7 @@ SDHCSTATUS LPLD_SDHC_InitCard(void)
 /*
  * LPLD_SDHC_ReadBlocks
  * 读指定扇区指定长度的块
- *
+ * 
  * 参数:
  *    buff--存储读出数据的地址指针
  *    sector--开始的扇区号
@@ -1134,23 +1136,23 @@ SDHCRES LPLD_SDHC_ReadBlocks(uint8 *buff, uint32 sector, uint32 count)
   ESDHC_COMMAND_STRUCT command;
   int cnt;
   int32 result;
-
+  
   //SD卡数据地址调节
   if (! sdcard_ptr->HC)
   {
     sector <<= IO_SDCARD_BLOCK_SIZE_POWER;
   }
-
+  
   //设置读块命令
   if (count > 1)
   {
     command.COMMAND = ESDHC_CMD18;
-  }
+  }   
   else
   {
     command.COMMAND = ESDHC_CMD17;
   }
-
+  
   command.ARGUMENT = sector;
   command.BLOCKS = count;
   command.BLOCKSIZE = IO_SDCARD_BLOCK_SIZE;
@@ -1158,7 +1160,7 @@ SDHCRES LPLD_SDHC_ReadBlocks(uint8 *buff, uint32 sector, uint32 count)
   {
     return (SDHCRES)result;
   }
-
+  
   //读取数据
   for (cnt = 0; cnt < count; cnt++)
   {
@@ -1168,13 +1170,13 @@ SDHCRES LPLD_SDHC_ReadBlocks(uint8 *buff, uint32 sector, uint32 count)
     }
     buff += IO_SDCARD_BLOCK_SIZE;
   }
-
+  
   //等待传输结束
   if (SDHCRES_OK !=(result=LPLD_SDHC_IOC (IO_IOCTL_FLUSH_OUTPUT, NULL)))
   {
     return (SDHCRES)result;
   }
-
+  
   return (SDHCRES)result;
 }
 
@@ -1182,7 +1184,7 @@ SDHCRES LPLD_SDHC_ReadBlocks(uint8 *buff, uint32 sector, uint32 count)
 /*
  * LPLD_SDHC_WriteBlocks
  * 在指定扇区写入指定长度块数数据
- *
+ * 
  * 参数:
  *    buff--存储待写入数据的地址指针
  *    sector--开始的扇区号
@@ -1197,8 +1199,8 @@ SDHCRES LPLD_SDHC_WriteBlocks(uint8* buff, uint32 sector, uint32 count)
     uint8               tmp[4];
     int32             cnt;
       int32 result;
-
-
+    
+ 
     //SD卡数据地址调节
     if (! sdcard_ptr->HC)
     {
@@ -1222,7 +1224,7 @@ SDHCRES LPLD_SDHC_WriteBlocks(uint8* buff, uint32 sector, uint32 count)
     {
         return (SDHCRES)result;
     }
-
+    
     //写数据
     for (cnt = 0; cnt < count; cnt++)
     {
@@ -1269,7 +1271,7 @@ SDHCRES LPLD_SDHC_WriteBlocks(uint8* buff, uint32 sector, uint32 count)
         {
             return (SDHCRES)result;
         }
-
+                
         //使用ACMD22命令获得写入的块数量
         command.COMMAND = ESDHC_ACMD22;
         command.ARGUMENT = 0;
@@ -1279,11 +1281,11 @@ SDHCRES LPLD_SDHC_WriteBlocks(uint8* buff, uint32 sector, uint32 count)
         {
             return (SDHCRES)result;
         }
-
+        
         if (4 != (result=LPLD_SDHC_Read (tmp, 4)))
         {
             return (SDHCRES)result;
-
+            
         }
 
         if (SDHCRES_OK != (result=LPLD_SDHC_IOC (IO_IOCTL_FLUSH_OUTPUT, NULL)))
@@ -1295,6 +1297,6 @@ SDHCRES LPLD_SDHC_WriteBlocks(uint8* buff, uint32 sector, uint32 count)
         if ((cnt < 0) || (cnt > count))
             return SDHCRES_ERROR;
     }
-
+    
     return SDHCRES_OK;
 }

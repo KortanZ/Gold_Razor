@@ -5,18 +5,33 @@
 
 #define U_MAX 4800
 
-typedef struct{
+typedef struct
+{
 	float32 Kp;
 	float32 Kd;
 	float32 Ki;
+}PIDParaStruct;
+
+typedef struct{
+	PIDParaStruct *para;
 	float32 error[3];
 	float32 u[3];
 }PIDStruct;
 
 extern PIDStruct *speedCtrler;
+extern PIDParaStruct *speedCtrlerPara;
+
 extern PIDStruct *steerCtrler;
+extern PIDParaStruct *steerCtrlerStPara;
+extern PIDParaStruct *steerCtrlerCurvPara;
+
 extern PIDStruct *differCtrler;
+extern PIDParaStruct *differCtrlerStPara;
+extern PIDParaStruct *differCtrlerCurvPara;
 extern float32 enhance;
+
+extern float32 motorThersh;
+extern float32 steerThersh;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real);
 void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real);

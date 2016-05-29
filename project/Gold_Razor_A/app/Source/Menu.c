@@ -5,23 +5,35 @@
 #include "SteerDriver.h"
 #include "SequenceCtrl.h"
 #include "ImgProcess.h"
+#include "common.h"
 
 ListType currentList = DEBUG;
+
+uint8 sdhcMessage[][9] = {"OK", "ERROR", "WRPRT", "NOTRDY", "PARERR", "NONRSPNS"};
 
 MenuType menuList[] = {
 	{RACE, RACE, DEBUG, PID_STEER, "Debug Mode", NULL, NULL, 0}, 			//调试模式
 	{DEBUG, DEBUG, RACE, RACE, "Race Mode", NULL, NULL, 1}, 					//比赛模式
 
-	{BROKEN_RESTART, PID_MOTOR, DEBUG, STEER_KP, "Steer", NULL, NULL, 0},
+	{CAMERA_SEND, PID_MOTOR, DEBUG, STEER_ST, "Steer", NULL, NULL, 0},
 	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, NULL, 1},
-	{PID_MOTOR, IMG_WEIGHT, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
-	{PID_DIFF, CAMERA_SEND, DEBUG, BLOCK0, "Img Weight", NULL , NULL, 3},
-	{IMG_WEIGHT, BROKEN_RESTART, DEBUG, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 4},
-	{CAMERA_SEND, PID_STEER, DEBUG, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 5},
+	{PID_MOTOR, BANGBANG, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
+	{PID_DIFF, BROKEN_RESTART, DEBUG, STEER_BB, "Bang-Bang", NULL , NULL, 3},
+	{BANGBANG, SDHC_WRITE, DEBUG, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 4},
+	{BROKEN_RESTART, SDHC_READ, DEBUG, SDHC_WRITE, "Write Data", (*SDHC_Write_Data), NULL, 5},
+	{SDHC_WRITE, CAMERA_SEND, DEBUG, SDHC_READ, "Read Data", (*SDHC_Read_Data), NULL, 6},
+	{SDHC_READ, PID_STEER, DEBUG, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 7},
 
-	{STEER_MID, STEER_KD, PID_STEER, STEER_KP, "Steer_Kp:", NULL, NULL, 0},
-	{STEER_KP, STEER_KI, PID_STEER, STEER_KD, "Steer_Kd:", NULL, NULL, 1},
-	{STEER_KD, STEER_MID, PID_STEER, STEER_KI, "Steer_Ki:", NULL, NULL, 2},
+	{STEER_MID, STEER_CURV, PID_STEER, STEER_ST_KP, "SteerSt", NULL, NULL, 0},
+	{STEER_ST, STEER_MID, PID_STEER, STEER_CURV_KP, "SteerCurv", NULL, NULL, 1},
+
+	{STEER_ST_KI, STEER_ST_KD, STEER_ST, STEER_ST_KP, "ST_Kp:", NULL, NULL, 0},
+	{STEER_ST_KP, STEER_ST_KI, STEER_ST, STEER_ST_KD, "ST_Kd:", NULL, NULL, 1},
+	{STEER_ST_KD, STEER_ST_KP, STEER_ST, STEER_ST_KI, "ST_Ki:", NULL, NULL, 2},
+
+	{STEER_CURV_KI, STEER_CURV_KD, STEER_CURV, STEER_CURV_KP, "CURV_Kp:", NULL, NULL, 0},
+	{STEER_CURV_KP, STEER_CURV_KI, STEER_CURV, STEER_CURV_KD, "CURV_Kd:", NULL, NULL, 1},
+	{STEER_CURV_KD, STEER_CURV_KP, STEER_CURV, STEER_CURV_KI, "CURV_Ki:", NULL, NULL, 2},
 
 	{MOTOR_SPEED, MOTOR_KD, PID_MOTOR, MOTOR_KP, "Motro_Kp:", NULL, NULL, 0},
 	{MOTOR_KP, MOTOR_KI, PID_MOTOR, MOTOR_KD, "Motor_Kd:", NULL, NULL, 1},
@@ -32,14 +44,12 @@ MenuType menuList[] = {
 	{DIFF_KD, DIFF_EN, PID_DIFF, DIFF_KI, "Diff_Ki:", NULL, NULL, 2},
 	{DIFF_KI, DIFF_KP, PID_DIFF, DIFF_EN, "Diff_En:", NULL, NULL, 3},
 
-	{BLOCK3, BLOCK1, IMG_WEIGHT, BLOCK0, "BLOCK0:", NULL, NULL, 0},
-	{BLOCK0, BLOCK2, IMG_WEIGHT, BLOCK1, "BLOCK1:", NULL, NULL, 1},
-	{BLOCK1, BLOCK3, IMG_WEIGHT, BLOCK2, "BLOCK2:", NULL, NULL, 2},
-	{BLOCK2, BLOCK0, IMG_WEIGHT, BLOCK3, "BLOCK3:", NULL, NULL, 3},
+	{MOTOR_BB, MOTOR_BB, BANGBANG, STEER_BB, "Steer TH:", NULL, NULL, 0},
+	{STEER_BB, STEER_BB, BANGBANG, MOTOR_BB, "Motor TH:", NULL, NULL, 1},
 	
 	{MOTOR_KI, MOTOR_KP, PID_MOTOR, MOTOR_SPEED, "Motor_Sp:", NULL, NULL, 3},
 
-	{STEER_KI, STEER_KP, PID_STEER, STEER_MID, "Steer_Mid:", NULL, NULL, 3},
+	{STEER_CURV, STEER_ST, PID_STEER, STEER_MID, "Steer_Mid:", NULL, NULL, 2},
 };
 
 void Menu_Show(void)
@@ -68,9 +78,7 @@ void Menu_Num_Show(ListType lst)
 
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_KP && lst <= DIFF_EN)
-			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((float32 *)menuList[lst].data) * 100), Num_Len);
-		else if(lst >= BLOCK0 && lst <= BLOCK3)
+		if(lst >= STEER_ST_KP && lst <= MOTOR_BB)
 			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((float32 *)menuList[lst].data) * 100), Num_Len);
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((int32 *)menuList[lst].data)), Num_Len);
@@ -81,25 +89,28 @@ void Menu_Num_Show(ListType lst)
 
 void Menu_Data_Link(void)
 {
-	menuList[MOTOR_KP].data = (void *)(&(speedCtrler -> Kp));
-	menuList[MOTOR_KD].data = (void *)(&(speedCtrler -> Kd));
-	menuList[MOTOR_KI].data = (void *)(&(speedCtrler -> Ki));
 
-	menuList[STEER_KP].data = (void *)(&(steerCtrler -> Kp));
-	menuList[STEER_KD].data = (void *)(&(steerCtrler -> Kd));
-	menuList[STEER_KI].data = (void *)(&(steerCtrler -> Ki));
+	menuList[STEER_ST_KP].data = (void *)(&(steerCtrlerStPara -> Kp));
+	menuList[STEER_ST_KD].data = (void *)(&(steerCtrlerStPara -> Kd));
+	menuList[STEER_ST_KI].data = (void *)(&(steerCtrlerStPara -> Ki));
 
-	menuList[DIFF_KP].data = (void *)(&(differCtrler -> Kp));
-	menuList[DIFF_KD].data = (void *)(&(differCtrler -> Kd));
-	menuList[DIFF_KI].data = (void *)(&(differCtrler -> Ki));
+	menuList[STEER_CURV_KP].data = (void *)(&(steerCtrlerCurvPara -> Kp));
+	menuList[STEER_CURV_KD].data = (void *)(&(steerCtrlerCurvPara -> Kd));
+	menuList[STEER_CURV_KI].data = (void *)(&(steerCtrlerCurvPara -> Ki));
+
+	menuList[MOTOR_KP].data = (void *)(&(speedCtrlerPara -> Kp));
+	menuList[MOTOR_KD].data = (void *)(&(speedCtrlerPara -> Kd));
+	menuList[MOTOR_KI].data = (void *)(&(speedCtrlerPara -> Ki));
+
+	menuList[DIFF_KP].data = (void *)(&(differCtrlerStPara -> Kp));
+	menuList[DIFF_KD].data = (void *)(&(differCtrlerStPara -> Kd));
+	menuList[DIFF_KI].data = (void *)(&(differCtrlerStPara -> Ki));
 	menuList[DIFF_EN].data = (void *)(&enhance);
 
-	menuList[BLOCK0].data = (void *)(&weight[0]);
-	menuList[BLOCK1].data = (void *)(&weight[1]);
-	menuList[BLOCK2].data = (void *)(&weight[2]);
-	menuList[BLOCK3].data = (void *)(&weight[3]);
-	
-	menuList[MOTOR_SPEED].data = (void *)(&PWM_Expect);
+	menuList[STEER_BB].data = (void *)(&(steerThersh));
+	menuList[MOTOR_BB].data = (void *)(&(motorThersh));
+
+	menuList[MOTOR_SPEED].data = (void *)(&PWM_Expect_Base);
 
 	menuList[STEER_MID].data = (void *)(&steerMidValue);
 	
@@ -110,10 +121,8 @@ void Menu_Data_Increase(ListType lst)
 {
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_KP && lst <= DIFF_EN)
+		if(lst >= STEER_ST_KP && lst <= MOTOR_BB)
 			*((float32 *)menuList[lst].data) += 0.01;
-		else if(lst >= BLOCK0 && lst <= BLOCK3)
-		  	*((float32 *)menuList[lst].data) += 0.01;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) += 100;
 		else if(lst >= STEER_MID && lst <= STEER_MID)
@@ -125,10 +134,8 @@ void Menu_Data_Decrease(ListType lst)
 {
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_KP && lst <= DIFF_EN)
+		if(lst >= STEER_ST_KP && lst <= MOTOR_BB)
 			*((float32 *)menuList[lst].data) -= 0.01;
-		else if(lst >= BLOCK0 && lst <= BLOCK3)
-		  	*((float32 *)menuList[lst].data) -= 0.01;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) -= 100;
 		else if(lst >= STEER_MID && lst <= STEER_MID)
@@ -149,4 +156,124 @@ void Broken_Down_Restart(void)
 {
 	brokeDownFlag = 0;
 	OLED_ClearLine(5);
+}
+
+void SDHC_Init(void)
+{
+	SDHCRES sd_state;
+	sd_state = (SDHCRES)LPLD_SDHC_InitCard();
+	OLED_ClearLine(5);
+	OLED_ShowString(0, 5, sdhcMessage[sd_state]);
+}
+
+void SDHC_Write_Data(void)
+{
+
+	uint8 i, flag = 0;
+	SDHCRES sd_state;
+	uint8 *sdhcBuff = (uint8 *)malloc(sizeof(512));
+
+	if (NULL == sdhcBuff)
+	{
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "SDHC alloc Failed");
+	}
+	else
+	{
+		for (i = DEBUG; i < STEER_MID; ++i)
+		{
+			if(NULL != menuList[i].data)
+			{
+				if(i >= STEER_ST_KP && i <= MOTOR_BB)
+				{
+					*((float32 *)sdhcBuff) = (float32)(*((float32 *)(menuList[i].data)));
+					sd_state = LPLD_SDHC_WriteBlocks((uint8 *)sdhcBuff, i, 1);
+				}
+				else if(i >= MOTOR_SPEED && i <= MOTOR_SPEED)
+				{
+					*((float32 *)sdhcBuff) = (float32)(*((int32 *)(menuList[i].data)));
+					sd_state = LPLD_SDHC_WriteBlocks((uint8 *)sdhcBuff, i, 1);
+				}
+				else if(i >= STEER_MID && i <= STEER_MID)
+				{
+					*((float32 *)sdhcBuff) = (float32)(*((uint8 *)(menuList[i].data)));
+					sd_state = LPLD_SDHC_WriteBlocks((uint8 *)sdhcBuff, i, 1);
+				}
+
+				if(sd_state)
+				{
+					flag = 1;
+				}
+			}
+			if (flag)
+			{
+				OLED_ClearLine(5);
+				OLED_ShowString(0, 5, "SDHC Write Failed");
+			}
+			else
+			{
+				OLED_ClearLine(5);
+				OLED_ShowString(0, 5, "SDHC Write Ok");
+			}
+		}
+
+		free(sdhcBuff);
+	}
+
+}
+
+void SDHC_Read_Data(void)
+{
+
+	uint8 i, flag = 0;
+	SDHCRES sd_state;
+	uint8 *sdhcBuff = (uint8 *)malloc(sizeof(512));
+
+	if (NULL == sdhcBuff)
+	{
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "SDHC alloc Failed");
+	}
+	else
+	{
+		for (i = DEBUG; i < STEER_MID; ++i)
+		{
+			if(NULL != menuList[i].data)
+			{
+				if(i >= STEER_ST_KP && i <= MOTOR_BB)
+				{
+					sd_state = LPLD_SDHC_ReadBlocks((uint8 *)sdhcBuff, i, 1);
+					*((float32 *)(menuList[i].data)) = (float32)(*((float32 *)sdhcBuff));
+				}
+				else if(i >= MOTOR_SPEED && i <= MOTOR_SPEED)
+				{
+					sd_state = LPLD_SDHC_ReadBlocks((uint8 *)sdhcBuff, i, 1);
+					*((int32 *)(menuList[i].data)) = (int32)(*((float32 *)sdhcBuff));
+				}
+				else if(i >= STEER_MID && i <= STEER_MID)
+				{
+					sd_state = LPLD_SDHC_ReadBlocks((uint8 *)sdhcBuff, i, 1);
+					*((uint8 *)(menuList[i].data)) = (uint8)(*((float32 *)sdhcBuff));
+				}
+
+				if(sd_state)
+				{
+					flag = 1;
+				}
+			}
+			if (flag)
+			{
+				OLED_ClearLine(5);
+				OLED_ShowString(0, 5, "SDHC Read Failed");
+			}
+			else
+			{
+				OLED_ClearLine(5);
+				OLED_ShowString(0, 5, "SDHC Read Ok");
+			}
+		}
+
+		free(sdhcBuff);
+	}
+
 }

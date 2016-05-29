@@ -5,7 +5,8 @@
 
 //#include "common.h"
 #include "MotorDriver.h"
-int32 PWM_Expect = 1500;
+int32 PWM_Expect_Base = 2500;
+int32 PWM_Expect = 2500;
 
 void Motor_Init(void)
 {

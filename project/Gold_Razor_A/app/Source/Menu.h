@@ -15,13 +15,21 @@ typedef enum{
 	PID_STEER,
 	PID_MOTOR,
 	PID_DIFF,
-	IMG_WEIGHT,
-	CAMERA_SEND,
+	BANGBANG,
 	BROKEN_RESTART,
+	SDHC_WRITE,
+	SDHC_READ,
+	CAMERA_SEND,
 
-	STEER_KP,
-	STEER_KD,
-	STEER_KI,
+	STEER_ST,
+	STEER_CURV,
+
+	STEER_ST_KP,
+	STEER_ST_KD,
+	STEER_ST_KI,
+	STEER_CURV_KP,
+	STEER_CURV_KD,
+	STEER_CURV_KI,
 	MOTOR_KP,
 	MOTOR_KD,
 	MOTOR_KI,
@@ -29,12 +37,9 @@ typedef enum{
 	DIFF_KD,
 	DIFF_KI,
 	DIFF_EN,
+	STEER_BB,
+	MOTOR_BB,
 
-	BLOCK0,
-	BLOCK1,
-	BLOCK2,
-	BLOCK3,
-	
 	MOTOR_SPEED,
 
 	STEER_MID,
@@ -60,8 +65,11 @@ void Menu_Num_Show(ListType lst);
 void Menu_Data_Link(void);
 void Menu_Data_Increase(ListType lst);
 void Menu_Data_Decrease(ListType lst);
+void SDHC_Init(void);
 
 void Img_Send_Change(void);
 void Broken_Down_Restart(void);
+void SDHC_Write_Data(void);
+void SDHC_Read_Data(void);
 
 #endif

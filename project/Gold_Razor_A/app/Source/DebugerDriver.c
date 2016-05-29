@@ -61,7 +61,7 @@ void Keyboard_GPIO_Init(void)
       LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
 
       keyboard_gpio_init_struct.GPIO_PTx = PTC;
-      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin14 | GPIO_Pin15;
+      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin9 | GPIO_Pin14 | GPIO_Pin15;
       keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
       keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
       keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
@@ -112,69 +112,91 @@ void Keybord_Delay(void)
 	}
 }
 
+void Keyboard_Locker(void)
+{
+	if(PTC9_I == 0)
+	{
+		Keybord_Delay();
+		if(PTC9_I == 0)
+		{
+			disable_irq((IRQn_Type)(2 + PORTA_IRQn));//PTC
+			disable_irq((IRQn_Type)(3 + PORTA_IRQn));//PTD
+		}
+	}
+
+	if(PTC9_I == 1)
+	{
+		Keybord_Delay();
+		if(PTC9_I == 1)
+		{
+			enable_irq((IRQn_Type)(2 + PORTA_IRQn));//PTC
+			enable_irq((IRQn_Type)(3 + PORTA_IRQn));//PTD
+		}
+	}
+ 
+}
 
 //Interrupt Keyboard
 void Keyboard_Isr(void)
 {
 	//确定
 	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin14))
-  	{
-	  	Keybord_Delay();
+	{
+		Keybord_Delay();
 		if(PTC14_I == 0)
 		{
 			if(NULL != menuList[currentList].function)
-  			(*menuList[currentList].function)();
-  			currentList = menuList[currentList].child;		
-		}  		
-  	}
+				(*menuList[currentList].function)();
+			currentList = menuList[currentList].child;		
+		}
+	}
 
-  	//返回
-  	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin15))
-  	{
-	  	Keybord_Delay();
+	//返回
+	if(LPLD_GPIO_IsPinxExt(PORTC, GPIO_Pin15))
+	{
+		Keybord_Delay();
 		if(PTC15_I == 0)
 		{
-		  	currentList = menuList[currentList].parent;
-		}  		
-  	}
-
-  	//向下翻
-  	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin10))
+			currentList = menuList[currentList].parent;
+		}		
+	}
+	//向下翻
+	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin10))
 	{
-	  	Keybord_Delay();
+		Keybord_Delay();
 		if(PTD10_I == 0)
 		{
-		 	currentList = menuList[currentList].next; 
+			currentList = menuList[currentList].next; 
 		}		
 	}
 
 	//值减
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin11))
 	{
-	  	Keybord_Delay();
+		Keybord_Delay();
 		if(PTD11_I == 0)
 		{
-		 	Menu_Data_Decrease(currentList); 
+			Menu_Data_Decrease(currentList); 
 		}
 	}
 
 	//向上翻
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin12))
 	{
-	  	Keybord_Delay();
+		Keybord_Delay();
 		if(PTD12_I == 0)
 		{
-		 	currentList = menuList[currentList].previous; 
+			currentList = menuList[currentList].previous; 
 		}
 	}
 
 	//值增
 	if(LPLD_GPIO_IsPinxExt(PORTD, GPIO_Pin13))
 	{
-	  	Keybord_Delay();
+		Keybord_Delay();
 		if(PTD13_I == 0)
 		{
-		 	Menu_Data_Increase(currentList); 
+			Menu_Data_Increase(currentList); 
 		}
 	}
 	Menu_Show();
@@ -185,32 +207,28 @@ void Keyboard_Scan(void)
 {
 		//确定
 	if(0 == PTC14_I)
-  	{
-  		Keybord_Delay();
-  		if(0 == PTC14_I)
-  		{
-  			if(NULL != menuList[currentList].function)
-  				(*menuList[currentList].function)();
-  			currentList = menuList[currentList].child;
-
-  			Menu_Show();
-  		}
-  	}
-
-  	//返回
-  	if(0 == PTC15_I)
-  	{
-  		Keybord_Delay();
-  		if(0 == PTC15_I)
-  		{
-  			currentList = menuList[currentList].parent;
-
-  			Menu_Show();
-  		}
-  	}
-
-  	//向下翻
-  	if(0 == PTD10_I)
+	{
+		Keybord_Delay();
+		if(0 == PTC14_I)
+		{
+			if(NULL != menuList[currentList].function)
+				(*menuList[currentList].function)();
+			currentList = menuList[currentList].child;
+			Menu_Show();
+		}
+	}
+	//返回
+	if(0 == PTC15_I)
+	{
+		Keybord_Delay();
+		if(0 == PTC15_I)
+		{
+			currentList = menuList[currentList].parent;
+			Menu_Show();
+		}
+	}
+	//向下翻
+	if(0 == PTD10_I)
 	{
 		Keybord_Delay();
 		if(0 == PTD10_I)

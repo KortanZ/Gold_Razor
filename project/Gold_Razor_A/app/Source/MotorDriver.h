@@ -19,6 +19,7 @@ typedef enum {
 	MOTOR_RIGHT,
 }MotorPosition;
 
+extern int32 PWM_Expect_Base;
 extern int32 PWM_Expect;
 
 void Motor_Init(void);

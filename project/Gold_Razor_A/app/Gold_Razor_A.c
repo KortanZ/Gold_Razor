@@ -8,6 +8,7 @@
 #include "Eagle_ov7725.h"
 #include "Menu.h"
 #include "ImgProcess.h"
+#include "common.h"
 
 /*     main function entrance    */
 
@@ -27,6 +28,7 @@ void main(void)
 	SteerCtrler_Init();
 	DifferCtrler_Init();
 	Camera_init();
+	SDHC_Init();
 	Menu_Data_Link();
 	Menu_Show();
 	EnableInterrupts;
