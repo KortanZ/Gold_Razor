@@ -25,7 +25,7 @@ void LinerFitting(int16 *,uint8 ,uint8 ,uint8 );
 void CrossDeal(void);
 void BlackDeal(int8 );
 void Get_MidAve(uint8 * ,float32 ,float32 ,float32 ,float32);
-void clearflag();
+void clearflag(void);
 
 
 
@@ -83,7 +83,6 @@ void Get_MidLine(void)
 		       , weight[1]    \
 		       , weight[2]    \
 		       , weight[3]);
-	clearflag();
 }
 
 uint8 Bef_Scan(uint8 *pic_buff)
@@ -358,6 +357,7 @@ void Get_Img(void)
     }
 	Get_MidLine();
 	Mode_Change(steerCtrler);
+	clearflag();
 	
 	Steer_Controller(steerCtrler, steerMidValue, MidAve);
 	OLED_ShowString(0,0,"MidAve");
@@ -634,7 +634,7 @@ void LinerFitting(int16 *Tar,uint8 Start_H,uint8 End_H,uint8 End_L)
 	 *(Tar + End_H) = End_L;
    }
 }
-void clearflag(CrossInf_Struct *CrossInf_Databuff)
+void clearflag(void)
 {
 	LeftFlag_Switch.LeftBlackLost = 0;
 	LeftFlag_Switch.LeftCrossFlag = 0;
@@ -727,25 +727,26 @@ int8 Is_Straight(uint8 *MidLine_Buff, uint8 y)
 
 	midErrInvSlp = (MidLine_Buff[y - 5] - steerMidValue) - 2 * (MidLine_Buff[y] - steerMidValue) + (MidLine_Buff[y + 5] - steerMidValue);
 
-	if(fabs(midErrInvSlp) < 4 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
+	if(fabs(midErrInvSlp) < 3 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
 	{
-		// OLED_ClearLine(5);
-		// OLED_ShowString(0, 5, "Straight");
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Straight");
 		isStraight = 1;
 	}
-	else if(fabs(midErrInvSlp) > 8 || LeftFlag_Switch.LeftLost || RightFlag_Switch.RightLost)
+	else
 	{
-		// OLED_ClearLine(5);
-		// OLED_ShowString(0, 5, "Curv");
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Curv");
 		isStraight = 0;
 	}
+	OLED_ShowNum(70, 5, (int32)midErrInvSlp, 5);
 
 	return isStraight;
 }
 
 void Mode_Change(PIDStruct *steerCtrler)
 {
-	if (Is_Straight(PIC_DateBlock.TrackInf_DataBlock.MidLine, 7))
+	if (Is_Straight(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9))
 	{
 		steerCtrler -> para = steerCtrlerStPara;
 		differCtrler -> para = differCtrlerStPara;

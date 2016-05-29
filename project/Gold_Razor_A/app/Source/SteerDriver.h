@@ -14,9 +14,9 @@
 //#define STEER_MIDVALUE 85
 
 /* red */
-#define STEER_MID_DUTY 801
-#define STEER_LEFT_DUTY 705
-#define STEER_RIGHT_DUTY 880
+#define STEER_MID_DUTY 772
+#define STEER_LEFT_DUTY 695
+#define STEER_RIGHT_DUTY 850
 
 extern uint8 steerMidValue;
 

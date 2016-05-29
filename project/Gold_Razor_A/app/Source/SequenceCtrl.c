@@ -112,7 +112,7 @@ void First_Process(void)
     	vcan_sendimg(imgbuff, CAMERA_SIZE);
 	}
 
-	Keyboard_Locker();
+	
 	// VirtualSignal[0] = (int32)(MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9));
 	// OutPut_Data();
 	// printf("%d\n", MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9));
@@ -150,6 +150,7 @@ void Second_Process(void)
 	Speed_Controller(speedCtrler, \
 					 PWM_To_Pulse(PWM_Expect), \
 					 (leftPulse + rightPulse) / 2.0);
+
 
 	// VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);
 	// VirtualSignal[1] = (leftPulse + rightPulse) / 2.0;

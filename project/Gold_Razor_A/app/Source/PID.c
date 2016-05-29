@@ -56,7 +56,7 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 		Motor_Duty_Change(MOTOR_LEFT, 9000);
 		Motor_Duty_Change(MOTOR_RIGHT, 9000);
 	}
-	else if(motorCtrler -> error[0] < -9000)
+	else if(motorCtrler -> error[0] < -motorThersh)
 	{
 		Motor_Duty_Change(MOTOR_LEFT, -9000);
 		Motor_Duty_Change(MOTOR_RIGHT, -9000);
@@ -130,7 +130,7 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 		Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
 	}
 
-	//Steer_Duty_Change(STEER_MID_DUTY);
+	//Steer_Duty_Change(STEER_RIGHT_DUTY);
 }
 void SteerCtrler_Init(void)
 {
