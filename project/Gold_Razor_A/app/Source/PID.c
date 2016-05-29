@@ -21,8 +21,8 @@ PIDParaStruct *differCtrlerCurvPara;
 
 float32 enhance = 0;
 
-float32 motorThersh = 240;
-float32 steerThersh = 30;
+int16 motorThersh = 240;
+int16 steerThersh = 30;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
@@ -149,8 +149,8 @@ void SteerCtrler_Init(void)
 		steerCtrlerStPara -> Kd = 0.2;
 		steerCtrlerStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 2.8;
-		steerCtrlerCurvPara -> Kd = 0.28;
+		steerCtrlerCurvPara -> Kp = 2.84;
+		steerCtrlerCurvPara -> Kd = 0.3;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;

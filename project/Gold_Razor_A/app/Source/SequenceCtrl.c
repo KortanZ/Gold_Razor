@@ -89,17 +89,8 @@ void NVIC_Init(void)
 void Main_Isr(void)
 {
 	First_Process();
-	// switch(++pitCounter)
-	// {
-	// 	//case 1 : First_Process();break;
 
-	// 	case 20 : Second_Process(); break;
-	// }
-
-	if (!brokeDownFlag)
-	{
-		Second_Process();
-	}
+	Second_Process();
 	
 }
 
@@ -141,15 +132,25 @@ void Second_Process(void)
 	rightPulse = Encoder_GetPulseNum(ENCODER_RIGHT);
 
 	if(leftPulse < 0)
+	{
 		rightPulse = -rightPulse;
+	}
 
-	// Steer_Controller(steerCtrler , \
-	// 				 steerMidValue , \
-	// 				 MidAve);
+	if (leftPulse + rightPulse)
+	{
+		Keyboard_Locker();
+	}
+	else
+	{
+		Keyboard_Unlocker();
+	}
 
-	Speed_Controller(speedCtrler, \
-					 PWM_To_Pulse(PWM_Expect), \
-					 (leftPulse + rightPulse) / 2.0);
+	if(!brokeDownFlag)
+	{
+		Speed_Controller(speedCtrler, \
+						 PWM_To_Pulse(PWM_Expect), \
+						 (leftPulse + rightPulse) / 2.0);
+	}
 
 
 	// VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);

@@ -78,8 +78,10 @@ void Menu_Num_Show(ListType lst)
 
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_ST_KP && lst <= MOTOR_BB)
+		if(lst >= STEER_ST_KP && lst <= DIFF_EN)
 			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((float32 *)menuList[lst].data) * 100), Num_Len);
+		else if(lst >= STEER_BB && lst <= MOTOR_BB)
+		  	OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((int16 *)menuList[lst].data)), Num_Len);
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((int32 *)menuList[lst].data)), Num_Len);
 		else if(lst >= STEER_MID && lst <= STEER_MID)
@@ -121,8 +123,10 @@ void Menu_Data_Increase(ListType lst)
 {
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_ST_KP && lst <= MOTOR_BB)
+		if(lst >= STEER_ST_KP && lst <= DIFF_EN)
 			*((float32 *)menuList[lst].data) += 0.01;
+		else if(lst >= STEER_BB && lst <= MOTOR_BB)
+		  	*((int16 *)menuList[lst].data) += 1;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) += 100;
 		else if(lst >= STEER_MID && lst <= STEER_MID)
@@ -134,8 +138,10 @@ void Menu_Data_Decrease(ListType lst)
 {
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_ST_KP && lst <= MOTOR_BB)
+		if(lst >= STEER_ST_KP && lst <= DIFF_EN)
 			*((float32 *)menuList[lst].data) -= 0.01;
+		else if(lst >= STEER_BB && lst <= MOTOR_BB)
+		  	*((int16 *)menuList[lst].data) -= 1;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
 		  	*((int32 *)menuList[lst].data) -= 100;
 		else if(lst >= STEER_MID && lst <= STEER_MID)

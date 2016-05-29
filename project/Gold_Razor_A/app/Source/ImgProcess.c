@@ -746,16 +746,19 @@ int8 Is_Straight(uint8 *MidLine_Buff, uint8 y)
 
 void Mode_Change(PIDStruct *steerCtrler)
 {
-	if (Is_Straight(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9))
+	if (Is_Straight(PIC_DateBlock.TrackInf_DataBlock.MidLine, 11))
 	{
 		steerCtrler -> para = steerCtrlerStPara;
 		differCtrler -> para = differCtrlerStPara;
-		PWM_Expect = PWM_Expect_Base + 1000;
+		if (fabs(steerCtrler -> error[0]) <= 10)
+		{
+			PWM_Expect = PWM_Expect_Base + 1000;
+		}
 	}
 	else
 	{
 		steerCtrler -> para = steerCtrlerCurvPara;
 		differCtrler -> para = differCtrlerCurvPara;
-		PWM_Expect = PWM_Expect_Base - 1000;
+		PWM_Expect = PWM_Expect_Base - 900;
 	}
 }

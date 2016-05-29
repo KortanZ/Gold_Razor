@@ -114,28 +114,16 @@ void Keybord_Delay(void)
 
 void Keyboard_Locker(void)
 {
-	if(PTC9_I == 0)
-	{
-		Keybord_Delay();
-		if(PTC9_I == 0)
-		{
-			disable_irq((IRQn_Type)(2 + PORTA_IRQn));//PTC
-			disable_irq((IRQn_Type)(3 + PORTA_IRQn));//PTD
-		}
-	}
 
-	if(PTC9_I == 1)
-	{
-		Keybord_Delay();
-		if(PTC9_I == 1)
-		{
-			enable_irq((IRQn_Type)(2 + PORTA_IRQn));//PTC
-			enable_irq((IRQn_Type)(3 + PORTA_IRQn));//PTD
-		}
-	}
- 
+	disable_irq((IRQn_Type)(2 + PORTA_IRQn));//PTC
+	disable_irq((IRQn_Type)(3 + PORTA_IRQn));//PTD
 }
 
+void Keyboard_Unlocker(void)
+{
+	enable_irq((IRQn_Type)(2 + PORTA_IRQn));//PTC
+	enable_irq((IRQn_Type)(3 + PORTA_IRQn));//PTD
+}
 //Interrupt Keyboard
 void Keyboard_Isr(void)
 {
