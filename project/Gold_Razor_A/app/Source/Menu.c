@@ -162,8 +162,11 @@ void SDHC_Init(void)
 {
 	SDHCRES sd_state;
 	sd_state = (SDHCRES)LPLD_SDHC_InitCard();
-	OLED_ClearLine(5);
-	OLED_ShowString(0, 5, sdhcMessage[sd_state]);
+	if(sd_state)
+	{
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, sdhcMessage[sd_state]);
+	}
 }
 
 void SDHC_Write_Data(void)
