@@ -6,17 +6,10 @@
 #define _STEERDRIVER_H
 
 #include "common.h"
-
-/* blank */
-// #define STEER_MID_DUTY 705
-// #define STEER_LEFT_DUTY 625
-// #define STEER_RIGHT_DUTY 775
-//#define STEER_MIDVALUE 85
-
 /* red */
-#define STEER_MID_DUTY 795
-#define STEER_LEFT_DUTY 710
-#define STEER_RIGHT_DUTY 868
+#define STEER_MID_DUTY 805
+#define STEER_LEFT_DUTY 720
+#define STEER_RIGHT_DUTY 895
 
 extern uint8 steerMidValue;
 

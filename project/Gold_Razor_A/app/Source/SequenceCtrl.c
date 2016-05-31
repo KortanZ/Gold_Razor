@@ -14,7 +14,7 @@
 #include "VirtualOsc.h"
 #include "math.h"
 
-uint8 pitCounter=0; //时序控制变量
+uint8 pitCounter = 0; //时序控制变量
 uint8 imgSendFlag = 0;
 
 /*     process functiong declare   */

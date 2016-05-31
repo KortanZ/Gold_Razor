@@ -11,6 +11,7 @@
 #include "PID.h"
 #include "SteerDriver.h"
 #include "MotorDriver.h"
+#include "EncoderDriver.h"
 
 PIC_DateStruct PIC_DateBlock;
 CrossInf_Struct CrossInf_Data;
@@ -373,7 +374,7 @@ void Cross_Check(int8 Row_buff)
 		if(~(LeftFlag_Switch.Left_1Con))
 		{
 			if (PIC_DateBlock.TrackInf_DataBlock.LeftLine[Row_buff] >=
-				PIC_DateBlock.TrackInf_DataBlock.MidLine[Row_buff + 1])
+				PIC_DateBlock.TrackInf_DataBlock.LeftLine[Row_buff + 1])
 			{
 				/* code */
 				LeftFlag_Switch.LeftIncrease = 1;
@@ -460,6 +461,7 @@ void Cross_Check(int8 Row_buff)
 			if(RightFlag_Switch.RightWhiteLost)
 			{
 				RightFlag_Switch.RightCrossFlag = 1;
+				LeftFlag_Switch.LeftCrossFlag = 1;
 
 				CrossInf_Data.RightCrossStart_H = CrossInf_Data.LeftCrossStart_H;
 				CrossInf_Data.RightCrossStart_L = PICTURE_W - 3;
@@ -470,6 +472,7 @@ void Cross_Check(int8 Row_buff)
 			if(LeftFlag_Switch.LeftWhiteLost)
 			{
 				LeftFlag_Switch.LeftCrossFlag = 1;
+				RightFlag_Switch.RightCrossFlag = 1;
 
 				CrossInf_Data.LeftCrossStart_H = CrossInf_Data.RightCrossStart_H;
 				CrossInf_Data.LeftCrossStart_L = 2;
@@ -746,6 +749,7 @@ int8 Is_Straight(uint8 *MidLine_Buff, uint8 y)
 
 void Mode_Change(PIDStruct *steerCtrler)
 {
+	//float32 speedTemp;
 	if (Is_Straight(PIC_DateBlock.TrackInf_DataBlock.MidLine, 11))
 	{
 		steerCtrler -> para = steerCtrlerStPara;
@@ -757,8 +761,14 @@ void Mode_Change(PIDStruct *steerCtrler)
 	}
 	else
 	{
+		PWM_Expect = PWM_Expect_Base - 900;
+		// speedTemp = (Encoder_GetPulseNum(ENCODER_LEFT) + Encoder_GetPulseNum(ENCODER_LEFT)) / 2.0;
+		// if(fabs(PulseNum_To_PWM(speedTemp) - PWM_Expect) < 100)
+		// {
+		// 	steerCtrler -> para = steerCtrlerCurvPara;
+		// 	differCtrler -> para = differCtrlerCurvPara;
+		// }
 		steerCtrler -> para = steerCtrlerCurvPara;
 		differCtrler -> para = differCtrlerCurvPara;
-		PWM_Expect = PWM_Expect_Base - 900;
 	}
 }

@@ -57,13 +57,13 @@ void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty)
 {
 
     /* Set motor threshold */
-    if (tagetDuty > 9000)
+    if (tagetDuty > 10000)
     {
-        tagetDuty = 9000;
+        tagetDuty = 10000;
     }
-    else if (tagetDuty < -9000)
+    else if (tagetDuty < -10000)
     {
-        tagetDuty = -9000;
+        tagetDuty = -10000;
     }
 
 	switch (motorPos)

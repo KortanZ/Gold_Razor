@@ -19,10 +19,10 @@ PIDStruct *differCtrler;
 PIDParaStruct *differCtrlerStPara;
 PIDParaStruct *differCtrlerCurvPara;
 
-float32 enhance = 0;
+float32 enhance = 1;
 
 int16 motorThersh = 240;
-int16 steerThersh = 30;
+int16 steerThersh = 28;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
@@ -53,13 +53,13 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 
 	if(motorCtrler -> error[0] > motorThersh)
 	{
-		Motor_Duty_Change(MOTOR_LEFT, 9000);
-		Motor_Duty_Change(MOTOR_RIGHT, 9000);
+		Motor_Duty_Change(MOTOR_LEFT, 6000);
+		Motor_Duty_Change(MOTOR_RIGHT, 6000);
 	}
 	else if(motorCtrler -> error[0] < -motorThersh)
 	{
-		Motor_Duty_Change(MOTOR_LEFT, -9000);
-		Motor_Duty_Change(MOTOR_RIGHT, -9000);
+		Motor_Duty_Change(MOTOR_LEFT, -10000);
+		Motor_Duty_Change(MOTOR_RIGHT, -10000);
 	}
 	else
 	{
@@ -92,7 +92,7 @@ void SpeedCtrler_Init(void)
 	}
 	else
 	{
-		speedCtrlerPara -> Kp = 4.5;
+		speedCtrlerPara -> Kp = 4.8;
 		speedCtrlerPara -> Kd = 0.2;
 		speedCtrlerPara -> Ki = 0.8;
 		speedCtrler -> para = speedCtrlerPara;
@@ -149,7 +149,7 @@ void SteerCtrler_Init(void)
 		steerCtrlerStPara -> Kd = 0.2;
 		steerCtrlerStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 2.84;
+		steerCtrlerCurvPara -> Kp = 2.75;
 		steerCtrlerCurvPara -> Kd = 0.3;
 		steerCtrlerCurvPara -> Ki = 0;
 
@@ -202,7 +202,7 @@ void DifferCtrler_Init(void)
 		differCtrlerStPara -> Kd = 0;
 		differCtrlerStPara -> Ki = 0;
 
-		differCtrlerCurvPara -> Kp = 0;
+		differCtrlerCurvPara -> Kp = 2;
 		differCtrlerCurvPara -> Kd = 0;
 		differCtrlerCurvPara -> Ki = 0;
 

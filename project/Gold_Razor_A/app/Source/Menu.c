@@ -104,9 +104,9 @@ void Menu_Data_Link(void)
 	menuList[MOTOR_KD].data = (void *)(&(speedCtrlerPara -> Kd));
 	menuList[MOTOR_KI].data = (void *)(&(speedCtrlerPara -> Ki));
 
-	menuList[DIFF_KP].data = (void *)(&(differCtrlerStPara -> Kp));
-	menuList[DIFF_KD].data = (void *)(&(differCtrlerStPara -> Kd));
-	menuList[DIFF_KI].data = (void *)(&(differCtrlerStPara -> Ki));
+	menuList[DIFF_KP].data = (void *)(&(differCtrlerCurvPara -> Kp));
+	menuList[DIFF_KD].data = (void *)(&(differCtrlerCurvPara -> Kd));
+	menuList[DIFF_KI].data = (void *)(&(differCtrlerCurvPara -> Ki));
 	menuList[DIFF_EN].data = (void *)(&enhance);
 
 	menuList[STEER_BB].data = (void *)(&(steerThersh));
