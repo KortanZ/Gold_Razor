@@ -7,9 +7,9 @@
 
 #include "common.h"
 /* red */
-#define STEER_MID_DUTY 805
-#define STEER_LEFT_DUTY 720
-#define STEER_RIGHT_DUTY 895
+#define STEER_MID_DUTY 795
+#define STEER_LEFT_DUTY 710
+#define STEER_RIGHT_DUTY 890
 
 extern uint8 steerMidValue;
 

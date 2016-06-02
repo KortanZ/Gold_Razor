@@ -53,8 +53,8 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 
 	if(motorCtrler -> error[0] > motorThersh)
 	{
-		Motor_Duty_Change(MOTOR_LEFT, 6000);
-		Motor_Duty_Change(MOTOR_RIGHT, 6000);
+		Motor_Duty_Change(MOTOR_LEFT, 6500);
+		Motor_Duty_Change(MOTOR_RIGHT, 6500);
 	}
 	else if(motorCtrler -> error[0] < -motorThersh)
 	{
@@ -130,7 +130,7 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 		Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
 	}
 
-	//Steer_Duty_Change(STEER_RIGHT_DUTY);
+	//Steer_Duty_Change(STEER_MID_DUTY);
 }
 void SteerCtrler_Init(void)
 {
@@ -149,8 +149,8 @@ void SteerCtrler_Init(void)
 		steerCtrlerStPara -> Kd = 0.2;
 		steerCtrlerStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 2.75;
-		steerCtrlerCurvPara -> Kd = 0.3;
+		steerCtrlerCurvPara -> Kp = 2.78;
+		steerCtrlerCurvPara -> Kd = 0.32;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;
@@ -170,18 +170,18 @@ float32 Differ_Controller(PIDStruct *DifferCon_Data, float32 expect, float32 rea
 	DifferCon_Data -> error[1] = DifferCon_Data -> error[0];
 	DifferCon_Data -> error[0] = real - expect;
 
-	incrementU = (DifferCon_Data -> para -> Kp) * ((DifferCon_Data -> error[0]) 		\
-										 - (DifferCon_Data -> error[1]))		\
-				+ (DifferCon_Data -> para -> Kd) * ((DifferCon_Data -> error[0]) 		\
-											- 2 * (DifferCon_Data -> error[1]) 	\
+	incrementU = (DifferCon_Data -> para -> Kp) * ((DifferCon_Data -> error[0]) 		
+										 - (DifferCon_Data -> error[1]))		
+				+ (DifferCon_Data -> para -> Kd) * ((DifferCon_Data -> error[0])
+											- 2 * (DifferCon_Data -> error[1]) 	
 											+ (DifferCon_Data -> error[2]));
 
 	DifferCon_Data -> u[2] = DifferCon_Data -> u[1];
 	DifferCon_Data -> u[1] = DifferCon_Data -> u[0];
 	DifferCon_Data -> u[0] = DifferCon_Data -> u[1] + incrementU;
 
-	(DifferCon_Data -> u[0] > 4000) ? (DifferCon_Data -> u[0] = 4000) : (NULL);
-	(DifferCon_Data -> u[0] < -4000) ? (DifferCon_Data -> u[0] = -4000) : (NULL);
+	(DifferCon_Data -> u[0] > 2000) ? (DifferCon_Data -> u[0] = 2000) : (NULL);
+	(DifferCon_Data -> u[0] < -2000) ? (DifferCon_Data -> u[0] = -2000) : (NULL);
 
 	return (DifferCon_Data -> u[0]);
 }
@@ -202,7 +202,7 @@ void DifferCtrler_Init(void)
 		differCtrlerStPara -> Kd = 0;
 		differCtrlerStPara -> Ki = 0;
 
-		differCtrlerCurvPara -> Kp = 2;
+		differCtrlerCurvPara -> Kp = 0;
 		differCtrlerCurvPara -> Kd = 0;
 		differCtrlerCurvPara -> Ki = 0;
 
