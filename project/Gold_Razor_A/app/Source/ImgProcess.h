@@ -70,6 +70,12 @@ typedef struct
 	_Bool RightCrossFlag;	
 }RightFlag_Struct;
 
+typedef enum{
+	STRAIGHT,
+	PSE_ST,
+	CURV,
+}RoadMode;
+
 extern int16 MidAve;
 extern uint8 brokeDownFlag;
 extern float32 weight[];
@@ -83,8 +89,8 @@ extern void Get_MidLine(void);
 float32 Calc_Curv(uint8 *MidLine_Buff, uint8 index);
 float32 Carmark_InvSqrt(float32 x);
 float32 InvSlope_Calc(uint8 *MidLine_Buff, uint8 y1, uint8 y2);
-int8 Is_Straight(uint8 *MidLine_Buff, uint8 y);
-void Mode_Change(PIDStruct *steerCtrler);
+RoadMode Road_Check(uint8 *MidLine_Buff, uint8 y);
+void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler);
 
 
 #endif

@@ -357,7 +357,7 @@ void Get_Img(void)
         }
     }
 	Get_MidLine();
-	Mode_Change(steerCtrler);
+	Mode_Change(steerCtrler, differCtrler);
 	clearflag();
 	
 	Steer_Controller(steerCtrler, steerMidValue, MidAve);
@@ -723,52 +723,58 @@ float32 InvSlope_Calc(uint8 *MidLine_Buff, uint8 y1, uint8 y2)
 	return invSlope;
 }
 
-int8 Is_Straight(uint8 *MidLine_Buff, uint8 y)
+RoadMode Road_Check(uint8 *MidLine_Buff, uint8 y)
 {
-	int8 isStraight = 1;
+	RoadMode thisMode;
 	int16 midErrInvSlp;
+	float32 midInvSlp;
 
 	midErrInvSlp = (MidLine_Buff[y - 5] - steerMidValue) - 2 * (MidLine_Buff[y] - steerMidValue) + (MidLine_Buff[y + 5] - steerMidValue);
+	midInvSlp = (MidLine_Buff[y - 5] - steerMidValue) / -15.0;
 
-	if(fabs(midErrInvSlp) < 3 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
+	if(fabs(midErrInvSlp) < 3 && fabs(midInvSlp) < 1 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
 	{
 		OLED_ClearLine(5);
 		OLED_ShowString(0, 5, "Straight");
-		isStraight = 1;
+		thisMode = STRAIGHT;
+	}
+	else if (fabs(midErrInvSlp) < 3 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
+	{
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Pse Straight");
+		thisMode = PSE_ST;
 	}
 	else
 	{
 		OLED_ClearLine(5);
 		OLED_ShowString(0, 5, "Curv");
-		isStraight = 0;
+		thisMode = CURV;
 	}
-	OLED_ShowNum(70, 5, (int32)midErrInvSlp, 5);
 
-	return isStraight;
+	return thisMode;
 }
 
-void Mode_Change(PIDStruct *steerCtrler)
+void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 {
-	//float32 speedTemp;
-	if (Is_Straight(PIC_DateBlock.TrackInf_DataBlock.MidLine, 11))
+	RoadMode thisMode;
+	thisMode = Road_Check(PIC_DateBlock.TrackInf_DataBlock.MidLine, 10);
+
+	switch (thisMode)
 	{
-		steerCtrler -> para = steerCtrlerStPara;
-		differCtrler -> para = differCtrlerStPara;
-		if (fabs(steerCtrler -> error[0]) <= 10)
-		{
+		case STRAIGHT: 
+			steerCtrler -> para = steerCtrlerStPara;
+			differCtrler -> para = differCtrlerStPara;
 			PWM_Expect = PWM_Expect_Base + 1000;
-		}
-	}
-	else
-	{
-		PWM_Expect = PWM_Expect_Base - 900;
-		// speedTemp = (Encoder_GetPulseNum(ENCODER_LEFT) + Encoder_GetPulseNum(ENCODER_LEFT)) / 2.0;
-		// if(fabs(PulseNum_To_PWM(speedTemp) - PWM_Expect) < 100)
-		// {
-		// 	steerCtrler -> para = steerCtrlerCurvPara;
-		// 	differCtrler -> para = differCtrlerCurvPara;
-		// }
-		steerCtrler -> para = steerCtrlerCurvPara;
-		differCtrler -> para = differCtrlerCurvPara;
+			break;
+		case PSE_ST:
+			steerCtrler -> para = steerCtrlerPseStPara;
+			differCtrler -> para = differCtrlerPseStPara;
+			PWM_Expect = PWM_Expect_Base - 650;
+			break;
+		case CURV:
+			PWM_Expect = PWM_Expect_Base - 900;
+			steerCtrler -> para = steerCtrlerCurvPara;
+			differCtrler -> para = differCtrlerCurvPara;
+			break;
 	}
 }

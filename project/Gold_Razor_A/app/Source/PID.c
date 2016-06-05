@@ -14,14 +14,16 @@ PIDParaStruct *speedCtrlerPara;
 PIDStruct *steerCtrler;
 PIDParaStruct *steerCtrlerStPara;
 PIDParaStruct *steerCtrlerCurvPara;
+PIDParaStruct *steerCtrlerPseStPara;
 
 PIDStruct *differCtrler;
 PIDParaStruct *differCtrlerStPara;
 PIDParaStruct *differCtrlerCurvPara;
+PIDParaStruct *differCtrlerPseStPara;
 
-float32 enhance = 1;
+float32 enhance = 0;
 
-int16 motorThersh = 240;
+int16 motorThersh = 260;
 int16 steerThersh = 28;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
@@ -85,7 +87,7 @@ void SpeedCtrler_Init(void)
 	speedCtrler = (PIDStruct *)malloc(sizeof(PIDStruct));
 	speedCtrlerPara = (PIDParaStruct *)malloc(sizeof(PIDParaStruct));
 
-	if (NULL == speedCtrler || NULL == speedCtrlerPara)
+	if (!speedCtrler || !speedCtrlerPara)
 	{
 		printf("Memory alloc faild!\n");
 		OLED_ShowString(0, 5, "Memory alloc faild!");
@@ -130,24 +132,29 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 		Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
 	}
 
-	//Steer_Duty_Change(STEER_MID_DUTY);
+	//Steer_Duty_Change(STEER_RIGHT_DUTY);
 }
 void SteerCtrler_Init(void)
 {
 	int8 i;
 	steerCtrler = (PIDStruct *)malloc(sizeof(PIDStruct));
 	steerCtrlerStPara = (PIDParaStruct *)malloc(sizeof(PIDParaStruct));
+	steerCtrlerPseStPara = (PIDParaStruct *)malloc(sizeof(PIDParaStruct));
 	steerCtrlerCurvPara = (PIDParaStruct *)malloc(sizeof(PIDParaStruct));
-	if ((NULL == steerCtrlerStPara) || (NULL == steerCtrlerCurvPara) || (NULL == steerCtrler))
+	if (!steerCtrlerStPara || !steerCtrlerCurvPara || !steerCtrler || !steerCtrlerPseStPara)
 	{
 		printf("Memory alloc faild!\n");
 		OLED_ShowString(0, 5, "Memory alloc faild!");
 	}
 	else
 	{
-		steerCtrlerStPara -> Kp = 1.0;
+		steerCtrlerStPara -> Kp = 1.2;
 		steerCtrlerStPara -> Kd = 0.2;
 		steerCtrlerStPara -> Ki = 0;
+
+		steerCtrlerPseStPara -> Kp = 1.6;
+		steerCtrlerPseStPara -> Kd = 0.24;
+		steerCtrlerPseStPara -> Ki = 0;
 
 		steerCtrlerCurvPara -> Kp = 2.78;
 		steerCtrlerCurvPara -> Kd = 0.32;
@@ -180,8 +187,8 @@ float32 Differ_Controller(PIDStruct *DifferCon_Data, float32 expect, float32 rea
 	DifferCon_Data -> u[1] = DifferCon_Data -> u[0];
 	DifferCon_Data -> u[0] = DifferCon_Data -> u[1] + incrementU;
 
-	(DifferCon_Data -> u[0] > 2000) ? (DifferCon_Data -> u[0] = 2000) : (NULL);
-	(DifferCon_Data -> u[0] < -2000) ? (DifferCon_Data -> u[0] = -2000) : (NULL);
+	(DifferCon_Data -> u[0] > 3000) ? (DifferCon_Data -> u[0] = 3000) : (NULL);
+	(DifferCon_Data -> u[0] < -3000) ? (DifferCon_Data -> u[0] = -3000) : (NULL);
 
 	return (DifferCon_Data -> u[0]);
 }
@@ -191,7 +198,8 @@ void DifferCtrler_Init(void)
 	differCtrler = (PIDStruct *)malloc(sizeof(PIDStruct));
 	differCtrlerStPara = (PIDParaStruct *)malloc(sizeof(PIDParaStruct));
 	differCtrlerCurvPara = (PIDParaStruct *)malloc(sizeof(PIDParaStruct));
-	if ((NULL == differCtrler) || (NULL == differCtrlerStPara) || (NULL == differCtrlerCurvPara))
+	differCtrlerPseStPara = (PIDParaStruct *)malloc(sizeof(PIDParaStruct));
+	if (!differCtrler || !differCtrlerStPara || !differCtrlerCurvPara)
 	{
 		printf("Memory alloc faild!\n");
 		OLED_ShowString(0, 5, "Memory alloc faild!");
@@ -201,6 +209,10 @@ void DifferCtrler_Init(void)
 		differCtrlerStPara -> Kp = 0;
 		differCtrlerStPara -> Kd = 0;
 		differCtrlerStPara -> Ki = 0;
+
+		differCtrlerPseStPara -> Kp = 0;
+		differCtrlerPseStPara -> Kd	= 0;
+		differCtrlerPseStPara -> Ki = 0;
 
 		differCtrlerCurvPara -> Kp = 0;
 		differCtrlerCurvPara -> Kd = 0;

@@ -24,10 +24,12 @@ extern PIDParaStruct *speedCtrlerPara;
 extern PIDStruct *steerCtrler;
 extern PIDParaStruct *steerCtrlerStPara;
 extern PIDParaStruct *steerCtrlerCurvPara;
+extern PIDParaStruct *steerCtrlerPseStPara;
 
 extern PIDStruct *differCtrler;
 extern PIDParaStruct *differCtrlerStPara;
 extern PIDParaStruct *differCtrlerCurvPara;
+extern PIDParaStruct *differCtrlerPseStPara;
 extern float32 enhance;
 
 extern int16 motorThersh;
