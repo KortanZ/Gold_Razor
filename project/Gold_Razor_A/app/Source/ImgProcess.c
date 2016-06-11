@@ -65,10 +65,10 @@ void Get_MidLine(void)
 	}
 	//BlackDeal(Row);
 	Get_MidAve(PIC_DateBlock.MidLine  \
-       , weight[0]    \
-       , weight[1]    \
-       , weight[2]    \
-       , weight[3]);
+	, weight[0]    \
+	, weight[1]    \
+	, weight[2]    \
+	, weight[3]);
 }
 
 uint8 Bef_Scan(uint8 *pic_buff)
@@ -91,9 +91,9 @@ uint8 Bef_Scan(uint8 *pic_buff)
 			for(i = 4;i < PICTURE_W - 1;i++)
 			{
 				if(White == *(pic_buff + Row * PICTURE_W + i) && 		\
-				   White == *(pic_buff + Row * PICTURE_W + i - 1) && 	\
-				   Black == *(pic_buff + Row * PICTURE_W + i - 2) &&	\
-				   Black == *(pic_buff + Row * PICTURE_W + i - 3))
+					White == *(pic_buff + Row * PICTURE_W + i - 1) && 	\
+					Black == *(pic_buff + Row * PICTURE_W + i - 2) &&	\
+					Black == *(pic_buff + Row * PICTURE_W + i - 3))
 				{
 					PIC_DateBlock.LeftLine[Row] = i - 1;
 					break;
@@ -116,7 +116,7 @@ uint8 Bef_Scan(uint8 *pic_buff)
 		}
 
 		if(White == *(pic_buff + Row * PICTURE_W + PICTURE_W - 2) && \
-		   White == *(pic_buff + Row * PICTURE_W + PICTURE_W - 3))
+			White == *(pic_buff + Row * PICTURE_W + PICTURE_W - 3))
 		{
 			PIC_DateBlock.RightLine[Row] = PICTURE_W - 3;
 			RightFlag_Switch.RightBlackLost = 0;
@@ -128,16 +128,16 @@ uint8 Bef_Scan(uint8 *pic_buff)
 			for(i = PICTURE_W - 5;i > 0; i--)
 			{
 				if(White == *(pic_buff + Row * PICTURE_W + i)  &&		\
-				   White == *(pic_buff + Row * PICTURE_W + i + 1) &&	\
-				   Black == *(pic_buff + Row * PICTURE_W + i + 2) &&	\
-				   Black == *(pic_buff + Row * PICTURE_W + i + 3))
+					White == *(pic_buff + Row * PICTURE_W + i + 1) &&	\
+					Black == *(pic_buff + Row * PICTURE_W + i + 2) &&	\
+					Black == *(pic_buff + Row * PICTURE_W + i + 3))
 				{
 					PIC_DateBlock.RightLine[Row] = i + 1;
 					RightFlag_Switch.RightLost = 0;
 					break;
 				}
 			}
-            if(i == 0)
+			if(i == 0)
 			{
 				PIC_DateBlock.RightLine[Row] = PICTURE_W - 3;
 				RightFlag_Switch.RightBlackLost = 1;
@@ -189,9 +189,9 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 	for(i = PIC_DateBlock.MidLine[Row_buff + 1];i > 0;i--)
 	{
 		if(Black == *(pic_buff + Row_buff * PICTURE_W + i) &&		\
-		   Black == *(pic_buff + Row_buff * PICTURE_W + i + 1) &&	\
-		   White == *(pic_buff + Row_buff * PICTURE_W + i + 2) &&	\
-		   White == *(pic_buff + Row_buff * PICTURE_W + i + 3))
+			Black == *(pic_buff + Row_buff * PICTURE_W + i + 1) &&	\
+			White == *(pic_buff + Row_buff * PICTURE_W + i + 2) &&	\
+			White == *(pic_buff + Row_buff * PICTURE_W + i + 3))
 		{
 			PIC_DateBlock.LeftLine[Row_buff] = i + 1;
 			break;
@@ -235,9 +235,9 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 	for(i = PIC_DateBlock.MidLine[Row_buff + 1];i < PICTURE_W - 1;i++)
 	{
 		if(Black == *(pic_buff + Row_buff * PICTURE_W + i) &&
-		   Black == *(pic_buff + Row_buff * PICTURE_W + i - 1) &&
-		   White == *(pic_buff + Row_buff * PICTURE_W + i - 2) &&
-		   White == *(pic_buff + Row_buff * PICTURE_W + i - 3))
+			Black == *(pic_buff + Row_buff * PICTURE_W + i - 1) &&
+			White == *(pic_buff + Row_buff * PICTURE_W + i - 2) &&
+			White == *(pic_buff + Row_buff * PICTURE_W + i - 3))
 		{
 			PIC_DateBlock.RightLine[Row_buff] = i - 1;
 			break;
@@ -246,7 +246,7 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 	if(i == PICTURE_W - 1)
 	{
 		if(White == *(pic_buff + Row_buff * PICTURE_W + PICTURE_W - 3) &&   \
-		   White == *(pic_buff + Row_buff * PICTURE_W + PICTURE_W - 4)  )
+			White == *(pic_buff + Row_buff * PICTURE_W + PICTURE_W - 4)  )
 		{
 			RightFlag_Switch.LastRightWhiteLost = RightFlag_Switch.RightWhiteLost;
 			RightFlag_Switch.RightWhiteLost = 1;
@@ -260,9 +260,6 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			RightFlag_Switch.RightBlackLost = 1;
 			RightFlag_Switch.RightLost = 1;
 		}
-		//PIC_DateBlock.RightLine[Row_buff] = PIC_DateBlock.RightLine[Row_buff + 1] \
-										   + PIC_DateBlock.RightLine[Row_buff + 2] \
-										   - PIC_DateBlock.RightLine[Row_buff + 3];
 		PIC_DateBlock.RightLine[Row_buff] = PICTURE_W - 3;
 
 		(PIC_DateBlock.RightLine[Row_buff] > PICTURE_W - 3) ? \
@@ -330,8 +327,8 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			LeftFlag_Switch.LeftTurn = 0;
 	}
 	/*          十字检测         */
-        if(Row_buff > 4)
-          Cross_StartCheck(Row_buff);
+	if(Row_buff > 4)
+		Cross_StartCheck(Row_buff);
 }
 
 void Get_MidAve(int16 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,float32 Coe_4)
@@ -358,22 +355,24 @@ void Get_MidAve(int16 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,fl
 	MidAve  = (int16) (sum1 + sum2 + sum3 + sum4);
 }
 
-void Get_Img(void)
+void Get_Img_Start(void)
 {
-    ov7725_eagle_img_flag = IMG_START;
-	//Time_Counter_Start();                  
+	ov7725_eagle_img_flag = IMG_START;
 	PORTA->ISFR = ~0;
-    enable_irq((IRQn_Type)(PORTA_IRQn));
-    while (ov7725_eagle_img_flag != IMG_FINISH)
-    {
-        if (ov7725_eagle_img_flag == IMG_FAIL)           
-        {
-            ov7725_eagle_img_flag = IMG_START;           
-            PORTA->ISFR = 0xFFFFFFFFu;               
-            enable_irq(PORTA_IRQn);                 
-        }
-    }
+	enable_irq((IRQn_Type)(PORTA_IRQn));
+}
 
+void Get_Img_Wait(void)
+{
+	while (ov7725_eagle_img_flag != IMG_FINISH)
+	{
+		if (ov7725_eagle_img_flag == IMG_FAIL)
+		{
+			ov7725_eagle_img_flag = IMG_START;
+			PORTA->ISFR = 0xFFFFFFFFu;
+			enable_irq(PORTA_IRQn);
+		}
+	}
 }
 
 void Cross_StartCheck(int8 Row_buff)
@@ -659,7 +658,7 @@ void CrossDeal(void)
 
 void BlackDeal(int8 Row_Buff)
 {
-    if(Row_Buff < 0) return;
+	if(Row_Buff < 0) return;
 	for(;Row_Buff >= 0;Row_Buff--)
 	{
 		if(LeftFlag_Switch.LeftTurnFlag)
@@ -684,36 +683,36 @@ void BlackDeal(int8 Row_Buff)
 /*                 */
 void LinerFitting(int16 *Tar,uint8 Start_H,uint8 End_H,uint8 End_L)
 {
-   int16 Sub_L,Sub_H;
-   int16 Quotinet,Reminder;//
-   int16 i;
-   Sub_L = End_L - *(Tar + Start_H);   //
-   Sub_H = Start_H - End_H;		   //
-   if(Sub_H == 0)
-   {
-     *(Tar + End_H) = End_L;
-	 return;
-   }
-   if(Sub_L >= 0)
-   {
-     Quotinet = Sub_L / Sub_H;
-	 Reminder = Sub_L % Sub_H;
-	 for(i = Start_H; i < End_H + Reminder - 1;i--)
-	 	*(Tar + i) = *(Tar + i + 1) + Quotinet;
-	 for(i = End_H + Reminder - 1;i > End_H;i--)
-	 	*(Tar + i) = *(Tar + i + 1) + Quotinet + 1;
-	 *(Tar + End_H) = End_L;
-   }
-   if(Sub_L < 0)
-   {
-     Quotinet = Sub_L / Sub_H;
-	 Reminder = Sub_L % Sub_H;
-	 for(i = Start_H; i < End_H - Reminder - 1; i--)
-		*(Tar + i) = *(Tar + i + 1) + Quotinet;
-	 for(i = End_H - Reminder - 1;i > End_H; i--)
-		*(Tar + i) = *(Tar + i + 1) + Quotinet - 1;
-	 *(Tar + End_H) = End_L;
-   }
+	int16 Sub_L,Sub_H;
+	int16 Quotinet,Reminder;//
+	int16 i;
+	Sub_L = End_L - *(Tar + Start_H);   //
+	Sub_H = Start_H - End_H;		   //
+	if(Sub_H == 0)
+	{
+		*(Tar + End_H) = End_L;
+		return;
+	}
+	if(Sub_L >= 0)
+	{
+		Quotinet = Sub_L / Sub_H;
+		Reminder = Sub_L % Sub_H;
+		for(i = Start_H; i < End_H + Reminder - 1;i--)
+			*(Tar + i) = *(Tar + i + 1) + Quotinet;
+		for(i = End_H + Reminder - 1;i > End_H;i--)
+			*(Tar + i) = *(Tar + i + 1) + Quotinet + 1;
+		*(Tar + End_H) = End_L;
+	}
+	if(Sub_L < 0)
+	{
+		Quotinet = Sub_L / Sub_H;
+		Reminder = Sub_L % Sub_H;
+		for(i = Start_H; i < End_H - Reminder - 1; i--)
+			*(Tar + i) = *(Tar + i + 1) + Quotinet;
+		for(i = End_H - Reminder - 1;i > End_H; i--)
+			*(Tar + i) = *(Tar + i + 1) + Quotinet - 1;
+		*(Tar + End_H) = End_L;
+	}
 }
 
 void clearflag(void)

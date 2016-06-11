@@ -48,7 +48,7 @@ void main(void)
 		{
 		   	vcan_sendimg(imgbuff, CAMERA_SIZE);
 		}
-		Get_Img();
+		Get_Img_Wait();
 		Get_MidLine();
 		Mode_Change(steerCtrler, differCtrler);
 		clearflag();

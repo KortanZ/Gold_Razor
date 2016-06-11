@@ -93,7 +93,8 @@ extern PIC_DateStruct PIC_DateBlock;
 extern LeftFlag_Struct LeftFlag_Switch;
 extern RightFlag_Struct RightFlag_Switch;
 
-void Get_Img(void);
+void Get_Img_Start(void);
+void Get_Img_Wait(void);
 void Get_MidLine(void);
 uint8 Bef_Scan(uint8 *pic_buff);
 void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff);

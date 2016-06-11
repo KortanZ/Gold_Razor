@@ -88,20 +88,6 @@ void NVIC_Init(void)
 
 void Main_Isr(void)
 {
-	First_Process();
-
-	Second_Process();
-	
-}
-
-/*    process function prototype     */
-void First_Process(void)
-{
-	
-}
-
-void Second_Process(void)
-{
 	int16 leftPulse, rightPulse;
 
 	pitCounter = 0;
@@ -117,7 +103,12 @@ void Second_Process(void)
 	if(!brokeDownFlag)
 	{
 		Speed_Controller(speedCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);
-		Steer_Controller(steerCtrler, steerMidValue, MidAve);
+		if (IMG_FINISH == ov7725_eagle_img_flag)
+		{
+			Steer_Controller(steerCtrler, steerMidValue, MidAve);
+			Get_Img_Start();
+		}
+
 	}
 	else
 	{
@@ -128,12 +119,8 @@ void Second_Process(void)
 
 	// VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);
 	// VirtualSignal[1] = (leftPulse + rightPulse) / 2.0;
- //    // VirtualSignal[2] = rightPulse;
- //    // VirtualSignal[3] = PWM_Expect;
- //    OutPut_Data();
-}
-
-void Third_Process(void)
-{
-
+	// VirtualSignal[2] = rightPulse;
+	// VirtualSignal[3] = PWM_Expect;
+	//OutPut_Data();
+	
 }
