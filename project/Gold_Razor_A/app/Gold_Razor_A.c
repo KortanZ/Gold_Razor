@@ -34,8 +34,17 @@ void main(void)
 	EnableInterrupts;
 	while (1)
 	{
-		Get_Img();
+		if(imgSendFlag)
+		{
+		   	vcan_sendimg(imgbuff, CAMERA_SIZE);
+		}
 		//Keyboard_Locker();
+		Get_Img();
+		Get_MidLine();
+		Mode_Change(steerCtrler, differCtrler);
+		clearflag();
+		OLED_ShowString(0,0,"MidAve");
+		OLED_ShowNum(70,0,MidAve,3);
 	}
 }
 

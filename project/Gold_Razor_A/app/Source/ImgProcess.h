@@ -91,6 +91,13 @@ float32 Carmark_InvSqrt(float32 x);
 float32 InvSlope_Calc(uint8 *MidLine_Buff, uint8 y1, uint8 y2);
 RoadMode Road_Check(uint8 *MidLine_Buff, uint8 y);
 void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler);
-
+void Cross_Check(int8 );
+uint8 Bef_Scan(uint8*);
+void TwinLine_Deal(uint8 *,int8);
+void LinerFitting(int16 *,uint8 ,uint8 ,uint8 );
+void CrossDeal(void);
+void BlackDeal(int8 );
+void Get_MidAve(uint8 * ,float32 ,float32 ,float32 ,float32);
+void clearflag(void);
 
 #endif

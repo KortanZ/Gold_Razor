@@ -97,6 +97,7 @@ uint32 Time_Counter_Get(void)
 	{
 		val--;              //确保 不等于 ~0
 	}
+	PIT->CHANNEL[0].TCTRL &= ~PIT_TCTRL_TEN_MASK;
 	return val;
 }
 

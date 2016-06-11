@@ -14,6 +14,13 @@
 #define MOTOR_RIGHT_BACKWARD PTA6
 #define MOTOR_RIGHT_FORWARD PTA7
 
+#define B_COF 0.5724
+#define B_CONST 319.8
+
+#define A_COF 0.4858
+#define A_CONST -111.1
+
+
 typedef enum {
 	MOTOR_LEFT, 
 	MOTOR_RIGHT,

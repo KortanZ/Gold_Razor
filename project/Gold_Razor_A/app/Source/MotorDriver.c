@@ -5,8 +5,10 @@
 
 //#include "common.h"
 #include "MotorDriver.h"
-int32 PWM_Expect_Base = 2500;
-int32 PWM_Expect = 2500;
+//int32 PWM_Expect_Base = 2500;
+//int32 PWM_Expect = 2500;
+int32 PWM_Expect_Base = 1900;
+int32 PWM_Expect = 1900;
 
 void Motor_Init(void)
 {
@@ -83,14 +85,14 @@ float32 PulseNum_To_PWM(float32 pulseNum)
 	/* This function convert pulse number to rotational speed */
 
 	float32 pwm;
-	pwm = (pulseNum + 319.8) / 0.5724;
+	pwm = (pulseNum + A_CONST) / A_COF;
 	return pwm;
 }
 
 float32 PWM_To_Pulse(uint32 pwm)
 {
 	float32 pulse;
-	pulse = 0.5724 * pwm - 319.8;
+	pulse = A_COF * pwm - A_CONST;
 
 	if (pulse < 0)
 	{

@@ -97,29 +97,7 @@ void Main_Isr(void)
 /*    process function prototype     */
 void First_Process(void)
 {
-
-	if(imgSendFlag)
-	{
-    	vcan_sendimg(imgbuff, CAMERA_SIZE);
-	}
-
 	
-	// VirtualSignal[0] = (int32)(MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9));
-	// OutPut_Data();
-	// printf("%d\n", MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 9));
-
-	// invSlope = MidError_InvSlope(PIC_DateBlock.TrackInf_DataBlock.MidLine, 8);
-	// if(fabs(invSlope) < 4 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
-	// {
-	// 	OLED_ClearLine(5);
-	// 	OLED_ShowString(0, 5, "Straight");
-	// }
-	// else if(fabs(invSlope) > 8 || LeftFlag_Switch.LeftLost || RightFlag_Switch.RightLost)
-	// {
-	// 	OLED_ClearLine(5);
-	// 	OLED_ShowString(0, 5, "Curv");
-	// }
-
 }
 
 void Second_Process(void)
@@ -147,9 +125,13 @@ void Second_Process(void)
 
 	if(!brokeDownFlag)
 	{
-		Speed_Controller(speedCtrler, \
-						 PWM_To_Pulse(PWM_Expect), \
-						 (leftPulse + rightPulse) / 2.0);
+		Speed_Controller(speedCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);
+		Steer_Controller(steerCtrler, steerMidValue, MidAve);
+	}
+	else
+	{
+		Speed_Controller(speedCtrler, 0, (leftPulse + rightPulse) / 2.0);
+		Steer_Controller(steerCtrler, steerMidValue, steerMidValue);
 	}
 
 

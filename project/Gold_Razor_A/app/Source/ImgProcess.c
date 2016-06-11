@@ -18,19 +18,6 @@ CrossInf_Struct CrossInf_Data;
 LeftFlag_Struct LeftFlag_Switch;
 RightFlag_Struct RightFlag_Switch;
 
-
-void Cross_Check(int8 );
-uint8 Bef_Scan(uint8*);
-void TwinLine_Deal(uint8 *,int8);
-void LinerFitting(int16 *,uint8 ,uint8 ,uint8 );
-void CrossDeal(void);
-void BlackDeal(int8 );
-void Get_MidAve(uint8 * ,float32 ,float32 ,float32 ,float32);
-void clearflag(void);
-
-
-
-
 int16 MidAve = 0;
 uint8 brokeDownFlag = 0;
 float32 weight[4] = {0.02, 0.04, 0.02, 0.02};
@@ -191,10 +178,11 @@ uint8 Bef_Scan(uint8 *pic_buff)
 	if(Black_Check > 2)
 	{
 
-		LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch1, 0);
-		LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch2, 0);
-		LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch3, 0);
-		LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch4, 0);
+//		 LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch1, 0);
+//		 LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch2, 0);
+//		 LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch3, 0);
+//		 LPLD_FTM_PWM_ChangeDuty(FTM0, FTM_Ch4, 0);
+
 		OLED_ClearLine(5);
 		OLED_ShowString(0 ,5 ,"Car Broke Down!");
 		brokeDownFlag = 1;
@@ -344,25 +332,27 @@ void Get_MidAve(uint8 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,fl
 
 void Get_Img(void)
 {
-    ov7725_eagle_img_flag = IMG_START;                   //
+    ov7725_eagle_img_flag = IMG_START;
+	//Time_Counter_Start();                  
 	PORTA->ISFR = ~0;
     enable_irq((IRQn_Type)(PORTA_IRQn));
     while (ov7725_eagle_img_flag != IMG_FINISH)
     {
-        if (ov7725_eagle_img_flag == IMG_FAIL)            //
+        if (ov7725_eagle_img_flag == IMG_FAIL)           
         {
-            ov7725_eagle_img_flag = IMG_START;           //
-            PORTA->ISFR = 0xFFFFFFFFu;                //
-            enable_irq(PORTA_IRQn);                 //
+            ov7725_eagle_img_flag = IMG_START;           
+            PORTA->ISFR = 0xFFFFFFFFu;               
+            enable_irq(PORTA_IRQn);                 
         }
     }
-	Get_MidLine();
-	Mode_Change(steerCtrler, differCtrler);
-	clearflag();
+	// Get_MidLine();
+	// OLED_ShowNum(0, 5, Time_Counter_Get(), 7);
+	// Mode_Change(steerCtrler, differCtrler);
+	// clearflag();
 	
-	Steer_Controller(steerCtrler, steerMidValue, MidAve);
-	OLED_ShowString(0,0,"MidAve");
-	OLED_ShowNum(70,0,MidAve,3);
+	// Steer_Controller(steerCtrler, steerMidValue, MidAve);
+	// OLED_ShowString(0,0,"MidAve");
+	// OLED_ShowNum(70,0,MidAve,3);
 }
 
 void Cross_Check(int8 Row_buff)
@@ -730,9 +720,9 @@ RoadMode Road_Check(uint8 *MidLine_Buff, uint8 y)
 	float32 midInvSlp;
 
 	midErrInvSlp = (MidLine_Buff[y - 5] - steerMidValue) - 2 * (MidLine_Buff[y] - steerMidValue) + (MidLine_Buff[y + 5] - steerMidValue);
-	midInvSlp = (MidLine_Buff[y - 5] - steerMidValue) / -15.0;
+	midInvSlp = (MidLine_Buff[y - 5] - steerMidValue) / -3.0;
 
-	if(fabs(midErrInvSlp) < 3 && fabs(midInvSlp) < 1 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
+	if(fabs(midErrInvSlp) < 3 && fabs(midInvSlp) < 5 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
 	{
 		OLED_ClearLine(5);
 		OLED_ShowString(0, 5, "Straight");
@@ -751,6 +741,7 @@ RoadMode Road_Check(uint8 *MidLine_Buff, uint8 y)
 		thisMode = CURV;
 	}
 
+
 	return thisMode;
 }
 
@@ -763,17 +754,22 @@ void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 	{
 		case STRAIGHT: 
 			steerCtrler -> para = steerCtrlerStPara;
+			steerCtrler -> useBang = 0;
 			differCtrler -> para = differCtrlerStPara;
-			PWM_Expect = PWM_Expect_Base + 1000;
+			PWM_Expect = PWM_Expect_Base + 800;
+			//PWM_Expect = PWM_Expect_Base + 1000;
 			break;
 		case PSE_ST:
 			steerCtrler -> para = steerCtrlerPseStPara;
+			steerCtrler -> useBang = 1;
 			differCtrler -> para = differCtrlerPseStPara;
-			PWM_Expect = PWM_Expect_Base - 650;
+			PWM_Expect = PWM_Expect_Base - 700;
 			break;
 		case CURV:
-			PWM_Expect = PWM_Expect_Base - 900;
+			//PWM_Expect = PWM_Expect_Base - 900;
+			PWM_Expect = PWM_Expect_Base - 750;
 			steerCtrler -> para = steerCtrlerCurvPara;
+			steerCtrler -> useBang = 1;
 			differCtrler -> para = differCtrlerCurvPara;
 			break;
 	}

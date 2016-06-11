@@ -13,7 +13,7 @@ void Steer_Init(void)
 
     steerInitStruct.FTM_Ftmx = FTM2;
     steerInitStruct.FTM_Mode = FTM_MODE_PWM;
-    steerInitStruct.FTM_PwmFreq = 50;
+    steerInitStruct.FTM_PwmFreq = 100;
     steerInitStruct.FTM_PwmDeadtimeCfg = DEADTIME_CH01;
     steerInitStruct.FTM_PwmDeadtimeDiv = DEADTIME_DIV1;
     steerInitStruct.FTM_PwmDeadtimeVal = 0;

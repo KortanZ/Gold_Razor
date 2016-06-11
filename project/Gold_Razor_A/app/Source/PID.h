@@ -16,6 +16,7 @@ typedef struct{
 	PIDParaStruct *para;
 	float32 error[3];
 	float32 u[3];
+	int8 useBang;
 }PIDStruct;
 
 extern PIDStruct *speedCtrler;
