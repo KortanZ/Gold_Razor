@@ -9,9 +9,7 @@
 #include "common.h"
 
 typedef enum{
-	DEBUG,
-	RACE,
-	
+
 	PID_STEER,
 	PID_MOTOR,
 	PID_DIFF,
@@ -22,11 +20,15 @@ typedef enum{
 	CAMERA_SEND,
 
 	STEER_ST,
+	STEER_PSEST,
 	STEER_CURV,
 
 	STEER_ST_KP,
 	STEER_ST_KD,
 	STEER_ST_KI,
+	STEER_PSEST_KP,
+	STEER_PSEST_KD,
+	STEER_PSEST_KI,
 	STEER_CURV_KP,
 	STEER_CURV_KD,
 	STEER_CURV_KI,

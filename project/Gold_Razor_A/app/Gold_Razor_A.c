@@ -21,16 +21,25 @@ void main(void)
 	MainCtrl_Pit_Init();
 	Steer_Init();
 	Motor_Init();
+	SDHC_Init();
 	Encoder_Init();
-	Keyboard_GPIO_Init();
 	UART_Debuger_Init();
 	LED_Debuger_Init();
+	DebugMode_GPIO_Init();
 	SpeedCtrler_Init();
 	SteerCtrler_Init();
 	DifferCtrler_Init();
-	Camera_init();
-	SDHC_Init();
 	Menu_Data_Link();
+	if (!PTC9_I)
+	{
+	  	Keyboard_GPIO_Init();
+	}
+	else
+	{
+		OLED_ShowString(0, 5, "Reading Data...");
+		SDHC_Read_Data();
+	}
+	Camera_init();
 	Menu_Show();
 	EnableInterrupts;
 	while (1)
@@ -39,7 +48,6 @@ void main(void)
 		{
 		   	vcan_sendimg(imgbuff, CAMERA_SIZE);
 		}
-		//Keyboard_Locker();
 		Get_Img();
 		Get_MidLine();
 		Mode_Change(steerCtrler, differCtrler);

@@ -7,29 +7,32 @@
 #include "ImgProcess.h"
 #include "common.h"
 
-ListType currentList = DEBUG;
+ListType currentList = PID_STEER;
 
 uint8 sdhcMessage[][9] = {"OK", "ERROR", "WRPRT", "NOTRDY", "PARERR", "NONRSPNS"};
 
 MenuType menuList[] = {
-	{RACE, RACE, DEBUG, PID_STEER, "Debug Mode", NULL, NULL, 0}, 			//调试模式
-	{DEBUG, DEBUG, RACE, RACE, "Race Mode", NULL, NULL, 1}, 					//比赛模式
 
-	{CAMERA_SEND, PID_MOTOR, DEBUG, STEER_ST, "Steer", NULL, NULL, 0},
-	{PID_STEER, PID_DIFF, DEBUG, MOTOR_KP, "Motor", NULL, NULL, 1},
-	{PID_MOTOR, BANGBANG, DEBUG, DIFF_KP, "Diff", NULL , NULL, 2},
-	{PID_DIFF, BROKEN_RESTART, DEBUG, STEER_BB, "Bang-Bang", NULL , NULL, 3},
-	{BANGBANG, SDHC_WRITE, DEBUG, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 4},
-	{BROKEN_RESTART, SDHC_READ, DEBUG, SDHC_WRITE, "Write Data", (*SDHC_Write_Data), NULL, 5},
-	{SDHC_WRITE, CAMERA_SEND, DEBUG, SDHC_READ, "Read Data", (*SDHC_Read_Data), NULL, 6},
-	{SDHC_READ, PID_STEER, DEBUG, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 7},
+	{CAMERA_SEND, PID_MOTOR, PID_STEER, STEER_ST, "Steer", NULL, NULL, 0},
+	{PID_STEER, PID_DIFF, PID_MOTOR, MOTOR_KP, "Motor", NULL, NULL, 1},
+	{PID_MOTOR, BANGBANG, PID_DIFF, DIFF_KP, "Diff", NULL , NULL, 2},
+	{PID_DIFF, BROKEN_RESTART, BANGBANG, STEER_BB, "Bang-Bang", NULL , NULL, 3},
+	{BANGBANG, SDHC_WRITE, BROKEN_RESTART, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 4},
+	{BROKEN_RESTART, SDHC_READ, SDHC_WRITE, SDHC_WRITE, "Write Data", (*SDHC_Write_Data), NULL, 5},
+	{SDHC_WRITE, CAMERA_SEND, SDHC_READ, SDHC_READ, "Read Data", (*SDHC_Read_Data), NULL, 6},
+	{SDHC_READ, PID_STEER, CAMERA_SEND, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 7},
 
-	{STEER_MID, STEER_CURV, PID_STEER, STEER_ST_KP, "SteerSt", NULL, NULL, 0},
-	{STEER_ST, STEER_MID, PID_STEER, STEER_CURV_KP, "SteerCurv", NULL, NULL, 1},
+	{STEER_MID, STEER_PSEST, PID_STEER, STEER_ST_KP, "SteerSt", NULL, NULL, 0},
+	{STEER_ST, STEER_CURV, PID_STEER, STEER_PSEST_KP, "SteerPseSt", NULL, NULL, 1},
+	{STEER_PSEST, STEER_MID, PID_STEER, STEER_CURV_KP, "SteerCurv", NULL, NULL, 2},
 
 	{STEER_ST_KI, STEER_ST_KD, STEER_ST, STEER_ST_KP, "ST_Kp:", NULL, NULL, 0},
 	{STEER_ST_KP, STEER_ST_KI, STEER_ST, STEER_ST_KD, "ST_Kd:", NULL, NULL, 1},
 	{STEER_ST_KD, STEER_ST_KP, STEER_ST, STEER_ST_KI, "ST_Ki:", NULL, NULL, 2},
+
+	{STEER_PSEST_KI, STEER_PSEST_KD, STEER_PSEST, STEER_PSEST_KP, "PSEST_Kp:", NULL, NULL, 0},
+	{STEER_PSEST_KP, STEER_PSEST_KI, STEER_PSEST, STEER_PSEST_KD, "PSEST_Kd:", NULL, NULL, 1},
+	{STEER_PSEST_KD, STEER_PSEST_KP, STEER_PSEST, STEER_PSEST_KI, "PSEST_Ki:", NULL, NULL, 2},
 
 	{STEER_CURV_KI, STEER_CURV_KD, STEER_CURV, STEER_CURV_KP, "CURV_Kp:", NULL, NULL, 0},
 	{STEER_CURV_KP, STEER_CURV_KI, STEER_CURV, STEER_CURV_KD, "CURV_Kd:", NULL, NULL, 1},
@@ -49,7 +52,7 @@ MenuType menuList[] = {
 	
 	{MOTOR_KI, MOTOR_KP, PID_MOTOR, MOTOR_SPEED, "Motor_Sp:", NULL, NULL, 3},
 
-	{STEER_CURV, STEER_ST, PID_STEER, STEER_MID, "Steer_Mid:", NULL, NULL, 2},
+	{STEER_CURV, STEER_ST, PID_STEER, STEER_MID, "Steer_Mid:", NULL, NULL, 3},
 };
 
 void Menu_Show(void)
@@ -95,6 +98,10 @@ void Menu_Data_Link(void)
 	menuList[STEER_ST_KP].data = (void *)(&(steerCtrlerStPara -> Kp));
 	menuList[STEER_ST_KD].data = (void *)(&(steerCtrlerStPara -> Kd));
 	menuList[STEER_ST_KI].data = (void *)(&(steerCtrlerStPara -> Ki));
+
+	menuList[STEER_PSEST_KP].data = (void *)(&(steerCtrlerPseStPara -> Kp));
+	menuList[STEER_PSEST_KD].data = (void *)(&(steerCtrlerPseStPara -> Kd));
+	menuList[STEER_PSEST_KI].data = (void *)(&(steerCtrlerPseStPara -> Ki));
 
 	menuList[STEER_CURV_KP].data = (void *)(&(steerCtrlerCurvPara -> Kp));
 	menuList[STEER_CURV_KD].data = (void *)(&(steerCtrlerCurvPara -> Kd));
@@ -189,7 +196,7 @@ void SDHC_Write_Data(void)
 	}
 	else
 	{
-		for (i = DEBUG; i < STEER_MID; ++i)
+		for (i = PID_STEER; i < STEER_MID; ++i)
 		{
 			if(NULL != menuList[i].data)
 			{
@@ -214,16 +221,17 @@ void SDHC_Write_Data(void)
 					flag = 1;
 				}
 			}
-			if (flag)
-			{
-				OLED_ClearLine(5);
-				OLED_ShowString(0, 5, "SDHC Write Failed");
-			}
-			else
-			{
-				OLED_ClearLine(5);
-				OLED_ShowString(0, 5, "SDHC Write Ok");
-			}
+		}
+
+		if (flag)
+		{
+			OLED_ClearLine(5);
+			OLED_ShowString(0, 5, "SDHC Write Failed");
+		}
+		else
+		{
+			OLED_ClearLine(5);
+			OLED_ShowString(0, 5, "SDHC Write Ok");
 		}
 
 		free(sdhcBuff);
@@ -245,7 +253,7 @@ void SDHC_Read_Data(void)
 	}
 	else
 	{
-		for (i = DEBUG; i < STEER_MID; ++i)
+		for (i = PID_STEER; i < STEER_MID; ++i)
 		{
 			if(NULL != menuList[i].data)
 			{
@@ -270,16 +278,17 @@ void SDHC_Read_Data(void)
 					flag = 1;
 				}
 			}
-			if (flag)
-			{
-				OLED_ClearLine(5);
-				OLED_ShowString(0, 5, "SDHC Read Failed");
-			}
-			else
-			{
-				OLED_ClearLine(5);
-				OLED_ShowString(0, 5, "SDHC Read Ok");
-			}
+		}
+
+		if (flag)
+		{
+			OLED_ClearLine(5);
+			OLED_ShowString(0, 5, "SDHC Read Failed");
+		}
+		else
+		{
+			OLED_ClearLine(5);
+			OLED_ShowString(0, 5, "SDHC Read Ok");
 		}
 
 		free(sdhcBuff);

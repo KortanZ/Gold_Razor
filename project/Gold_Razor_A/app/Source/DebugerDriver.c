@@ -46,28 +46,40 @@ void LED_Debuger_Init(void)
 	LPLD_GPIO_Init(gpioInitStruct);
 }
 
+void DebugMode_GPIO_Init(void)
+{
+	GPIO_InitTypeDef DebugMode_gpio_init_struct;
+
+	DebugMode_gpio_init_struct.GPIO_PTx = PTC;
+	DebugMode_gpio_init_struct.GPIO_Pins = GPIO_Pin9;
+	DebugMode_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+	DebugMode_gpio_init_struct.GPIO_Output = OUTPUT_L;
+	DebugMode_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
+	LPLD_GPIO_Init(DebugMode_gpio_init_struct);
+}
+
 void Keyboard_GPIO_Init(void)
 {
 
-  	  GPIO_InitTypeDef keyboard_gpio_init_struct;
+	GPIO_InitTypeDef keyboard_gpio_init_struct;
 
-      keyboard_gpio_init_struct.GPIO_PTx = PTD;
-      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
-      keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
-      keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
-      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
-      keyboard_gpio_init_struct.GPIO_Isr = Keyboard_Isr;
-      LPLD_GPIO_Init(keyboard_gpio_init_struct);
-      LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
+	keyboard_gpio_init_struct.GPIO_PTx = PTD;
+	keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin10 | GPIO_Pin11 | GPIO_Pin12 | GPIO_Pin13;
+	keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+	keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
+	keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
+	keyboard_gpio_init_struct.GPIO_Isr = Keyboard_Isr;
+	LPLD_GPIO_Init(keyboard_gpio_init_struct);
+	LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
 
-      keyboard_gpio_init_struct.GPIO_PTx = PTC;
-      keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin9 | GPIO_Pin14 | GPIO_Pin15;
-      keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
-      keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
-      keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
-      keyboard_gpio_init_struct.GPIO_Isr = Keyboard_Isr;
-      LPLD_GPIO_Init(keyboard_gpio_init_struct);
-      LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
+	keyboard_gpio_init_struct.GPIO_PTx = PTC;
+	keyboard_gpio_init_struct.GPIO_Pins = GPIO_Pin9 | GPIO_Pin14 | GPIO_Pin15;
+	keyboard_gpio_init_struct.GPIO_Dir = DIR_INPUT;
+	keyboard_gpio_init_struct.GPIO_Output = OUTPUT_L;
+	keyboard_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
+	keyboard_gpio_init_struct.GPIO_Isr = Keyboard_Isr;
+	LPLD_GPIO_Init(keyboard_gpio_init_struct);
+	LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
 }
 
 void Time_Counter_Start(void)
@@ -113,18 +125,6 @@ void Keybord_Delay(void)
 	}
 }
 
-void Keyboard_Locker(void)
-{
-
-	disable_irq((IRQn_Type)(2 + PORTA_IRQn));//PTC
-	disable_irq((IRQn_Type)(3 + PORTA_IRQn));//PTD
-}
-
-void Keyboard_Unlocker(void)
-{
-	enable_irq((IRQn_Type)(2 + PORTA_IRQn));//PTC
-	enable_irq((IRQn_Type)(3 + PORTA_IRQn));//PTD
-}
 //Interrupt Keyboard
 void Keyboard_Isr(void)
 {

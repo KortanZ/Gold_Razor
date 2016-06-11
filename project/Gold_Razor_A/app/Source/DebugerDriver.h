@@ -18,11 +18,10 @@ void Time_Counter_Start(void);
 uint32 Time_Counter_Get(void);
 void Keyboard_GPIO_Init(void);
 void Keybord_Delay(void);
-void Keyboard_Locker(void);
-void Keyboard_Unlocker(void);
 void Keyboard_Scan(void);
 void Keyboard_Isr(void);
 void Menu_Show(void);
+void DebugMode_GPIO_Init(void);
 
 
 #endif
