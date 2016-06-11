@@ -114,15 +114,6 @@ void Second_Process(void)
 		rightPulse = -rightPulse;
 	}
 
-	if (leftPulse + rightPulse)
-	{
-		Keyboard_Locker();
-	}
-	else
-	{
-		Keyboard_Unlocker();
-	}
-
 	if(!brokeDownFlag)
 	{
 		Speed_Controller(speedCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);

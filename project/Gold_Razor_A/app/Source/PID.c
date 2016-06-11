@@ -132,8 +132,7 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 		Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
 	}
 
-	//Steer_Duty_Change(STEER_MID_DUTY);
-	//LPLD_FTM_PWM_ChangeDuty(FTM2, FTM_Ch0, STEER_RIGHT_DUTY);
+	//Steer_Duty_Change(STEER_RIGHT_DUTY);
 }
 void SteerCtrler_Init(void)
 {
@@ -149,16 +148,16 @@ void SteerCtrler_Init(void)
 	}
 	else
 	{
-		steerCtrlerStPara -> Kp = 1.8;
+		steerCtrlerStPara -> Kp = 1.4;
 		steerCtrlerStPara -> Kd = 0.44;
 		steerCtrlerStPara -> Ki = 0;
 
-		steerCtrlerPseStPara -> Kp = 4.2;
+		steerCtrlerPseStPara -> Kp = 4.3;
 		steerCtrlerPseStPara -> Kd = 0.48;
 		steerCtrlerPseStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 5.7;
-		steerCtrlerCurvPara -> Kd = 0.66;
+		steerCtrlerCurvPara -> Kp = 5.8;
+		steerCtrlerCurvPara -> Kd = 0.7;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;

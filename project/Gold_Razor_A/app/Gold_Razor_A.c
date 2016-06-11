@@ -24,6 +24,7 @@ void main(void)
 	Encoder_Init();
 	Keyboard_GPIO_Init();
 	UART_Debuger_Init();
+	LED_Debuger_Init();
 	SpeedCtrler_Init();
 	SteerCtrler_Init();
 	DifferCtrler_Init();

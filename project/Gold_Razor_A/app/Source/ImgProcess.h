@@ -13,6 +13,9 @@
 #define Black 0
 #define White 255
 
+#define LeftimgS -10
+#define RightimgS 6
+
 typedef struct 
 {
 	int16 LeftLine[PICTURE_H];
@@ -24,7 +27,10 @@ typedef struct
 typedef struct
 {
 	uint8 pic[PICTURE_W * PICTURE_H];
-	TrackInf_DataStruct TrackInf_DataBlock;
+	int16 LeftLine[PICTURE_H];
+	int16 RightLine[PICTURE_H];
+	int16 MidLine[PICTURE_H];
+	uint8 TrackWidth[PICTURE_H];
 }PIC_DateStruct;
 
 typedef struct
@@ -42,10 +48,11 @@ typedef struct
 	uint8 SpeCross;
 } CrossInf_Struct;
 
-typedef struct 
+typedef struct
 {
 	_Bool LeftBlackLost;
 	_Bool LeftWhiteLost;
+	_Bool LastLeftWhiteLost;
 	_Bool LeftLost;
 	uint8 LeftTurn;
 	_Bool LeftTurnFlag;
@@ -56,10 +63,11 @@ typedef struct
 	_Bool LeftCrossFlag;
 }LeftFlag_Struct;
 
-typedef struct 
+typedef struct
 {
 	_Bool RightBlackLost;
 	_Bool RightWhiteLost;
+	_Bool LastRightWhiteLost;
 	_Bool RightLost;
 	uint8 RightTurn;
 	_Bool RightTurnFlag;
@@ -67,8 +75,9 @@ typedef struct
 	_Bool RightIncrease;
 	_Bool Rightreduce;
 	_Bool Right_1Con;
-	_Bool RightCrossFlag;	
+	_Bool RightCrossFlag;
 }RightFlag_Struct;
+
 
 typedef enum{
 	STRAIGHT,
@@ -84,20 +93,18 @@ extern PIC_DateStruct PIC_DateBlock;
 extern LeftFlag_Struct LeftFlag_Switch;
 extern RightFlag_Struct RightFlag_Switch;
 
-extern void Get_Img(void);
-extern void Get_MidLine(void);
-float32 Calc_Curv(uint8 *MidLine_Buff, uint8 index);
-float32 Carmark_InvSqrt(float32 x);
-float32 InvSlope_Calc(uint8 *MidLine_Buff, uint8 y1, uint8 y2);
-RoadMode Road_Check(uint8 *MidLine_Buff, uint8 y);
-void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler);
-void Cross_Check(int8 );
-uint8 Bef_Scan(uint8*);
-void TwinLine_Deal(uint8 *,int8);
-void LinerFitting(int16 *,uint8 ,uint8 ,uint8 );
+void Get_Img(void);
+void Get_MidLine(void);
+uint8 Bef_Scan(uint8 *pic_buff);
+void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff);
+void LinerFitting(int16 *Tar,uint8 Start_H,uint8 End_H,uint8 End_L);
 void CrossDeal(void);
-void BlackDeal(int8 );
-void Get_MidAve(uint8 * ,float32 ,float32 ,float32 ,float32);
+void BlackDeal(int8 Row_Buff);
+void Get_MidAve(int16 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,float32 Coe_4);
 void clearflag(void);
+void Cross_StartCheck(int8 Row_buff);
+
+RoadMode Road_Check(int16 *MidLine_Buff, uint8 y);
+void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler);
 
 #endif
