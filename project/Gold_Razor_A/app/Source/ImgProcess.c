@@ -301,7 +301,7 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 	                         			- PIC_DateBlock.LeftLine[Row_buff];
 
 	PIC_DateBlock.MidLine[Row_buff] = ((PIC_DateBlock.RightLine[Row_buff]     \
-		                            + PIC_DateBlock.LeftLine[Row_buff]) >> 1) + 5;
+		                            + PIC_DateBlock.LeftLine[Row_buff]) >> 1);
 	(PIC_DateBlock.MidLine[Row_buff] >= 155) ? 	\
 		(PIC_DateBlock.MidLine[Row_buff] = 155) : (NULL);
 	(PIC_DateBlock.MidLine[Row_buff] <= 4) ?    \
@@ -626,11 +626,10 @@ void CrossDeal(void)
 	for(;Row >= 0;Row--)
 	{
 		if (PIC_DateBlock.TrackWidth[Row] > PIC_DateBlock.TrackWidth[Row + 1])
-			PIC_DateBlock.TrackWidth[Row] = PIC_DateBlock.TrackWidth[Row + 1];
+			PIC_DateBlock.TrackWidth[Row] = PIC_DateBlock.TrackWidth[Row + 1] - 5;;
 		PIC_DateBlock.MidLine[Row] = PIC_DateBlock.MidLine[Row + 1] \
 									+ PIC_DateBlock.MidLine[Row + 2] \
-									- PIC_DateBlock.MidLine[Row + 3];
-		PIC_DateBlock.TrackWidth[Row] = PIC_DateBlock.TrackWidth[Row + 1];
+									- PIC_DateBlock.MidLine[Row + 3];	PIC_DateBlock.TrackWidth[Row] = PIC_DateBlock.TrackWidth[Row + 1] - 5;
 		(PIC_DateBlock.TrackWidth[Row] <= 6) ? 	\
 			(PIC_DateBlock.TrackWidth[Row] = 6) : (NULL);
 		(PIC_DateBlock.MidLine[Row] >= 155) ? 	\
