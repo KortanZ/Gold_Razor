@@ -21,7 +21,7 @@ RightFlag_Struct RightFlag_Switch;
 int16 MidAve = 0;
 uint8 brokeDownFlag = 0;
 uint8 Strightcount,Fakestrightcount,Curvecount;
-float32 weight[4] = {0.015, 0.045, 0.025, 0.015};
+float32 weight[4] = {0.021, 0.048, 0.026, 0.005};
 
 void Get_MidLine(void)
 {
@@ -214,15 +214,10 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			LeftFlag_Switch.LeftBlackLost = 1;
 			LeftFlag_Switch.LeftLost = 1;
 		}
-		//PIC_DateBlock.LeftLine[Row_buff] = PIC_DateBlock.LeftLine[Row_buff + 1] \
-											+ PIC_DateBlock.LeftLine[Row_buff + 2] \
-											- PIC_DateBlock.LeftLine[Row_buff + 3];
+		// PIC_DateBlock.LeftLine[Row_buff] = PIC_DateBlock.LeftLine[Row_buff + 1] \
+		// 									+ PIC_DateBlock.LeftLine[Row_buff + 2] \
+		// 									- PIC_DateBlock.LeftLine[Row_buff + 3];
 		PIC_DateBlock.LeftLine[Row_buff] = 2;
-
-		(PIC_DateBlock.LeftLine[Row_buff] < 2) ?  \
-			(PIC_DateBlock.LeftLine[Row_buff] = 2) : (NULL);
-		(PIC_DateBlock.LeftLine[Row_buff] > PICTURE_W - 3) ?
-			(PIC_DateBlock.LeftLine[Row_buff] = PICTURE_W - 3) : (NULL);
 	}
 	else
 	{
@@ -231,6 +226,17 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		LeftFlag_Switch.LeftBlackLost = 0;
 		LeftFlag_Switch.LeftLost = 0;
 	}
+	if (fabs(PIC_DateBlock.LeftLine[Row_buff] - PIC_DateBlock.LeftLine[Row_buff + 1]) > 100)
+	{
+		PIC_DateBlock.LeftLine[Row_buff] = PIC_DateBlock.LeftLine[Row_buff + 1] \
+										+ PIC_DateBlock.LeftLine[Row_buff + 2] \
+										- PIC_DateBlock.LeftLine[Row_buff + 3];
+	}
+
+	(PIC_DateBlock.LeftLine[Row_buff] < 2) ?  \
+		(PIC_DateBlock.LeftLine[Row_buff] = 2) : (NULL);
+	(PIC_DateBlock.LeftLine[Row_buff] > PICTURE_W - 3) ?
+		(PIC_DateBlock.LeftLine[Row_buff] = PICTURE_W - 3) : (NULL);	
 	//向右扫描
 	for(i = PIC_DateBlock.MidLine[Row_buff + 1];i < PICTURE_W - 1;i++)
 	{
@@ -261,11 +267,6 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			RightFlag_Switch.RightLost = 1;
 		}
 		PIC_DateBlock.RightLine[Row_buff] = PICTURE_W - 3;
-
-		(PIC_DateBlock.RightLine[Row_buff] > PICTURE_W - 3) ? \
-			(PIC_DateBlock.RightLine[Row_buff] = PICTURE_W - 3) : (NULL);
-		(PIC_DateBlock.RightLine[Row_buff] < 2) ? \
-			(PIC_DateBlock.RightLine[Row_buff] = 2) : (NULL);
 	}
 	else
 	{
@@ -274,6 +275,18 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		RightFlag_Switch.RightBlackLost = 0;
 		RightFlag_Switch.RightLost = 0;
 	}
+	if (fabs(PIC_DateBlock.RightLine[Row_buff] - PIC_DateBlock.RightLine[Row_buff + 1]) > 100)
+	{
+		PIC_DateBlock.RightLine[Row_buff] = PIC_DateBlock.RightLine[Row_buff + 1] \
+										+ PIC_DateBlock.RightLine[Row_buff + 2] \
+										- PIC_DateBlock.RightLine[Row_buff + 3];
+	}
+
+	(PIC_DateBlock.RightLine[Row_buff] > PICTURE_W - 3) ? \
+		(PIC_DateBlock.RightLine[Row_buff] = PICTURE_W - 3) : (NULL);
+	(PIC_DateBlock.RightLine[Row_buff] < 2) ? \
+		(PIC_DateBlock.RightLine[Row_buff] = 2) : (NULL);
+	
 	//如果扫描错误
 	if(PIC_DateBlock.RightLine[Row_buff] < PIC_DateBlock.LeftLine[Row_buff])
 	{
@@ -327,7 +340,7 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			LeftFlag_Switch.LeftTurn = 0;
 	}
 	/*          十字检测         */
-	if(Row_buff > 4)
+	if(Row_buff > 3)
 		Cross_StartCheck(Row_buff);
 }
 
@@ -600,7 +613,7 @@ void Cross_StartCheck(int8 Row_buff)
 				else
 					CrossInf_Data.SpeCross = 0;
 			}
-			if(CrossInf_Data.SpeCross >= 10)
+			if(CrossInf_Data.SpeCross >= 20)
 			{
 				LeftFlag_Switch.LeftCrossFlag = 1;
 				RightFlag_Switch.RightCrossFlag = 1;
@@ -801,10 +814,10 @@ void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 			steerCtrler -> para = steerCtrlerPseStPara;
 			steerCtrler -> useBang = 1;
 			differCtrler -> para = differCtrlerPseStPara;
-			PWM_Expect = PWM_Expect_Base - 700;
+			PWM_Expect = PWM_Expect_Base - 850;
 			break;
 		case CURV:
-			PWM_Expect = PWM_Expect_Base - 900;
+			PWM_Expect = PWM_Expect_Base - 850;
 			//PWM_Expect = PWM_Expect_Base - 750;
 			steerCtrler -> para = steerCtrlerCurvPara;
 			steerCtrler -> useBang = 1;
