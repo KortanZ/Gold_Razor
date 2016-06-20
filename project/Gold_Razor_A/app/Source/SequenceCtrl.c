@@ -119,8 +119,8 @@ void Main_Isr(void)
 
 	// VirtualSignal[0] = PWM_To_Pulse(PWM_Expect);
 	// VirtualSignal[1] = (leftPulse + rightPulse) / 2.0;
-	// VirtualSignal[2] = rightPulse;
-	// VirtualSignal[3] = PWM_Expect;
-	//OutPut_Data();
+	// // VirtualSignal[2] = rightPulse;
+	// // VirtualSignal[3] = PWM_Expect;
+	// OutPut_Data();
 	
 }

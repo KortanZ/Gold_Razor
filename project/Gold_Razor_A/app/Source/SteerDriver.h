@@ -7,9 +7,9 @@
 
 #include "common.h"
 /* red */
-#define STEER_MID_DUTY 1593
-#define STEER_LEFT_DUTY 1395
-#define STEER_RIGHT_DUTY 1820
+#define STEER_MID_DUTY 1580
+#define STEER_LEFT_DUTY 1385
+#define STEER_RIGHT_DUTY 1818
 
 /*black*/
 // #define STEER_MID_DUTY 1368

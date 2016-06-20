@@ -21,7 +21,7 @@ RightFlag_Struct RightFlag_Switch;
 int16 MidAve = 0;
 uint8 brokeDownFlag = 0;
 uint8 Strightcount,Fakestrightcount,Curvecount;
-float32 weight[4] = {0.021, 0.048, 0.026, 0.005};
+float32 weight[4] = {0.022, 0.048, 0.025, 0.005};
 
 void Get_MidLine(void)
 {
@@ -390,7 +390,8 @@ void Get_Img_Wait(void)
 
 void Cross_StartCheck(int8 Row_buff)
 {
-	if(39 == Row_buff) return;
+	if(39 == Row_buff) 
+		return;
 	else
 	{
 		float32 leftdown = 0.0,rightdown = 0.0;
@@ -670,7 +671,8 @@ void CrossDeal(void)
 
 void BlackDeal(int8 Row_Buff)
 {
-	if(Row_Buff < 0) return;
+	if(Row_Buff < 0) 
+		return;
 	for(;Row_Buff >= 0;Row_Buff--)
 	{
 		if(LeftFlag_Switch.LeftTurnFlag)
