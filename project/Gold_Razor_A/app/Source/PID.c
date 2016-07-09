@@ -21,10 +21,10 @@ PIDParaStruct *differCtrlerStPara;
 PIDParaStruct *differCtrlerCurvPara;
 PIDParaStruct *differCtrlerPseStPara;
 
-float32 enhance = 0;
+float32 enhance = 2.5;
 
-int16 motorThersh = 260;
-int16 steerThersh = 28;
+int16 motorThersh = 250;
+int16 steerThersh = 29;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
@@ -54,27 +54,35 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	motorCtrler -> u[1] = motorCtrler -> u[0];
 	motorCtrler -> error[1] = motorCtrler -> error[0];
 
-	if(motorCtrler -> error[0] > motorThersh)
-	{
-		Motor_Duty_Change(MOTOR_LEFT, 6500);
-		Motor_Duty_Change(MOTOR_RIGHT, 6500);
-	}
-	else if(motorCtrler -> error[0] < -motorThersh)
-	{
-		Motor_Duty_Change(MOTOR_LEFT, -6500);
-		Motor_Duty_Change(MOTOR_RIGHT, -6500);
-	}
-	else
-	{
-		/*          Differ PID Control  Block      */
-		Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
-		PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;
-		PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp;
+	// if(motorCtrler -> error[0] > motorThersh)
+	// {
+	// 	Motor_Duty_Change(MOTOR_LEFT, 6500);
+	// 	Motor_Duty_Change(MOTOR_RIGHT, 6500);
+	// }
+	// else if(motorCtrler -> error[0] < -motorThersh)
+	// {
+	// 	Motor_Duty_Change(MOTOR_LEFT, -8200);
+	// 	Motor_Duty_Change(MOTOR_RIGHT, -8200);
+	// }
+	// else
+	// {
+	// 	/*          Differ PID Control  Block      */
+	// 	Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
+	// 	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;
+	// 	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp;
 
 
-		Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(PWMoutput_1));
-		Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(PWMoutput_2));
-	}
+	// 	Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(PWMoutput_1));
+	// 	Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(PWMoutput_2));
+	// }
+	/*          Differ PID Control  Block      */
+	Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
+	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;
+	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp;
+
+
+	Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(PWMoutput_1));
+	Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(PWMoutput_2));
 
 }
 
@@ -131,7 +139,7 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 		Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
 	}
 
-	//Steer_Duty_Change(STEER_RIGHT_DUTY);
+	//Steer_Duty_Change(STEER_MID_DUTY);
 }
 void SteerCtrler_Init(void)
 {
@@ -147,16 +155,16 @@ void SteerCtrler_Init(void)
 	}
 	else
 	{
-		steerCtrlerStPara -> Kp = 1.36;
-		steerCtrlerStPara -> Kd = 0.44;
+		steerCtrlerStPara -> Kp = 1.15;
+		steerCtrlerStPara -> Kd = 0.45;
 		steerCtrlerStPara -> Ki = 0;
 
 		steerCtrlerPseStPara -> Kp = 4.3;
 		steerCtrlerPseStPara -> Kd = 0.48;
 		steerCtrlerPseStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 5.7231;
-		steerCtrlerCurvPara -> Kd = 0.7051;
+		steerCtrlerCurvPara -> Kp = 5.77732;
+		steerCtrlerCurvPara -> Kd = 0.7026;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;
@@ -176,15 +184,13 @@ float32 Differ_Controller(PIDStruct *DifferCon_Data, float32 expect, float32 rea
 	DifferCon_Data -> error[1] = DifferCon_Data -> error[0];
 	DifferCon_Data -> error[0] = real - expect;
 
-	incrementU = (DifferCon_Data -> para -> Kp) * ((DifferCon_Data -> error[0]) 		
-										 - (DifferCon_Data -> error[1]))		
-				+ (DifferCon_Data -> para -> Kd) * ((DifferCon_Data -> error[0])
-											- 2 * (DifferCon_Data -> error[1]) 	
-											+ (DifferCon_Data -> error[2]));
+	incrementU = ((DifferCon_Data -> para -> Kp) * (DifferCon_Data -> error[0]))
+				 + ((DifferCon_Data -> para -> Kd) * ((DifferCon_Data -> error[0]) - (DifferCon_Data -> error[1])));	
 
-	DifferCon_Data -> u[2] = DifferCon_Data -> u[1];
-	DifferCon_Data -> u[1] = DifferCon_Data -> u[0];
-	DifferCon_Data -> u[0] = DifferCon_Data -> u[1] + incrementU;
+	DifferCon_Data -> u[0] = incrementU;
+
+	// OLED_ClearLine(5);
+	// OLED_ShowNum(70, 5, (int32)incrementU, 5);
 
 	// (DifferCon_Data -> u[0] > 5000) ? (DifferCon_Data -> u[0] = 5000) : (NULL);
 	// (DifferCon_Data -> u[0] < -5000) ? (DifferCon_Data -> u[0] = -5000) : (NULL);
@@ -205,16 +211,16 @@ void DifferCtrler_Init(void)
 	}
 	else
 	{
-		differCtrlerStPara -> Kp = 2;
+		differCtrlerStPara -> Kp = 0;
 		differCtrlerStPara -> Kd = 0;
 		differCtrlerStPara -> Ki = 0;
 
-		differCtrlerPseStPara -> Kp = 6.5;
-		differCtrlerPseStPara -> Kd	= 1.225;
+		differCtrlerPseStPara -> Kp = 7;
+		differCtrlerPseStPara -> Kd	= 1;
 		differCtrlerPseStPara -> Ki = 0;
 
-		differCtrlerCurvPara -> Kp = 6.7;
-		differCtrlerCurvPara -> Kd = 1.3625;
+		differCtrlerCurvPara -> Kp = 7.80;
+		differCtrlerCurvPara -> Kd = 0.5;
 		differCtrlerCurvPara -> Ki = 0;
 
 		differCtrler -> para = differCtrlerStPara;

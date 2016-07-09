@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-#define U_MAX 4800
+#define U_MAX 4000
 
 typedef struct
 {

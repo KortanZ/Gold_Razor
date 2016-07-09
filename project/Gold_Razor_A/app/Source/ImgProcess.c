@@ -21,7 +21,7 @@ RightFlag_Struct RightFlag_Switch;
 int16 MidAve = 0;
 uint8 brokeDownFlag = 0;
 uint8 Strightcount,Fakestrightcount,Curvecount;
-float32 weight[4] = {0.022, 0.048, 0.025, 0.005};
+float32 weight[4] = {0.020, 0.045, 0.030, 0.005};
 
 void Get_MidLine(void)
 {
@@ -340,7 +340,7 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			LeftFlag_Switch.LeftTurn = 0;
 	}
 	/*          十字检测         */
-	if(Row_buff > 3)
+	if(Row_buff > 2)
 		Cross_StartCheck(Row_buff);
 }
 
@@ -801,7 +801,7 @@ RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
 void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 {
 	RoadMode thisMode;
-	thisMode = Road_Check(PIC_DateBlock.MidLine, 10);
+	thisMode = Road_Check(PIC_DateBlock.MidLine, 15);
 
 	switch (thisMode)
 	{
@@ -810,16 +810,16 @@ void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 			steerCtrler -> useBang = 0;
 			differCtrler -> para = differCtrlerStPara;
 			//PWM_Expect = PWM_Expect_Base + 800;
-			PWM_Expect = PWM_Expect_Base + 1000;
+			PWM_Expect = PWM_Expect_Base - 920;
 			break;
 		case PSE_ST:
 			steerCtrler -> para = steerCtrlerPseStPara;
 			steerCtrler -> useBang = 1;
 			differCtrler -> para = differCtrlerPseStPara;
-			PWM_Expect = PWM_Expect_Base - 850;
+			PWM_Expect = PWM_Expect_Base - 940;
 			break;
 		case CURV:
-			PWM_Expect = PWM_Expect_Base - 850;
+			PWM_Expect = PWM_Expect_Base - 940;
 			//PWM_Expect = PWM_Expect_Base - 750;
 			steerCtrler -> para = steerCtrlerCurvPara;
 			steerCtrler -> useBang = 1;
