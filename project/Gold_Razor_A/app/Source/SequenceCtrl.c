@@ -49,28 +49,28 @@ void NVIC_Init(void)
 	//配置PIT3的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = PIT3_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_3;
-	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 3;
+	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 4;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
 	//配置Key_Isr的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = PORTC_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_3;
-	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 2;
+	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 3;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
 
 	nvic_init_struct.NVIC_IRQChannel = PORTD_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_3;
-	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 2;
+	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 3;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 0;
 	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
 	//配置PORTA的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = PORTA_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_3;
-	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 1;
+	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 2;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
@@ -78,6 +78,13 @@ void NVIC_Init(void)
 	nvic_init_struct.NVIC_IRQChannel = DMA0_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_3;
 	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 0;
+	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
+	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
+	LPLD_NVIC_Init(nvic_init_struct);
+
+	nvic_init_struct.NVIC_IRQChannel = UART2_RX_TX_IRQn;
+	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_3;
+	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 1;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);

@@ -75,6 +75,7 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	// 	Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(PWMoutput_1));
 	// 	Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(PWMoutput_2));
 	// }
+	
 	/*          Differ PID Control  Block      */
 	Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
 	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;

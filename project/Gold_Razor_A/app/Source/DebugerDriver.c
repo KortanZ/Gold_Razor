@@ -6,6 +6,7 @@
 //#include "common.h"
 #include "Menu.h"
 #include "DebugerDriver.h"
+#include "oled.h"
 
 uint32 steerDebugDuty = 1431;
 #if (!Twin_Car)
@@ -22,9 +23,27 @@ void UART_Debuger_Init(void)
 #else
 void UART_Blooth_Init(void)
 {
-
+	UART_InitTypeDef uartInitStruct;
+	uartInitStruct.UART_Uartx = UART2; //使用UART2
+	uartInitStruct.UART_BaudRate = 115200; //设置波特率115200
+	uartInitStruct.UART_RxPin = PTD2;  //接收引脚为PTD2
+	uartInitStruct.UART_TxPin = PTD3;  //发送引脚为PTD3
+	uartInitStruct.UART_RxIntEnable = TRUE;
+	uartInitStruct.UART_RxIsr = Blooth_Isr;
+	//初始化UART
+	LPLD_UART_Init(uartInitStruct);
+	LPLD_UART_EnableIrq(uartInitStruct);
 }
 #endif
+
+void Blooth_Isr(void)
+{
+	int8 recv;
+  	recv = LPLD_UART_GetChar(UART2);
+  	LPLD_UART_PutChar(UART2, recv);
+  	OLED_ClearLine(5);
+	OLED_ShowString(0, 5, "success!");
+}
 
 void LED_Debuger_Init(void)
 {
