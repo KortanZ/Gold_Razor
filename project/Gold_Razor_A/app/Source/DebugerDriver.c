@@ -41,8 +41,8 @@ void Blooth_Isr(void)
 	int8 recv;
   	recv = LPLD_UART_GetChar(UART2);
   	LPLD_UART_PutChar(UART2, recv);
-  	OLED_ClearLine(5);
-	OLED_ShowString(0, 5, "success!");
+	// OLED_ClearLine(5);
+	// OLED_ShowString(0, 5, "success!");
 }
 
 void LED_Debuger_Init(void)
