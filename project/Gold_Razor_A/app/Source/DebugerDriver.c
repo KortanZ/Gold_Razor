@@ -34,14 +34,14 @@ void LED_Debuger_Init(void)
 	gpioInitStruct.GPIO_PTx = PTA;
 	gpioInitStruct.GPIO_Pins = GPIO_Pin17;
 	gpioInitStruct.GPIO_Dir = DIR_OUTPUT;
-	gpioInitStruct.GPIO_Output = OUTPUT_L;
+	gpioInitStruct.GPIO_Output = OUTPUT_H;
 	gpioInitStruct.GPIO_PinControl = IRQC_DIS;
 	LPLD_GPIO_Init(gpioInitStruct);   /* */
 	//---------------------Razor_LED----------------
 	gpioInitStruct.GPIO_PTx = PTE;
 	gpioInitStruct.GPIO_Pins = GPIO_Pin10;
 	gpioInitStruct.GPIO_Dir = DIR_OUTPUT;
-	gpioInitStruct.GPIO_Output = OUTPUT_H;
+	gpioInitStruct.GPIO_Output = OUTPUT_L;
 	gpioInitStruct.GPIO_PinControl = IRQC_DIS;
 	LPLD_GPIO_Init(gpioInitStruct);
 }

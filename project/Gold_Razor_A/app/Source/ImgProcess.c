@@ -21,6 +21,7 @@ RightFlag_Struct RightFlag_Switch;
 int16 MidAve = 0;
 uint8 brokeDownFlag = 0;
 uint8 Strightcount,Fakestrightcount,Curvecount;
+uint8 leftWhiteLostCnt = 0, rightWhiteLostCnt = 0;
 float32 weight[4] = {0.020, 0.045, 0.030, 0.005};
 
 void Get_MidLine(void)
@@ -197,6 +198,10 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			break;
 		}
 	}
+	if (LeftFlag_Switch.LastLeftWhiteLost && LeftFlag_Switch.LeftWhiteLost)
+	{
+		++leftWhiteLostCnt;
+	}
 	if(i == 0)
 	{
 		if(White == *(pic_buff + Row_buff * PICTURE_W + 2) &&   \
@@ -248,6 +253,10 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			PIC_DateBlock.RightLine[Row_buff] = i - 1;
 			break;
 		}
+	}
+	if (RightFlag_Switch.LastRightWhiteLost && RightFlag_Switch.RightWhiteLost)
+	{
+		++rightWhiteLostCnt;
 	}
 	if(i == PICTURE_W - 1)
 	{
@@ -340,7 +349,7 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			LeftFlag_Switch.LeftTurn = 0;
 	}
 	/*          十字检测         */
-	if(Row_buff > 2)
+	if(Row_buff > 6)
 		Cross_StartCheck(Row_buff);
 }
 
@@ -366,6 +375,10 @@ void Get_MidAve(int16 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,fl
 	}
 	sum1 *= Coe_1 , sum2 *= Coe_2 , sum3 *= Coe_3 , sum4 *= Coe_4;
 	MidAve  = (int16) (sum1 + sum2 + sum3 + sum4);
+	if (CrossInf_Data.SpeCross >= 20)
+	{
+		MidAve = steerMidValue;
+	}
 }
 
 void Get_Img_Start(void)
@@ -420,12 +433,20 @@ void Cross_StartCheck(int8 Row_buff)
 									  2 * PIC_DateBlock.LeftLine[CrossInf_Data.LeftCrossStart_H + 2] + \
 									  PIC_DateBlock.LeftLine[CrossInf_Data.LeftCrossStart_H + 3]) / 3.0;
 						leftdown = fabs(leftdown);
-						if (leftdown >= 0.34)
+						// if (leftdown >= 0.34)
+						// {
+						// 	LeftFlag_Switch.Left_1Con = 0;
+						// }
+						// else
+						// 	LeftFlag_Switch.Left_1Con = 1;
+						if (leftdown <= 0.34 || fabs(leftdown - 1) < 1e-3 || fabs(leftdown - 2) < 1e-3)
+						{
+							LeftFlag_Switch.Left_1Con = 1;
+						}
+						else
 						{
 							LeftFlag_Switch.Left_1Con = 0;
 						}
-						else
-							LeftFlag_Switch.Left_1Con = 1;
 					}
 					LeftFlag_Switch.LeftIncrease = 0;
 				}
@@ -457,12 +478,20 @@ void Cross_StartCheck(int8 Row_buff)
 									  PIC_DateBlock.RightLine[CrossInf_Data.RightCrossStart_H + 1] - \
 									  PIC_DateBlock.RightLine[CrossInf_Data.RightCrossStart_H + 3]) / 3.0;
 						rightdown = fabs(rightdown);
-						if (rightdown >= 0.34)
+						// if (rightdown >= 0.34)
+						// {
+						// 	RightFlag_Switch.Right_1Con = 0;
+						// }
+						// else
+						// 	RightFlag_Switch.Right_1Con = 1;
+						if (rightdown <= 0 || fabs(rightdown - 1) < 1e-3|| fabs(rightdown - 2) < 1e-3)
+						{
+							RightFlag_Switch.Right_1Con = 1;
+						}
+						else
 						{
 							RightFlag_Switch.Right_1Con = 0;
 						}
-						else
-							RightFlag_Switch.Right_1Con = 1;
 					}
 					RightFlag_Switch.Rightreduce = 0;
 				}
@@ -578,7 +607,7 @@ void Cross_StartCheck(int8 Row_buff)
 		//弯道入十字
 		if(LeftFlag_Switch.LeftCrossFlag)  //右拐十字
 		{
-			if(RightFlag_Switch.RightTurn >= 20)   // 左边起始坐标已经好
+			if(rightWhiteLostCnt >= 20)   // 左边起始坐标已经好
 			{
 				LeftFlag_Switch.LeftCrossFlag = 1;
 				if(!RightFlag_Switch.RightCrossFlag)
@@ -591,7 +620,7 @@ void Cross_StartCheck(int8 Row_buff)
 		}
 		if(RightFlag_Switch.RightCrossFlag)  //左拐十字
 		{
-			if(LeftFlag_Switch.LeftTurn >= 20)
+			if(leftWhiteLostCnt >= 20)
 			{
 				RightFlag_Switch.RightCrossFlag = 1;
 				if(!LeftFlag_Switch.LeftCrossFlag)
@@ -614,7 +643,7 @@ void Cross_StartCheck(int8 Row_buff)
 				else
 					CrossInf_Data.SpeCross = 0;
 			}
-			if(CrossInf_Data.SpeCross >= 20)
+			if(CrossInf_Data.SpeCross >= 20)		//十字和大弯道误判严重增大此值
 			{
 				LeftFlag_Switch.LeftCrossFlag = 1;
 				RightFlag_Switch.RightCrossFlag = 1;
@@ -764,6 +793,10 @@ void clearflag(void)
 	Strightcount = 0;
 	Fakestrightcount = 0;
 	Curvecount = 0;
+	CrossInf_Data.SpeCross = 0;
+
+	leftWhiteLostCnt = 0;
+	rightWhiteLostCnt = 0;
 }
 
 RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
@@ -775,13 +808,13 @@ RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
 	midErrInvSlp = (MidLine_Buff[y - 5] - steerMidValue) - 2 * (MidLine_Buff[y] - steerMidValue) + (MidLine_Buff[y + 5] - steerMidValue);
 	midInvSlp = (MidLine_Buff[y - 5] - steerMidValue) / -3.0;
 
-	if(fabs(midErrInvSlp) < 3 && fabs(midInvSlp) < 5 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
+	if(fabs(midErrInvSlp) < 5 && fabs(midInvSlp) < 5 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
 	{
 		OLED_ClearLine(5);
 		OLED_ShowString(0, 5, "Straight");
 		thisMode = STRAIGHT;
 	}
-	else if (fabs(midErrInvSlp) < 3 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
+	else if (LeftFlag_Switch.LeftCrossFlag && RightFlag_Switch.RightCrossFlag)
 	{
 		OLED_ClearLine(5);
 		OLED_ShowString(0, 5, "Pse Straight");
@@ -803,6 +836,11 @@ void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 	RoadMode thisMode;
 	thisMode = Road_Check(PIC_DateBlock.MidLine, 15);
 
+	if (LeftFlag_Switch.LeftCrossFlag && RightFlag_Switch.RightCrossFlag)
+	{
+		thisMode = PSE_ST;
+	}
+
 	switch (thisMode)
 	{
 		case STRAIGHT: 
@@ -810,16 +848,16 @@ void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 			steerCtrler -> useBang = 0;
 			differCtrler -> para = differCtrlerStPara;
 			//PWM_Expect = PWM_Expect_Base + 800;
-			PWM_Expect = PWM_Expect_Base - 920;
+			PWM_Expect = PWM_Expect_Base - 890;
 			break;
 		case PSE_ST:
 			steerCtrler -> para = steerCtrlerPseStPara;
 			steerCtrler -> useBang = 1;
 			differCtrler -> para = differCtrlerPseStPara;
-			PWM_Expect = PWM_Expect_Base - 940;
+			PWM_Expect = PWM_Expect_Base - 910;
 			break;
 		case CURV:
-			PWM_Expect = PWM_Expect_Base - 940;
+			PWM_Expect = PWM_Expect_Base - 910;
 			//PWM_Expect = PWM_Expect_Base - 750;
 			steerCtrler -> para = steerCtrlerCurvPara;
 			steerCtrler -> useBang = 1;

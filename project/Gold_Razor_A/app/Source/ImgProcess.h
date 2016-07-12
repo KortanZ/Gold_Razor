@@ -13,8 +13,8 @@
 #define Black 0
 #define White 255
 
-#define LeftimgS -10
-#define RightimgS 6
+#define LeftimgS -5
+#define RightimgS 5
 
 typedef struct 
 {
