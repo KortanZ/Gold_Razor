@@ -54,16 +54,16 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	motorCtrler -> u[1] = motorCtrler -> u[0];
 	motorCtrler -> error[1] = motorCtrler -> error[0];
 
-	// if(motorCtrler -> error[0] > motorThersh)
-	// {
-	// 	Motor_Duty_Change(MOTOR_LEFT, 6500);
-	// 	Motor_Duty_Change(MOTOR_RIGHT, 6500);
-	// }
-	// else if(motorCtrler -> error[0] < -motorThersh)
-	// {
-	// 	Motor_Duty_Change(MOTOR_LEFT, -8200);
-	// 	Motor_Duty_Change(MOTOR_RIGHT, -8200);
-	// }
+	if(motorCtrler -> error[0] > motorThersh)
+	{
+		Motor_Duty_Change(MOTOR_LEFT, 6500);
+		Motor_Duty_Change(MOTOR_RIGHT, 6500);
+	}
+	else if(motorCtrler -> error[0] < -motorThersh)
+	{
+		Motor_Duty_Change(MOTOR_LEFT, -8200);
+		Motor_Duty_Change(MOTOR_RIGHT, -8200);
+	}
 	// else
 	// {
 	// 	/*          Differ PID Control  Block      */
@@ -163,8 +163,8 @@ void SteerCtrler_Init(void)
 		steerCtrlerPseStPara -> Kd = 2.5021;
 		steerCtrlerPseStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 5.17766;
-		steerCtrlerCurvPara -> Kd = 2.6021;
+		steerCtrlerCurvPara -> Kp = 5.07766;
+		steerCtrlerCurvPara -> Kd = 2.7021;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;
