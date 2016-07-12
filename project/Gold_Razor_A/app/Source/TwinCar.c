@@ -1,18 +1,47 @@
 #include "TwinCar.h"
 #include "common.h"
 #include "DebugerDriver.h"
+#include "oled.h"
+#include "VirtualOsc.h"
 
-int8 ultraSoundFlag = 0;
-GPIO_InitTypeDef ultraSoundStruct;
+GPIO_InitTypeDef ultrasoundStruct;
 uint32 carDistance = 0;
+UltrasoundState usState = US_RI;
 
-void UltraSound_GPIO_Init(void)
+void Ultrasound_GPIO_Init(void)
 {
 	
-	ultraSoundStruct.GPIO_PTx = PTC;
-	ultraSoundStruct.GPIO_Dir = DIR_INPUT;
-	ultraSoundStruct.GPIO_Pins = GPIO_Pin11;
-	ultraSoundStruct.GPIO_PinControl = IRQC_RI | INPUT_PULL_DOWN | INPUT_PF_EN;
-	ultraSoundStruct.GPIO_Isr = Keyboard_Isr;
-	LPLD_GPIO_Init(ultraSoundStruct);
+	ultrasoundStruct.GPIO_PTx = PTC;
+	ultrasoundStruct.GPIO_Dir = DIR_INPUT;
+	ultrasoundStruct.GPIO_Pins = GPIO_Pin11;
+	ultrasoundStruct.GPIO_PinControl = IRQC_RI | INPUT_PULL_DOWN | INPUT_PF_EN;
+	ultrasoundStruct.GPIO_Isr = Ultrasound_Isr;
+	LPLD_GPIO_Init(ultrasoundStruct);
+	LPLD_GPIO_EnableIrq(ultrasoundStruct);
 }
+
+void Ultrasound_Isr(void)
+{
+	if (US_RI == usState)
+	{
+		Time_Counter_Start();
+		ultrasoundStruct.GPIO_PinControl = IRQC_FA | INPUT_PULL_DOWN | INPUT_PF_EN;
+		LPLD_GPIO_Init(ultrasoundStruct);
+		LPLD_GPIO_EnableIrq(ultrasoundStruct);
+		usState = US_FA;
+	}
+	else
+	{
+		carDistance = Time_Counter_Get();
+		ultrasoundStruct.GPIO_PinControl = IRQC_RI | INPUT_PULL_DOWN | INPUT_PF_EN;
+		LPLD_GPIO_Init(ultrasoundStruct);
+		LPLD_GPIO_EnableIrq(ultrasoundStruct);
+		usState = US_RI;
+	}
+	// VirtualSignal[0] = carDistance / 500;
+	// OutPut_Data();
+}
+
+
+
+

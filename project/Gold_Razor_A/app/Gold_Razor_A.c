@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include "ImgProcess.h"
 #include "common.h"
+#include "twinCar.h"
 
 /*     main function entrance    */
 
@@ -36,6 +37,7 @@ void main(void)
 	}
 	else
 	{
+		Ultrasound_GPIO_Init();
 		OLED_ShowString(0, 5, "Reading Data...");
 		SDHC_Read_Data();
 	}
