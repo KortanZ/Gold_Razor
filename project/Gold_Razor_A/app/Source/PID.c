@@ -140,7 +140,7 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 		Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
 	}
 
-	//Steer_Duty_Change(STEER_RIGHT_DUTY);
+	//Steer_Duty_Change(STEER_MID_DUTY);
 }
 void SteerCtrler_Init(void)
 {
