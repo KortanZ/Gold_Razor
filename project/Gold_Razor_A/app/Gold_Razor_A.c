@@ -31,6 +31,7 @@ void main(void)
 	SpeedCtrler_Init();
 	SteerCtrler_Init();
 	DifferCtrler_Init();
+	Distance_Ctrler_Init();
 	Menu_Data_Link();
 	if (!PTC9_I)
 	{

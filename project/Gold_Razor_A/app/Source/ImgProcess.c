@@ -231,17 +231,6 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		LeftFlag_Switch.LeftBlackLost = 0;
 		LeftFlag_Switch.LeftLost = 0;
 	}
-	if (fabs(PIC_DateBlock.LeftLine[Row_buff] - PIC_DateBlock.LeftLine[Row_buff + 1]) > 100)
-	{
-		PIC_DateBlock.LeftLine[Row_buff] = PIC_DateBlock.LeftLine[Row_buff + 1] \
-										+ PIC_DateBlock.LeftLine[Row_buff + 2] \
-										- PIC_DateBlock.LeftLine[Row_buff + 3];
-	}
-
-	(PIC_DateBlock.LeftLine[Row_buff] < 2) ?  \
-		(PIC_DateBlock.LeftLine[Row_buff] = 2) : (NULL);
-	(PIC_DateBlock.LeftLine[Row_buff] > PICTURE_W - 3) ?
-		(PIC_DateBlock.LeftLine[Row_buff] = PICTURE_W - 3) : (NULL);	
 	//向右扫描
 	for(i = PIC_DateBlock.MidLine[Row_buff + 1];i < PICTURE_W - 1;i++)
 	{
@@ -284,17 +273,6 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		RightFlag_Switch.RightBlackLost = 0;
 		RightFlag_Switch.RightLost = 0;
 	}
-	if (fabs(PIC_DateBlock.RightLine[Row_buff] - PIC_DateBlock.RightLine[Row_buff + 1]) > 100)
-	{
-		PIC_DateBlock.RightLine[Row_buff] = PIC_DateBlock.RightLine[Row_buff + 1] \
-										+ PIC_DateBlock.RightLine[Row_buff + 2] \
-										- PIC_DateBlock.RightLine[Row_buff + 3];
-	}
-
-	(PIC_DateBlock.RightLine[Row_buff] > PICTURE_W - 3) ? \
-		(PIC_DateBlock.RightLine[Row_buff] = PICTURE_W - 3) : (NULL);
-	(PIC_DateBlock.RightLine[Row_buff] < 2) ? \
-		(PIC_DateBlock.RightLine[Row_buff] = 2) : (NULL);
 	
 	//如果扫描错误
 	if(PIC_DateBlock.RightLine[Row_buff] < PIC_DateBlock.LeftLine[Row_buff])
@@ -328,6 +306,28 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		(PIC_DateBlock.MidLine[Row_buff] = 155) : (NULL);
 	(PIC_DateBlock.MidLine[Row_buff] <= 4) ?    \
 		(PIC_DateBlock.MidLine[Row_buff] = 4) : (NULL);
+	if (fabs(PIC_DateBlock.RightLine[Row_buff] - PIC_DateBlock.RightLine[Row_buff + 1]) > 50)
+	{
+		PIC_DateBlock.RightLine[Row_buff] = PIC_DateBlock.RightLine[Row_buff + 1] \
+										+ PIC_DateBlock.RightLine[Row_buff + 2] \
+										- PIC_DateBlock.RightLine[Row_buff + 3];
+	}
+
+	(PIC_DateBlock.RightLine[Row_buff] > PICTURE_W - 3) ? \
+		(PIC_DateBlock.RightLine[Row_buff] = PICTURE_W - 3) : (NULL);
+	(PIC_DateBlock.RightLine[Row_buff] < 2) ? \
+		(PIC_DateBlock.RightLine[Row_buff] = 2) : (NULL);		
+	if (fabs(PIC_DateBlock.LeftLine[Row_buff] - PIC_DateBlock.LeftLine[Row_buff + 1]) > 50)
+	{
+		PIC_DateBlock.LeftLine[Row_buff] = PIC_DateBlock.LeftLine[Row_buff + 1] \
+										+ PIC_DateBlock.LeftLine[Row_buff + 2] \
+										- PIC_DateBlock.LeftLine[Row_buff + 3];
+	}
+
+	(PIC_DateBlock.LeftLine[Row_buff] < 2) ?  \
+		(PIC_DateBlock.LeftLine[Row_buff] = 2) : (NULL);
+	(PIC_DateBlock.LeftLine[Row_buff] > PICTURE_W - 3) ?
+		(PIC_DateBlock.LeftLine[Row_buff] = PICTURE_W - 3) : (NULL);			
 		
 	/*           转弯检测       */
 	if(!LeftFlag_Switch.LeftLost && RightFlag_Switch.RightWhiteLost)//右转弯

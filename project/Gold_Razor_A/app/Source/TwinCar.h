@@ -16,4 +16,5 @@ void Bluetooth_Twincar_Isr(void);
 void Ultrasound_Isr(void);
 void Bluetooth_Twincar_Isr(void);
 extern uint32 carDistance;
+extern uint32 expDistance;
 #endif

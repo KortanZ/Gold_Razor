@@ -5,6 +5,7 @@
 #include "MotorDriver.h"
 #include "ImgProcess.h"
 #include "SteerDriver.h"
+#include "TwinCar.h"
 
 float32 Differ_Controller(PIDStruct *, float32, float32);
 
@@ -21,6 +22,9 @@ PIDParaStruct *differCtrlerStPara;
 PIDParaStruct *differCtrlerCurvPara;
 PIDParaStruct *differCtrlerPseStPara;
 
+PIDStruct *distanceCtrler;
+PIDParaStruct *distancePara;
+
 float32 enhance = 2.6;
 
 int16 motorThersh = 250;
@@ -30,6 +34,7 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 {
 	float32 PWMoutput_1 , PWMoutput_2;
 	float32 Differ_Temp = 0;
+	int32 distanceTemp = 0;
 	/* previous difference PID */
 
 	float32 incrementU;
@@ -78,9 +83,10 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	
 	/*          Differ PID Control  Block      */
 	Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
-	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;
-	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp;
-
+	distanceTemp = Distance_Controller(distanceCtrler, expDistance, carDistance);
+	
+	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp + distanceTemp;
+	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp + distanceTemp;
 
 	Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(PWMoutput_1));
 	Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(PWMoutput_2));
@@ -140,7 +146,7 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 		Steer_Duty_Change((uint32)SteerCon_Data -> u[0]);
 	}
 
-	//Steer_Duty_Change(STEER_RIGHT_DUTY);
+	//Steer_Duty_Change(STEER_MID_DUTY);
 }
 void SteerCtrler_Init(void)
 {
@@ -157,15 +163,15 @@ void SteerCtrler_Init(void)
 	else
 	{
 		steerCtrlerStPara -> Kp = 0.5;
-		steerCtrlerStPara -> Kd = 3.0021;
+		steerCtrlerStPara -> Kd = 1;
 		steerCtrlerStPara -> Ki = 0;
 
 		steerCtrlerPseStPara -> Kp = 4.5;
 		steerCtrlerPseStPara -> Kd = 2.5021;
 		steerCtrlerPseStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 5.07766;
-		steerCtrlerCurvPara -> Kd = 2.7021;
+		steerCtrlerCurvPara -> Kp = 5.17766;
+		steerCtrlerCurvPara -> Kd = 3;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;
@@ -220,8 +226,8 @@ void DifferCtrler_Init(void)
 		differCtrlerPseStPara -> Kd	= 0;
 		differCtrlerPseStPara -> Ki = 0;
 
-		differCtrlerCurvPara -> Kp = 8.4;
-		differCtrlerCurvPara -> Kd = 0.80;
+		differCtrlerCurvPara -> Kp = 11.5;
+		differCtrlerCurvPara -> Kd = 0;
 		differCtrlerCurvPara -> Ki = 0;
 
 		differCtrler -> para = differCtrlerStPara;
@@ -231,4 +237,49 @@ void DifferCtrler_Init(void)
 			differCtrler -> u[i] = 0;
 		}
 	}
+}
+
+void Distance_Ctrler_Init(void)
+{
+  	int8 i;	
+  
+	distanceCtrler = (PIDStruct *)malloc(sizeof(PIDStruct));
+	distancePara = (PIDParaStruct *)malloc(sizeof(PIDParaStruct));
+	if (!distancePara || !distanceCtrler)
+	{
+		printf("Memory alloc faild!\n");
+		OLED_ShowString(0, 5, "Memory alloc faild!");
+	}
+	else
+	{
+		distancePara -> Kp = 0;
+		distancePara -> Kd = 0;
+		distancePara -> Ki = 0;
+
+		distanceCtrler -> para = distancePara;
+		for(i = 0;i < 3; i++)
+		{
+			distanceCtrler -> error[i] = 0;
+			distanceCtrler -> u[i] = 0;
+		}
+	}
+}
+
+int32 Distance_Controller(PIDStruct *distanceCtrler, uint32 expDistance, uint32 realDistance)
+{
+	float32 increment;
+
+	distanceCtrler -> error[2] = distanceCtrler -> error[1];
+	distanceCtrler -> error[1] = distanceCtrler -> error[0];
+	distanceCtrler -> error[0] = realDistance - expDistance;
+
+	increment = (distanceCtrler -> para -> Kp) * ((distanceCtrler -> error[0]) - (distanceCtrler -> error[1]))
+					 + (distanceCtrler -> para-> Ki) * (distanceCtrler -> error[0]) + (distanceCtrler -> para -> Kd)
+					 * ((distanceCtrler -> error[0]) - 2 * (distanceCtrler -> error[1]) + (distanceCtrler -> error[2]));
+
+	distanceCtrler -> u[2] = distanceCtrler -> u[1];
+	distanceCtrler -> u[1] = distanceCtrler -> u[0];
+	distanceCtrler -> u[0] += increment;
+
+	return (int32)(distanceCtrler -> u[0]);
 }

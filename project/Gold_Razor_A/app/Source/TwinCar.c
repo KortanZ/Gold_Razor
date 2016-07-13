@@ -7,6 +7,7 @@
 
 GPIO_InitTypeDef ultrasoundStruct;
 uint32 carDistance = 0;
+uint32 expDistance;
 UltrasoundState usState = US_RI;
 TwincarState tcState = TWINCAR_FORMER;
 uint8 recv = 0;
@@ -41,7 +42,7 @@ void Ultrasound_Isr(void)
 		LPLD_GPIO_EnableIrq(ultrasoundStruct);
 		usState = US_RI;
 	}
-	// VirtualSignal[0] = carDistance / 500;
+	// VirtualSignal[0] = carDistance / 100;
 	// OutPut_Data();
 }
 
