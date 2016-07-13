@@ -18,15 +18,15 @@ void main(void)
 	DisableInterrupts;
 	OLED_Init();
 	OLED_Clear();
+	LED_Debuger_Init();
 	NVIC_Init();
-	MainCtrl_Pit_Init();
 	Steer_Init();
 	Motor_Init();
-	SDHC_Init();
+	//SDHC_Init();
 	Encoder_Init();
 	//Bluetooth_Debuger_Init();
 	Bluetooth_Twincar_Init();
-	LED_Debuger_Init();
+
 	DebugMode_GPIO_Init();
 	SpeedCtrler_Init();
 	SteerCtrler_Init();
@@ -47,6 +47,7 @@ void main(void)
 	Menu_Show();
 	EnableInterrupts;
 	Twincar_Launch();
+	MainCtrl_Pit_Init();
 	while (1)
 	{
 		if(imgSendFlag)

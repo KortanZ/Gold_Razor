@@ -6,6 +6,7 @@
 #include "ImgProcess.h"
 
 GPIO_InitTypeDef ultrasoundStruct;
+UART_InitTypeDef uartInitStruct;
 uint32 carDistance = 0;
 uint32 expDistance;
 UltrasoundState usState = US_RI;
@@ -48,7 +49,6 @@ void Ultrasound_Isr(void)
 
 void Bluetooth_Twincar_Init(void)
 {
-	UART_InitTypeDef uartInitStruct;
 	uartInitStruct.UART_Uartx = UART2; //use UART2
 	uartInitStruct.UART_BaudRate = 115200; //set baude 115200
 	uartInitStruct.UART_RxPin = PTD2;  //RXD PTD2
@@ -76,11 +76,21 @@ void Bluetooth_Twincar_Isr(void)
 {
 	uint8 recvTmp;
   	recvTmp = (uint8)LPLD_UART_GetChar(UART2);
-  	if (Bluetooth_ParityCheck(recv))
+  	if (Bluetooth_ParityCheck(recvTmp))
   	{
   		recv = recvTmp;
   	}
 
+}
+
+void Twincar_Delay()
+{
+	uint16 i, j;
+	for (i = 0; i < 800; ++i)
+	{
+		for (j = 0; j < 800; ++j);
+	}
+			
 }
 
 void Twincar_Launch(void)
@@ -89,27 +99,26 @@ void Twincar_Launch(void)
 	uint8 READY = 0x83;
 	if (TWINCAR_FORMER == tcState)
 	{
-		while(~SHAKE == recv)
+		while(0xFE != recv)
 		{
 			LPLD_UART_PutChar(UART2, SHAKE);
+			Twincar_Delay();
 		}
-		while(~READY == recv)
+		while(0x7C != recv)
 		{
 			LPLD_UART_PutChar(UART2, READY);
+			Twincar_Delay();
 		}
 		OLED_ShowString(0, 5, "F Launched");
 
 	}
 	else
 	{
-		while(SHAKE == recv)
-		{
-			LPLD_UART_PutChar(UART2, ~SHAKE);
-		}
-		while(READY == recv)
-		{
-			LPLD_UART_PutChar(UART2, ~READY);
-		}
+		while(SHAKE != recv);
+		LPLD_UART_PutChar(UART2, ~SHAKE);
+		while(READY != recv);
+		LPLD_UART_PutChar(UART2, ~READY);
 		OLED_ShowString(0, 5, "B Launched");
 	}
+	LPLD_UART_DisableIrq(uartInitStruct);
 }
