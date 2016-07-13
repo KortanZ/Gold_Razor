@@ -33,14 +33,19 @@ extern PIDParaStruct *differCtrlerCurvPara;
 extern PIDParaStruct *differCtrlerPseStPara;
 extern float32 enhance;
 
+extern PIDStruct *distanceCtrler;
+extern PIDParaStruct *distancePara;
+
 extern int16 motorThersh;
 extern int16 steerThersh;
 
 void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real);
 void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real);
+int32 Distance_Controller(PIDStruct *distanceCtrler, uint32 expDistance, uint32 realDistance);
 
 void SpeedCtrler_Init(void);
 void SteerCtrler_Init(void);
 void DifferCtrler_Init(void);
+void Distance_Ctrler_Init(void);
 
 #endif

@@ -5,7 +5,8 @@ typedef enum {
 	US_RI, 
 	US_FA,
 }UltrasoundState;
-extern void Ultrasound_GPIO_Init(void);
-extern void Ultrasound_Isr(void);
+void Ultrasound_GPIO_Init(void);
+void Ultrasound_Isr(void);
 extern uint32 carDistance;
+extern uint32 expDistance;
 #endif

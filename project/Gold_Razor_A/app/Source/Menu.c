@@ -15,12 +15,13 @@ MenuType menuList[] = {
 
 	{CAMERA_SEND, PID_MOTOR, PID_STEER, STEER_ST, "Steer", NULL, NULL, 0},
 	{PID_STEER, PID_DIFF, PID_MOTOR, MOTOR_KP, "Motor", NULL, NULL, 1},
-	{PID_MOTOR, BANGBANG, PID_DIFF, DIFF_KP, "Diff", NULL , NULL, 2},
-	{PID_DIFF, BROKEN_RESTART, BANGBANG, STEER_BB, "Bang-Bang", NULL , NULL, 3},
-	{BANGBANG, SDHC_WRITE, BROKEN_RESTART, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 4},
-	{BROKEN_RESTART, SDHC_READ, SDHC_WRITE, SDHC_WRITE, "Write Data", (*SDHC_Write_Data), NULL, 5},
-	{SDHC_WRITE, CAMERA_SEND, SDHC_READ, SDHC_READ, "Read Data", (*SDHC_Read_Data), NULL, 6},
-	{SDHC_READ, PID_STEER, CAMERA_SEND, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 7},
+	{PID_MOTOR, PID_DIS, PID_DIFF, DIFF_KP, "Diff", NULL , NULL, 2},
+	{PID_DIFF, BANGBANG, PID_DIS, DIS_KP, "Distance", NULL , NULL, 3},
+	{PID_DIS, BROKEN_RESTART, BANGBANG, STEER_BB, "Bang-Bang", NULL , NULL, 4},
+	{BANGBANG, SDHC_WRITE, BROKEN_RESTART, BROKEN_RESTART, "Restart", (*Broken_Down_Restart), NULL, 5},
+	{BROKEN_RESTART, SDHC_READ, SDHC_WRITE, SDHC_WRITE, "Write Data", (*SDHC_Write_Data), NULL, 6},
+	{SDHC_WRITE, CAMERA_SEND, SDHC_READ, SDHC_READ, "Read Data", (*SDHC_Read_Data), NULL, 7},
+	{SDHC_READ, PID_STEER, CAMERA_SEND, CAMERA_SEND, "Img Send Stoped", (*Img_Send_Change), NULL, 8},
 
 	{STEER_MID, STEER_PSEST, PID_STEER, STEER_ST_KP, "SteerSt", NULL, NULL, 0},
 	{STEER_ST, STEER_CURV, PID_STEER, STEER_PSEST_KP, "SteerPseSt", NULL, NULL, 1},
@@ -41,6 +42,10 @@ MenuType menuList[] = {
 	{MOTOR_SPEED, MOTOR_KD, PID_MOTOR, MOTOR_KP, "Motro_Kp:", NULL, NULL, 0},
 	{MOTOR_KP, MOTOR_KI, PID_MOTOR, MOTOR_KD, "Motor_Kd:", NULL, NULL, 1},
 	{MOTOR_KD, MOTOR_SPEED, PID_MOTOR, MOTOR_KI, "Motor_Ki:", NULL, NULL, 2},
+
+	{DIS_KI, DIS_KD, PID_DIS, DIS_KP, "Dis_Kp:", NULL, NULL, 0},
+	{DIS_KP, DIS_KI, PID_DIS, DIS_KD, "Dis_Kd:", NULL, NULL, 1},
+	{DIS_KD, DIS_KP, PID_DIS, DIS_KI, "Dis_Ki:", NULL, NULL, 2},
 
 	{DIFF_EN, DIFF_KD, PID_DIFF, DIFF_KP, "Diff_Kp:", NULL, NULL, 0},
 	{DIFF_KP, DIFF_KI, PID_DIFF, DIFF_KD, "Diff_Kd:", NULL, NULL, 1},
@@ -110,6 +115,10 @@ void Menu_Data_Link(void)
 	menuList[MOTOR_KP].data = (void *)(&(speedCtrlerPara -> Kp));
 	menuList[MOTOR_KD].data = (void *)(&(speedCtrlerPara -> Kd));
 	menuList[MOTOR_KI].data = (void *)(&(speedCtrlerPara -> Ki));
+
+	menuList[DIS_KP].data = (void *)(&(distancePara -> Kp));
+	menuList[DIS_KD].data = (void *)(&(distancePara -> Kd));
+	menuList[DIS_KI].data = (void *)(&(distancePara -> Ki));
 
 	menuList[DIFF_KP].data = (void *)(&(differCtrlerCurvPara -> Kp));
 	menuList[DIFF_KD].data = (void *)(&(differCtrlerCurvPara -> Kd));

@@ -6,6 +6,7 @@
 
 GPIO_InitTypeDef ultrasoundStruct;
 uint32 carDistance = 0;
+uint32 expDistance;
 UltrasoundState usState = US_RI;
 
 void Ultrasound_GPIO_Init(void)
