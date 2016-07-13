@@ -109,7 +109,7 @@ void Twincar_Launch(void)
 			LPLD_UART_PutChar(UART2, READY);
 			Twincar_Delay();
 		}
-		OLED_ShowString(0, 5, "F Launched");
+		//OLED_ShowString(0, 5, "F Launched");
 
 	}
 	else
@@ -118,7 +118,7 @@ void Twincar_Launch(void)
 		LPLD_UART_PutChar(UART2, ~SHAKE);
 		while(READY != recv);
 		LPLD_UART_PutChar(UART2, ~READY);
-		OLED_ShowString(0, 5, "B Launched");
+		//OLED_ShowString(0, 5, "B Launched");
 	}
 	LPLD_UART_DisableIrq(uartInitStruct);
 }

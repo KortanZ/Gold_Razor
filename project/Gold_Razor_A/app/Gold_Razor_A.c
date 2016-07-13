@@ -22,7 +22,7 @@ void main(void)
 	NVIC_Init();
 	Steer_Init();
 	Motor_Init();
-	//SDHC_Init();
+	SDHC_Init();
 	Encoder_Init();
 	//Bluetooth_Debuger_Init();
 	Bluetooth_Twincar_Init();
