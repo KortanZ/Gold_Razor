@@ -157,15 +157,15 @@ void SteerCtrler_Init(void)
 	else
 	{
 		steerCtrlerStPara -> Kp = 0.5;
-		steerCtrlerStPara -> Kd = 3.0021;
+		steerCtrlerStPara -> Kd = 1;
 		steerCtrlerStPara -> Ki = 0;
 
 		steerCtrlerPseStPara -> Kp = 4.5;
 		steerCtrlerPseStPara -> Kd = 2.5021;
 		steerCtrlerPseStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 5.07766;
-		steerCtrlerCurvPara -> Kd = 2.7021;
+		steerCtrlerCurvPara -> Kp = 5.17766;
+		steerCtrlerCurvPara -> Kd = 3;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;
@@ -220,8 +220,8 @@ void DifferCtrler_Init(void)
 		differCtrlerPseStPara -> Kd	= 0;
 		differCtrlerPseStPara -> Ki = 0;
 
-		differCtrlerCurvPara -> Kp = 8.4;
-		differCtrlerCurvPara -> Kd = 0.80;
+		differCtrlerCurvPara -> Kp = 11.5;
+		differCtrlerCurvPara -> Kd = 0;
 		differCtrlerCurvPara -> Ki = 0;
 
 		differCtrler -> para = differCtrlerStPara;
