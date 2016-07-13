@@ -297,22 +297,13 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 			PIC_DateBlock.LeftLine[Row_buff] = PIC_DateBlock.LeftLine[Row_buff + 1];
 		}
 	}
-	PIC_DateBlock.TrackWidth[Row_buff] = PIC_DateBlock.RightLine[Row_buff]     \
-	                         			- PIC_DateBlock.LeftLine[Row_buff];
-
-	PIC_DateBlock.MidLine[Row_buff] = ((PIC_DateBlock.RightLine[Row_buff]     \
-		                            + PIC_DateBlock.LeftLine[Row_buff]) >> 1);
-	(PIC_DateBlock.MidLine[Row_buff] >= 155) ? 	\
-		(PIC_DateBlock.MidLine[Row_buff] = 155) : (NULL);
-	(PIC_DateBlock.MidLine[Row_buff] <= 4) ?    \
-		(PIC_DateBlock.MidLine[Row_buff] = 4) : (NULL);
 	if (fabs(PIC_DateBlock.RightLine[Row_buff] - PIC_DateBlock.RightLine[Row_buff + 1]) > 50)
 	{
 		PIC_DateBlock.RightLine[Row_buff] = PIC_DateBlock.RightLine[Row_buff + 1] \
 										+ PIC_DateBlock.RightLine[Row_buff + 2] \
 										- PIC_DateBlock.RightLine[Row_buff + 3];
 	}
-
+	//检测是否边界突变，突变是错误的，可以更改50的值来改变突变判定阈值
 	(PIC_DateBlock.RightLine[Row_buff] > PICTURE_W - 3) ? \
 		(PIC_DateBlock.RightLine[Row_buff] = PICTURE_W - 3) : (NULL);
 	(PIC_DateBlock.RightLine[Row_buff] < 2) ? \
@@ -327,7 +318,16 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 	(PIC_DateBlock.LeftLine[Row_buff] < 2) ?  \
 		(PIC_DateBlock.LeftLine[Row_buff] = 2) : (NULL);
 	(PIC_DateBlock.LeftLine[Row_buff] > PICTURE_W - 3) ?
-		(PIC_DateBlock.LeftLine[Row_buff] = PICTURE_W - 3) : (NULL);			
+		(PIC_DateBlock.LeftLine[Row_buff] = PICTURE_W - 3) : (NULL);	
+	PIC_DateBlock.TrackWidth[Row_buff] = PIC_DateBlock.RightLine[Row_buff]     \
+	                         			- PIC_DateBlock.LeftLine[Row_buff];
+
+	PIC_DateBlock.MidLine[Row_buff] = ((PIC_DateBlock.RightLine[Row_buff]     \
+		                            + PIC_DateBlock.LeftLine[Row_buff]) >> 1);
+	(PIC_DateBlock.MidLine[Row_buff] >= 155) ? 	\
+		(PIC_DateBlock.MidLine[Row_buff] = 155) : (NULL);
+	(PIC_DateBlock.MidLine[Row_buff] <= 4) ?    \
+		(PIC_DateBlock.MidLine[Row_buff] = 4) : (NULL);			
 		
 	/*           转弯检测       */
 	if(!LeftFlag_Switch.LeftLost && RightFlag_Switch.RightWhiteLost)//右转弯

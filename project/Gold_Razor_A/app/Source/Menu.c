@@ -140,7 +140,7 @@ void Menu_Data_Increase(ListType lst)
 	if(NULL != menuList[lst].data)
 	{
 		if(lst >= STEER_ST_KP && lst <= DIFF_EN)
-			*((float32 *)menuList[lst].data) += 0.01;
+			*((float32 *)menuList[lst].data) += 0.1;
 		else if(lst >= STEER_BB && lst <= MOTOR_BB)
 		  	*((int16 *)menuList[lst].data) += 1;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)
@@ -155,7 +155,7 @@ void Menu_Data_Decrease(ListType lst)
 	if(NULL != menuList[lst].data)
 	{
 		if(lst >= STEER_ST_KP && lst <= DIFF_EN)
-			*((float32 *)menuList[lst].data) -= 0.01;
+			*((float32 *)menuList[lst].data) -= 0.1;
 		else if(lst >= STEER_BB && lst <= MOTOR_BB)
 		  	*((int16 *)menuList[lst].data) -= 1;
 		else if(lst >= MOTOR_SPEED && lst <= MOTOR_SPEED)

@@ -84,6 +84,14 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	/*          Differ PID Control  Block      */
 	Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
 	distanceTemp = Distance_Controller(distanceCtrler, expDistance, carDistance);
+
+	if (Differ_Temp > 3000)
+	{
+		Differ_Temp = 3000;
+	}else if (Differ_Temp < -3000)
+	{
+		Differ_Temp = -3000;
+	}
 	
 	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp + distanceTemp;
 	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp + distanceTemp;
