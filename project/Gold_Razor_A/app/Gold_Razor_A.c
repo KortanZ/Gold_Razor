@@ -24,8 +24,8 @@ void main(void)
 	Motor_Init();
 	SDHC_Init();
 	Encoder_Init();
-	//UART_Debuger_Init();
-	UART_Blooth_Init();
+	//Bluetooth_Debuger_Init();
+	Bluetooth_Twincar_Init();
 	LED_Debuger_Init();
 	DebugMode_GPIO_Init();
 	SpeedCtrler_Init();
@@ -45,6 +45,7 @@ void main(void)
 	Camera_init();
 	Menu_Show();
 	EnableInterrupts;
+	Twincar_Launch();
 	while (1)
 	{
 		if(imgSendFlag)
