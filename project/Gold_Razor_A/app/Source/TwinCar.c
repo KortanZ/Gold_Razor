@@ -8,7 +8,7 @@
 GPIO_InitTypeDef ultrasoundStruct;
 UART_InitTypeDef uartInitStruct;
 uint32 carDistance = 0;
-uint32 expDistance;
+uint32 expDistance = 103;
 UltrasoundState usState = US_RI;
 TwincarState tcState = TWINCAR_BACK;
 uint8 recv = 0;
@@ -43,8 +43,9 @@ void Ultrasound_Isr(void)
 		LPLD_GPIO_EnableIrq(ultrasoundStruct);
 		usState = US_RI;
 	}
-	// VirtualSignal[0] = carDistance / 100;
+	// VirtualSignal[0] = carDistance / 1000;
 	// OutPut_Data();
+	//printf("%d\n", carDistance / 100);
 }
 
 void Bluetooth_Twincar_Init(void)

@@ -83,7 +83,7 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	
 	/*          Differ PID Control  Block      */
 	Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
-	distanceTemp = Distance_Controller(distanceCtrler, expDistance, carDistance);
+	distanceTemp = Distance_Controller(distanceCtrler, expDistance, carDistance / 1000);
 
 	if (Differ_Temp > 3000)
 	{
@@ -178,7 +178,7 @@ void SteerCtrler_Init(void)
 		steerCtrlerPseStPara -> Kd = 2.5021;
 		steerCtrlerPseStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 5.17766;
+		steerCtrlerCurvPara -> Kp = 4.97766;
 		steerCtrlerCurvPara -> Kd = 3;
 		steerCtrlerCurvPara -> Ki = 0;
 
@@ -234,7 +234,7 @@ void DifferCtrler_Init(void)
 		differCtrlerPseStPara -> Kd	= 0;
 		differCtrlerPseStPara -> Ki = 0;
 
-		differCtrlerCurvPara -> Kp = 11.5;
+		differCtrlerCurvPara -> Kp = 11.09;
 		differCtrlerCurvPara -> Kd = 0;
 		differCtrlerCurvPara -> Ki = 0;
 
@@ -260,7 +260,7 @@ void Distance_Ctrler_Init(void)
 	}
 	else
 	{
-		distancePara -> Kp = 0;
+		distancePara -> Kp = 10;
 		distancePara -> Kd = 0;
 		distancePara -> Ki = 0;
 
@@ -277,17 +277,19 @@ int32 Distance_Controller(PIDStruct *distanceCtrler, uint32 expDistance, uint32 
 {
 	float32 increment;
 
-	distanceCtrler -> error[2] = distanceCtrler -> error[1];
-	distanceCtrler -> error[1] = distanceCtrler -> error[0];
-	distanceCtrler -> error[0] = realDistance - expDistance;
+	if (realDistance < 200)
+	{
+		distanceCtrler -> error[2] = distanceCtrler -> error[1];
+		distanceCtrler -> error[1] = distanceCtrler -> error[0];
+		distanceCtrler -> error[0] = (float32)realDistance - (float32)expDistance;
 
-	increment = (distanceCtrler -> para -> Kp) * ((distanceCtrler -> error[0]) - (distanceCtrler -> error[1]))
-					 + (distanceCtrler -> para-> Ki) * (distanceCtrler -> error[0]) + (distanceCtrler -> para -> Kd)
-					 * ((distanceCtrler -> error[0]) - 2 * (distanceCtrler -> error[1]) + (distanceCtrler -> error[2]));
+		increment = (distanceCtrler -> para -> Kp) * (distanceCtrler -> error[0])
+					 + (distanceCtrler -> para -> Kd) * ((distanceCtrler -> error[0]) - (distanceCtrler -> error[1]));
 
-	distanceCtrler -> u[2] = distanceCtrler -> u[1];
-	distanceCtrler -> u[1] = distanceCtrler -> u[0];
-	distanceCtrler -> u[0] += increment;
+		distanceCtrler -> u[2] = distanceCtrler -> u[1];
+		distanceCtrler -> u[1] = distanceCtrler -> u[0];
+		distanceCtrler -> u[0] = increment;
+	}
 
 	return (int32)(distanceCtrler -> u[0]);
 }

@@ -24,8 +24,8 @@ void main(void)
 	Motor_Init();
 	SDHC_Init();
 	Encoder_Init();
-	//Bluetooth_Debuger_Init();
-	Bluetooth_Twincar_Init();
+	Bluetooth_Debuger_Init();
+	//Bluetooth_Twincar_Init();
 
 	DebugMode_GPIO_Init();
 	SpeedCtrler_Init();
@@ -46,7 +46,7 @@ void main(void)
 	Camera_init();
 	Menu_Show();
 	EnableInterrupts;
-	Twincar_Launch();
+	//Twincar_Launch();
 	MainCtrl_Pit_Init();
 	while (1)
 	{
@@ -59,7 +59,8 @@ void main(void)
 		Mode_Change(steerCtrler, differCtrler);
 		clearflag();
 		OLED_ShowString(0,0,"MidAve");
-		OLED_ShowNum(70,0,MidAve,3);
+		//OLED_ShowNum(70,0,MidAve,3);
+		OLED_ShowNum(70, 0, carDistance / 1000, 3);
 	}
 }
 
