@@ -53,10 +53,10 @@ void NVIC_Init(void)
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);
-	//配置Key_Isr的NVIC分组
+	//配置Key_Isr和US_Isr的NVIC分组
 	nvic_init_struct.NVIC_IRQChannel = PORTC_IRQn;
 	nvic_init_struct.NVIC_IRQChannelGroupPriority = NVIC_PriorityGroup_3;
-	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 3;
+	nvic_init_struct.NVIC_IRQChannelPreemptionPriority = 5;
 	nvic_init_struct.NVIC_IRQChannelSubPriority = 1;
 	nvic_init_struct.NVIC_IRQChannelEnable = FALSE;
 	LPLD_NVIC_Init(nvic_init_struct);

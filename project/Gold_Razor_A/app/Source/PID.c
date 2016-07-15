@@ -170,16 +170,16 @@ void SteerCtrler_Init(void)
 	}
 	else
 	{
-		steerCtrlerStPara -> Kp = 0.5;
-		steerCtrlerStPara -> Kd = 1;
+		steerCtrlerStPara -> Kp = 0;
+		steerCtrlerStPara -> Kd = 1.4;
 		steerCtrlerStPara -> Ki = 0;
 
-		steerCtrlerPseStPara -> Kp = 4.5;
-		steerCtrlerPseStPara -> Kd = 2.5021;
+		steerCtrlerPseStPara -> Kp = 1.7;
+		steerCtrlerPseStPara -> Kd = 1.2;
 		steerCtrlerPseStPara -> Ki = 0;
 
-		steerCtrlerCurvPara -> Kp = 4.97766;
-		steerCtrlerCurvPara -> Kd = 3;
+		steerCtrlerCurvPara -> Kp = 2.5;
+		steerCtrlerCurvPara -> Kd = 1.4;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;
@@ -226,7 +226,7 @@ void DifferCtrler_Init(void)
 	}
 	else
 	{
-		differCtrlerStPara -> Kp = 0.5;
+		differCtrlerStPara -> Kp = 0;
 		differCtrlerStPara -> Kd = 0;
 		differCtrlerStPara -> Ki = 0;
 
@@ -234,7 +234,7 @@ void DifferCtrler_Init(void)
 		differCtrlerPseStPara -> Kd	= 0;
 		differCtrlerPseStPara -> Ki = 0;
 
-		differCtrlerCurvPara -> Kp = 11.09;
+		differCtrlerCurvPara -> Kp = 10;
 		differCtrlerCurvPara -> Kd = 0;
 		differCtrlerCurvPara -> Ki = 0;
 
@@ -260,7 +260,7 @@ void Distance_Ctrler_Init(void)
 	}
 	else
 	{
-		distancePara -> Kp = 10;
+		distancePara -> Kp = 0;
 		distancePara -> Kd = 0;
 		distancePara -> Ki = 0;
 
@@ -289,6 +289,10 @@ int32 Distance_Controller(PIDStruct *distanceCtrler, uint32 expDistance, uint32 
 		distanceCtrler -> u[2] = distanceCtrler -> u[1];
 		distanceCtrler -> u[1] = distanceCtrler -> u[0];
 		distanceCtrler -> u[0] = increment;
+	}
+	else
+	{
+		distanceCtrler -> u[0] = 0;
 	}
 
 	return (int32)(distanceCtrler -> u[0]);
