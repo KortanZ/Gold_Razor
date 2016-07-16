@@ -84,12 +84,12 @@ void Bluetooth_Twincar_Isr(void)
 
 }
 
-void Twincar_Delay()
+void Twincar_Delay(uint8 t)
 {
 	uint16 i, j;
-	for (i = 0; i < 800; ++i)
+	for (i = 0; i < (800 * t); ++i)
 	{
-		for (j = 0; j < 800; ++j);
+		for (j = 0; j < 900; ++j);
 	}
 			
 }
@@ -103,12 +103,12 @@ void Twincar_Launch(void)
 		while(0xFE != recv)
 		{
 			LPLD_UART_PutChar(UART2, SHAKE);
-			Twincar_Delay();
+			Twincar_Delay(1);
 		}
 		while(0x7C != recv)
 		{
 			LPLD_UART_PutChar(UART2, READY);
-			Twincar_Delay();
+			Twincar_Delay(1);
 		}
 		//OLED_ShowString(0, 5, "F Launched");
 
@@ -119,6 +119,7 @@ void Twincar_Launch(void)
 		LPLD_UART_PutChar(UART2, ~SHAKE);
 		while(READY != recv);
 		LPLD_UART_PutChar(UART2, ~READY);
+		Twincar_Delay(8);
 		//OLED_ShowString(0, 5, "B Launched");
 	}
 	LPLD_UART_DisableIrq(uartInitStruct);

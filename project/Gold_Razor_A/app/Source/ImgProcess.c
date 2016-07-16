@@ -854,10 +854,10 @@ void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 			steerCtrler -> para = steerCtrlerPseStPara;
 			steerCtrler -> useBang = 1;
 			differCtrler -> para = differCtrlerPseStPara;
-			PWM_Expect = PWM_Expect_Base - 900;
+			PWM_Expect = PWM_Expect_Base - 850;
 			break;
 		case CURV:
-			PWM_Expect = PWM_Expect_Base - 900;
+			PWM_Expect = PWM_Expect_Base - 850;
 			//PWM_Expect = PWM_Expect_Base - 750;
 			steerCtrler -> para = steerCtrlerCurvPara;
 			steerCtrler -> useBang = 1;

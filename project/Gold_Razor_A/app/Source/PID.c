@@ -25,7 +25,7 @@ PIDParaStruct *differCtrlerPseStPara;
 PIDStruct *distanceCtrler;
 PIDParaStruct *distancePara;
 
-float32 enhance = 2.6;
+float32 enhance = 2.5;
 
 int16 motorThersh = 250;
 int16 steerThersh = 80;
@@ -69,35 +69,26 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 		Motor_Duty_Change(MOTOR_LEFT, -8200);
 		Motor_Duty_Change(MOTOR_RIGHT, -8200);
 	}
-	// else
-	// {
-	// 	/*          Differ PID Control  Block      */
-	// 	Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
-	// 	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp;
-	// 	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp;
-
-
-	// 	Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(PWMoutput_1));
-	// 	Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(PWMoutput_2));
-	// }
-	
-	/*          Differ PID Control  Block      */
-	Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
-	distanceTemp = Distance_Controller(distanceCtrler, expDistance, carDistance / 1000);
-
-	if (Differ_Temp > 3000)
+	else
 	{
-		Differ_Temp = 3000;
-	}else if (Differ_Temp < -3000)
-	{
-		Differ_Temp = -3000;
+		/*          Differ PID Control  Block      */
+		Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
+		distanceTemp = Distance_Controller(distanceCtrler, expDistance, carDistance / 1000);
+
+		if (Differ_Temp > 3000)
+		{
+			Differ_Temp = 3000;
+		}else if (Differ_Temp < -3000)
+		{
+			Differ_Temp = -3000;
+		}
+
+		PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp + distanceTemp;
+		PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp + distanceTemp;
+
+		Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(PWMoutput_1));
+		Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(PWMoutput_2));
 	}
-	
-	PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp + distanceTemp;
-	PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp + distanceTemp;
-
-	Motor_Duty_Change(MOTOR_LEFT, (int32)PulseNum_To_PWM(PWMoutput_1));
-	Motor_Duty_Change(MOTOR_RIGHT, (int32)PulseNum_To_PWM(PWMoutput_2));
 
 }
 
@@ -174,12 +165,12 @@ void SteerCtrler_Init(void)
 		steerCtrlerStPara -> Kd = 1.4;
 		steerCtrlerStPara -> Ki = 0;
 
-		steerCtrlerPseStPara -> Kp = 1.7;
+		steerCtrlerPseStPara -> Kp = 1.85;
 		steerCtrlerPseStPara -> Kd = 1.2;
 		steerCtrlerPseStPara -> Ki = 0;
 
 		steerCtrlerCurvPara -> Kp = 2.5;
-		steerCtrlerCurvPara -> Kd = 1.4;
+		steerCtrlerCurvPara -> Kd = 1.45;
 		steerCtrlerCurvPara -> Ki = 0;
 
 		steerCtrler -> para = steerCtrlerStPara;
