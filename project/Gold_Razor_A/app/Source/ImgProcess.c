@@ -20,7 +20,8 @@ RightFlag_Struct RightFlag_Switch;
 
 int16 MidAve = 0;
 uint8 brokeDownFlag = 0;
-uint8 Strightcount,Fakestrightcount,Curvecount;
+uint8 rightLinecnt,leftLinecnt;
+_Bool Car_left,Car_right;
 uint8 leftWhiteLostCnt = 0, rightWhiteLostCnt = 0;
 float32 weight[4] = {0.020, 0.045, 0.030, 0.005};
 
@@ -54,15 +55,14 @@ void Get_MidLine(void)
 		if(LeftFlag_Switch.LeftCrossFlag && RightFlag_Switch.RightCrossFlag)
 		{
 			CrossDeal();
-			LPLD_GPIO_Output_b(PTA,17,0);
 		}
-		else
-			LPLD_GPIO_Output_b(PTA,17,1);
+		//else
+			//LPLD_GPIO_Output_b(PTA,17,1);
 	}
 	else
 	{
 		BlackDeal(Row);
-		LPLD_GPIO_Output_b(PTA,17,1);
+		//LPLD_GPIO_Output_b(PTA,17,1);
 	}
 	//BlackDeal(Row);
 	Get_MidAve(PIC_DateBlock.MidLine  \
@@ -225,6 +225,7 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		PIC_DateBlock.LeftLine[Row_buff] = 2;
 	}
 	else
+
 	{
 		LeftFlag_Switch.LastLeftWhiteLost = LeftFlag_Switch.LeftWhiteLost;
 		LeftFlag_Switch.LeftWhiteLost = 0;
@@ -273,6 +274,23 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		RightFlag_Switch.RightBlackLost = 0;
 		RightFlag_Switch.RightLost = 0;
 	}
+	//直线检测
+	if(!LeftFlag_Switch.LeftLost)
+	{
+		if ((PIC_DateBlock.LeftLine[Row_buff] - PIC_DateBlock.LeftLine[Row_buff + 1] <= 3) && 
+			(PIC_DateBlock.LeftLine[Row_buff] - PIC_DateBlock.LeftLine[Row_buff + 1] >= 1))
+		{
+			leftLinecnt++;
+		}
+	}
+	if (!RightFlag_Switch.RightLost)
+	{
+		if ((PIC_DateBlock.RightLine[Row_buff] - PIC_DateBlock.RightLine[Row_buff + 1] >= -3) && 
+			(PIC_DateBlock.RightLine[Row_buff] - PIC_DateBlock.RightLine[Row_buff + 1] <= -1) ) 
+		{
+			rightLinecnt++;
+		}
+	}
 	
 	//如果扫描错误
 	if(PIC_DateBlock.RightLine[Row_buff] < PIC_DateBlock.LeftLine[Row_buff])
@@ -308,6 +326,7 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		(PIC_DateBlock.RightLine[Row_buff] = PICTURE_W - 3) : (NULL);
 	(PIC_DateBlock.RightLine[Row_buff] < 2) ? \
 		(PIC_DateBlock.RightLine[Row_buff] = 2) : (NULL);		
+	//边缘突变
 	if (fabs(PIC_DateBlock.LeftLine[Row_buff] - PIC_DateBlock.LeftLine[Row_buff + 1]) > 50)
 	{
 		PIC_DateBlock.LeftLine[Row_buff] = PIC_DateBlock.LeftLine[Row_buff + 1] \
@@ -335,18 +354,18 @@ void TwinLine_Deal(uint8 *pic_buff,int8 Row_buff)
 		if(RightFlag_Switch.LastRightWhiteLost)  //是否上一行也是白丢线
 			(++RightFlag_Switch.RightTurn >= 5)  ? 	\
 				(RightFlag_Switch.RightTurnFlag = 1) :	\
-				(LeftFlag_Switch.LeftTurn = 0 , LeftFlag_Switch.LeftTurnFlag = 0);
-		else
-			RightFlag_Switch.RightTurn = 0;
+				(LeftFlag_Switch.LeftTurnFlag = 0);
+		//else
+			//RightFlag_Switch.RightTurn = 0;
 	}
 	else if(LeftFlag_Switch.LeftWhiteLost && !RightFlag_Switch.RightLost)//左转弯
 	{
 		if (LeftFlag_Switch.LastLeftWhiteLost)//是否上一行也是白丢线
 			(++LeftFlag_Switch.LeftTurn >= 5) ?		\
 				(LeftFlag_Switch.LeftTurnFlag = 1) :	\
-				(RightFlag_Switch.RightTurn = 0 , RightFlag_Switch.RightTurnFlag = 0);
-		else
-			LeftFlag_Switch.LeftTurn = 0;
+				(RightFlag_Switch.RightTurnFlag = 0);
+		//else
+			//LeftFlag_Switch.LeftTurn = 0;
 	}
 	/*          十字检测         */
 	if(Row_buff > 6)
@@ -375,10 +394,76 @@ void Get_MidAve(int16 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,fl
 	}
 	sum1 *= Coe_1 , sum2 *= Coe_2 , sum3 *= Coe_3 , sum4 *= Coe_4;
 	MidAve  = (int16) (sum1 + sum2 + sum3 + sum4);
-	if (CrossInf_Data.SpeCross >= 20)
+	
+	if (CrossInf_Data.SpeCross >= 18)
 	{
 		MidAve = steerMidValue;
+	}	
+	//超车区在右边
+	//uint32 MidSum = 0;
+	if(leftLinecnt >= 30) //|| rightLinecnt >= 30)
+	{
+		if(RightFlag_Switch.RightTurn >= 20 || Car_right)
+		{
+			for(i = 0;i < 10;i++)
+			{
+				sum1 += PIC_DateBlock.LeftLine[i];
+			}
+			for(;i < 20;i++)
+			{
+				sum2 += PIC_DateBlock.LeftLine[i];
+			}
+			for(;i < 30;i++)
+			{
+				sum3 += PIC_DateBlock.LeftLine[i];
+			}
+			for(;i < 40;i++)
+			{
+				sum4 += PIC_DateBlock.LeftLine[i];
+			}
+			sum1 *= Coe_1 , sum2 *= Coe_2 , sum3 *= Coe_3 , sum4 *= Coe_4;
+			MidAve  = (int16) (sum1 + sum2 + sum3 + sum4) + 30;												
+			LPLD_GPIO_Output_b(PTA,17,0);  
+		}
+		else
+		{
+			LPLD_GPIO_Output_b(PTA,17,1);
+		}
 	}
+	//超车区在左边
+	else if (rightLinecnt >= 30)
+	{
+		if (LeftFlag_Switch.LeftTurn >= 20 || Car_left)
+		{
+			for(i = 0;i < 10;i++)
+			{
+				sum1 += PIC_DateBlock.RightLine[i];
+			}
+			for(;i < 20;i++)
+			{
+				sum2 += PIC_DateBlock.RightLine[i];
+			}
+			for(;i < 30;i++)
+			{
+				sum3 += PIC_DateBlock.RightLine[i];
+			}
+			for(;i < 40;i++)
+			{
+				sum4 += PIC_DateBlock.RightLine[i];
+			}
+			sum1 *= Coe_1 , sum2 *= Coe_2 , sum3 *= Coe_3 , sum4 *= Coe_4;
+			MidAve  = (int16) (sum1 + sum2 + sum3 + sum4) - 30;	
+			LPLD_GPIO_Output_b(PTA,17,0);
+		}
+		else
+		{
+			LPLD_GPIO_Output_b(PTA,17,1);
+		}
+	}
+	else
+	{
+		LPLD_GPIO_Output_b(PTA,17,1);
+	}	
 }
 
 void Get_Img_Start(void)
@@ -484,7 +569,7 @@ void Cross_StartCheck(int8 Row_buff)
 						// }
 						// else
 						// 	RightFlag_Switch.Right_1Con = 1;
-						if (rightdown <= 0 || fabs(rightdown - 1) < 1e-3|| fabs(rightdown - 2) < 1e-3)
+						if (rightdown <= 0.34 || fabs(rightdown - 1) < 1e-3|| fabs(rightdown - 2) < 1e-3)
 						{
 							RightFlag_Switch.Right_1Con = 1;
 						}
@@ -508,7 +593,10 @@ void Cross_StartCheck(int8 Row_buff)
 					CrossInf_Data.LeftCrossStart_H - Row_buff >= 0)
 				{
 					if(LeftFlag_Switch.LeftWhiteLost)
+					{
 						LeftFlag_Switch.LeftCrossFlag = 1;
+						Car_left = 1;
+					}
 				}
 				else if (CrossInf_Data.LeftCrossStart_H - Row_buff <= 8 && \
 						 CrossInf_Data.LeftCrossStart_H - Row_buff >= 6)
@@ -524,7 +612,7 @@ void Cross_StartCheck(int8 Row_buff)
 									2 * PIC_DateBlock.LeftLine[CrossInf_Data.LeftCrossStart_H - 2] + \
 									PIC_DateBlock.LeftLine[CrossInf_Data.LeftCrossStart_H - 3]) / 3.0;
 						leftup = fabs(leftup);
-						if (leftup <= 0.34)
+						if (leftup <= 0.34 || fabs(leftup - 1) < 1e-3 || fabs(leftup - 2) < 1e-3)
 						{
 							LeftFlag_Switch.LeftCrossFlag = 1;
 						}
@@ -561,7 +649,10 @@ void Cross_StartCheck(int8 Row_buff)
 					CrossInf_Data.RightCrossStart_H - Row_buff >= 0)
 				{
 					if(RightFlag_Switch.RightWhiteLost)
+					{
 						RightFlag_Switch.RightCrossFlag = 1;
+						Car_right = 1;
+					}
 				}
 				else if (CrossInf_Data.RightCrossStart_H - Row_buff <= 8 && \
 						 CrossInf_Data.RightCrossStart_H - Row_buff >= 6)
@@ -577,7 +668,7 @@ void Cross_StartCheck(int8 Row_buff)
 									PIC_DateBlock.RightLine[CrossInf_Data.RightCrossStart_H - 3] - \
 									PIC_DateBlock.RightLine[CrossInf_Data.RightCrossStart_H - 1]) / 3.0;
 						rightup = fabs(rightup);
-						if (rightup <= 0.35)
+						if (rightup <= 0.34|| fabs(rightup - 1) < 1e-3 || fabs(rightup - 2) < 1e-3)
 						{
 							RightFlag_Switch.RightCrossFlag = 1;
 						}
@@ -640,8 +731,8 @@ void Cross_StartCheck(int8 Row_buff)
 				{
 					++CrossInf_Data.SpeCross;
 				}
-				else
-					CrossInf_Data.SpeCross = 0;
+				//else
+					//CrossInf_Data.SpeCross = 0;
 			}
 			if(CrossInf_Data.SpeCross >= 20)		//十字和大弯道误判严重增大此值
 			{
@@ -653,7 +744,7 @@ void Cross_StartCheck(int8 Row_buff)
 
 				CrossInf_Data.RightCrossStart_H = (uint8) (Row_buff);
 				CrossInf_Data.RightCrossStart_L = PICTURE_W - 3;
-				CrossInf_Data.SpeCross = 0;
+				//CrossInf_Data.SpeCross = 0;
 			}
 		}
 	}
@@ -717,9 +808,9 @@ void BlackDeal(int8 Row_Buff)
 			PIC_DateBlock.MidLine[Row_Buff] = PICTURE_W - 2;
 		}
 	}
-	LeftFlag_Switch.LeftTurn = 0;
+	//LeftFlag_Switch.LeftTurn = 0;
 	LeftFlag_Switch.LeftTurnFlag = 0;
-	RightFlag_Switch.RightTurn = 0;
+	//RightFlag_Switch.RightTurn = 0;
 	RightFlag_Switch.RightTurnFlag = 0;
 }
 
@@ -790,10 +881,12 @@ void clearflag(void)
 	RightFlag_Switch.RightWhiteLost = 0;
 	RightFlag_Switch.Right_1Con = 0;
 
-	Strightcount = 0;
-	Fakestrightcount = 0;
-	Curvecount = 0;
 	CrossInf_Data.SpeCross = 0;
+	
+	leftLinecnt = 0;
+	rightLinecnt = 0;
+	Car_left = 0;
+	Car_right = 0;	
 
 	leftWhiteLostCnt = 0;
 	rightWhiteLostCnt = 0;
@@ -810,20 +903,20 @@ RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
 
 	if(fabs(midErrInvSlp) < 5 && fabs(midInvSlp) < 5 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
 	{
-		// OLED_ClearLine(5);
-		// OLED_ShowString(0, 5, "Straight");
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Straight");
 		thisMode = STRAIGHT;
 	}
 	else if (LeftFlag_Switch.LeftCrossFlag && RightFlag_Switch.RightCrossFlag)
 	{
-		// OLED_ClearLine(5);
-		// OLED_ShowString(0, 5, "Pse Straight");
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Pse Straight");
 		thisMode = PSE_ST;
 	}
 	else
 	{
-		// OLED_ClearLine(5);
-		// OLED_ShowString(0, 5, "Curv");
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Curv");
 		thisMode = CURV;
 	}
 

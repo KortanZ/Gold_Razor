@@ -24,8 +24,8 @@ void main(void)
 	Motor_Init();
 	SDHC_Init();
 	Encoder_Init();
-	//Bluetooth_Debuger_Init();
-	Bluetooth_Twincar_Init();
+	Bluetooth_Debuger_Init();
+	//Bluetooth_Twincar_Init();
 
 	DebugMode_GPIO_Init();
 	SpeedCtrler_Init();
@@ -39,15 +39,16 @@ void main(void)
 	}
 	else
 	{
-		Ultrasound_GPIO_Init();
+		//Ultrasound_GPIO_Init();
 		OLED_ShowString(0, 5, "Reading Data...");
 		SDHC_Read_Data();
 	}
 	Camera_init();
 	Menu_Show();
 	EnableInterrupts;
-	Twincar_Launch();
+	//Twincar_Launch();
 	MainCtrl_Pit_Init();
+	Get_Img_Start();
 	while (1)
 	{
 		if(imgSendFlag)

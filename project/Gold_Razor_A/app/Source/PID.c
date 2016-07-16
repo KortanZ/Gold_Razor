@@ -6,6 +6,7 @@
 #include "ImgProcess.h"
 #include "SteerDriver.h"
 #include "TwinCar.h"
+#include "VirtualOsc.h"
 
 float32 Differ_Controller(PIDStruct *, float32, float32);
 
