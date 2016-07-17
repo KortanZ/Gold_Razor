@@ -25,6 +25,8 @@ _Bool Car_left,Car_right;
 uint8 leftWhiteLostCnt = 0, rightWhiteLostCnt = 0;
 float32 weight[4] = {0.020, 0.045, 0.030, 0.005};
 
+int8 overTakeFlag = 0;
+
 void Get_MidLine(void)
 {
 	uint8 i,j,k;
@@ -424,6 +426,7 @@ void Get_MidAve(int16 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,fl
 			sum1 *= Coe_1 , sum2 *= Coe_2 , sum3 *= Coe_3 , sum4 *= Coe_4;
 			MidAve  = (int16) (sum1 + sum2 + sum3 + sum4) + 30;												
 			LPLD_GPIO_Output_b(PTA,17,0);  
+			overTakeFlag = 1;
 		}
 		else
 		{
@@ -454,6 +457,7 @@ void Get_MidAve(int16 *MidLine_Buff,float32 Coe_1,float32 Coe_2,float32 Coe_3,fl
 			sum1 *= Coe_1 , sum2 *= Coe_2 , sum3 *= Coe_3 , sum4 *= Coe_4;
 			MidAve  = (int16) (sum1 + sum2 + sum3 + sum4) - 30;	
 			LPLD_GPIO_Output_b(PTA,17,0);
+			overTakeFlag = 1;
 		}
 		else
 		{
@@ -890,6 +894,8 @@ void clearflag(void)
 
 	leftWhiteLostCnt = 0;
 	rightWhiteLostCnt = 0;
+
+	overTakeFlag = 0;
 }
 
 RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
@@ -920,6 +926,12 @@ RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
 		thisMode = CURV;
 	}
 
+	if (overTakeFlag)
+	{
+		OLED_ClearLine(5);
+		OLED_ShowString(0, 5, "Straight");
+		thisMode = STRAIGHT;
+	}
 
 	return thisMode;
 }
