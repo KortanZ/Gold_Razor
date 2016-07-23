@@ -10,7 +10,7 @@ UART_InitTypeDef uartInitStruct;
 uint32 carDistance = 0;
 uint32 expDistance = 103;
 UltrasoundState usState = US_RI;
-TwincarState tcState = TWINCAR_BACK;
+TwincarState tcState = TWINCAR_FORMER;
 uint8 recv = 0;
 
 void Ultrasound_GPIO_Init(void)

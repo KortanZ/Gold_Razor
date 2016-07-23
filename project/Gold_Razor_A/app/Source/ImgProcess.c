@@ -909,27 +909,27 @@ RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
 
 	if(fabs(midErrInvSlp) < 5 && fabs(midInvSlp) < 5 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
 	{
-		OLED_ClearLine(5);
-		OLED_ShowString(0, 5, "Straight");
+		// OLED_ClearLine(5);
+		// OLED_ShowString(0, 5, "Straight");
 		thisMode = STRAIGHT;
 	}
 	else if (LeftFlag_Switch.LeftCrossFlag && RightFlag_Switch.RightCrossFlag)
 	{
-		OLED_ClearLine(5);
-		OLED_ShowString(0, 5, "Pse Straight");
+		// OLED_ClearLine(5);
+		// OLED_ShowString(0, 5, "Pse Straight");
 		thisMode = PSE_ST;
 	}
 	else
 	{
-		OLED_ClearLine(5);
-		OLED_ShowString(0, 5, "Curv");
+		// OLED_ClearLine(5);
+		// OLED_ShowString(0, 5, "Curv");
 		thisMode = CURV;
 	}
 
 	if (overTakeFlag)
 	{
-		OLED_ClearLine(5);
-		OLED_ShowString(0, 5, "Straight");
+		// OLED_ClearLine(5);
+		// OLED_ShowString(0, 5, "Straight");
 		thisMode = STRAIGHT;
 	}
 

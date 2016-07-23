@@ -24,30 +24,30 @@ void main(void)
 	Motor_Init();
 	SDHC_Init();
 	Encoder_Init();
-	Bluetooth_Debuger_Init();
-	//Bluetooth_Twincar_Init();
-
 	DebugMode_GPIO_Init();
 	SpeedCtrler_Init();
 	SteerCtrler_Init();
 	DifferCtrler_Init();
 	Distance_Ctrler_Init();
 	Menu_Data_Link();
+	Camera_init();
 	if (!PTC9_I)
 	{
+	  	Bluetooth_Debuger_Init();
 	  	Keyboard_GPIO_Init();
+	  	EnableInterrupts;
 	}
 	else
 	{
+		Bluetooth_Twincar_Init();
 		//Ultrasound_GPIO_Init();
 		OLED_ShowString(0, 5, "Reading Data...");
 		SDHC_Read_Data();
+		EnableInterrupts;
+		Twincar_Launch();
 	}
-	Camera_init();
-	Menu_Show();
-	EnableInterrupts;
-	//Twincar_Launch();
 	MainCtrl_Pit_Init();
+	Menu_Show();
 	Get_Img_Start();
 	while (1)
 	{
