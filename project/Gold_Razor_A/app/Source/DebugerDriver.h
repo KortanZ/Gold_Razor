@@ -8,12 +8,7 @@
 
 #include "common.h"
 
-//#define Twin_Car 1
-
-extern uint32 steerDebugDuty;
-
 void Bluetooth_Debuger_Init(void);
-//void Bluetooth_Twincar_Init(void);
 void LED_Debuger_Init(void);
 void Time_Counter_Start(void);
 uint32 Time_Counter_Get(void);
@@ -23,8 +18,4 @@ void Keyboard_Scan(void);
 void Keyboard_Isr(void);
 void Menu_Show(void);
 void DebugMode_GPIO_Init(void);
-
-//void Bluetooth_Twincar_Isr(void);
-
-
 #endif

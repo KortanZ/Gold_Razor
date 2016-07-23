@@ -8,21 +8,22 @@
 
 #include "common.h"
 
+/*菜单内容索引枚举*/
 typedef enum{
 
-	PID_STEER,
-	PID_MOTOR,
-	PID_DIFF,
-	PID_DIS,
-	BANGBANG,
-	BROKEN_RESTART,
-	SDHC_WRITE,
-	SDHC_READ,
-	CAMERA_SEND,
+	PID_STEER,			//舵机pid
+	PID_MOTOR,			//电机pid
+	PID_DIFF,			//差速pid
+	PID_DIS,			//距离pid
+	BANGBANG,			//棒棒阈值
+	BROKEN_RESTART,		//停车重启
+	SDHC_WRITE,			//sd卡写数据
+	SDHC_READ,			//sd卡读数据
+	CAMERA_SEND,		//向上位机发送图像
 
-	STEER_ST,
-	STEER_PSEST,
-	STEER_CURV,
+	STEER_ST,			//直道舵机pid
+	STEER_PSEST,		//伪直道舵机pid
+	STEER_CURV,			//弯道舵机pid
 
 	STEER_ST_KP,
 	STEER_ST_KD,
@@ -42,25 +43,26 @@ typedef enum{
 	DIFF_KP,
 	DIFF_KD,
 	DIFF_KI,
-	DIFF_EN,
-	STEER_BB,
-	MOTOR_BB,
+	DIFF_EN,			//差速增强因子
+	STEER_BB,			//舵机棒棒阈值
+	MOTOR_BB,			//电机棒棒阈值
 
-	MOTOR_SPEED,
+	MOTOR_SPEED,		//电机速度
 
-	STEER_MID,
+	STEER_MID,			//期望中线值
 }ListType;
 
+/*菜单结构体*/
 typedef struct
 {
-	ListType previous;
-	ListType next;
-	ListType parent;
-	ListType child;
-	uint8 *str;
-	void (*function)();
-	void *data;
-	uint8 indexInPage;
+	ListType previous;	//前一项索引
+	ListType next;		//后一项索引
+	ListType parent;	//父项索引
+	ListType child;		//子项索引
+	uint8 *str;			//当前项显示的字符
+	void (*function)();	//当前项执行的功能
+	void *data;			//当前项的数据
+	uint8 indexInPage;	//当前显示页内的索引，与标号枚举的索引不同
 }MenuType;
 
 extern ListType currentList;

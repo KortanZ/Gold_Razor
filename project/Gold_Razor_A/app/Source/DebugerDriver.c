@@ -8,8 +8,6 @@
 #include "DebugerDriver.h"
 #include "oled.h"
 
-uint32 steerDebugDuty = 1431;
-//#if (!Twin_Car)
 void Bluetooth_Debuger_Init(void)
 {
 	UART_InitTypeDef uartInitStruct;
@@ -20,31 +18,6 @@ void Bluetooth_Debuger_Init(void)
 	//初始化UART
 	LPLD_UART_Init(uartInitStruct);
 }
-//#else
-// void Bluetooth_Twincar_Init(void)
-// {
-// 	UART_InitTypeDef uartInitStruct;
-// 	uartInitStruct.UART_Uartx = UART2; //使用UART2
-// 	uartInitStruct.UART_BaudRate = 115200; //设置波特率115200
-// 	uartInitStruct.UART_RxPin = PTD2;  //接收引脚为PTD2
-// 	uartInitStruct.UART_TxPin = PTD3;  //发送引脚为PTD3
-// 	uartInitStruct.UART_RxIntEnable = TRUE;
-// 	uartInitStruct.UART_RxIsr = Bluetooth_Twincar_Isr;
-// 	//初始化UART
-// 	LPLD_UART_Init(uartInitStruct);
-// 	LPLD_UART_EnableIrq(uartInitStruct);
-// }
-//#endif
-
-// void Bluetooth_Twincar_Isr(void)
-// {
-// 	int8 recv;
-//   	recv = LPLD_UART_GetChar(UART2);
-//   	LPLD_UART_PutChar(UART2, recv);
-// 	// OLED_ClearLine(5);
-// 	// OLED_ShowString(0, 5, "success!");
-// }
-
 void LED_Debuger_Init(void)
 {
 	GPIO_InitTypeDef gpioInitStruct;
@@ -55,7 +28,7 @@ void LED_Debuger_Init(void)
 	gpioInitStruct.GPIO_Dir = DIR_OUTPUT;
 	gpioInitStruct.GPIO_Output = OUTPUT_H;
 	gpioInitStruct.GPIO_PinControl = IRQC_DIS;
-	LPLD_GPIO_Init(gpioInitStruct);   /* */
+	LPLD_GPIO_Init(gpioInitStruct);
 	//---------------------Razor_LED----------------
 	gpioInitStruct.GPIO_PTx = PTE;
 	gpioInitStruct.GPIO_Pins = GPIO_Pin10;
@@ -65,6 +38,7 @@ void LED_Debuger_Init(void)
 	LPLD_GPIO_Init(gpioInitStruct);
 }
 
+/*调试模式和发车模式切换接口初始化*/
 void DebugMode_GPIO_Init(void)
 {
 	GPIO_InitTypeDef DebugMode_gpio_init_struct;
@@ -73,10 +47,11 @@ void DebugMode_GPIO_Init(void)
 	DebugMode_gpio_init_struct.GPIO_Pins = GPIO_Pin9;
 	DebugMode_gpio_init_struct.GPIO_Dir = DIR_INPUT;
 	DebugMode_gpio_init_struct.GPIO_Output = OUTPUT_L;
-	DebugMode_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;
+	DebugMode_gpio_init_struct.GPIO_PinControl = IRQC_FA | INPUT_PULL_UP;	//内部上拉
 	LPLD_GPIO_Init(DebugMode_gpio_init_struct);
 }
 
+/*按键接口初始化*/
 void Keyboard_GPIO_Init(void)
 {
 
@@ -101,6 +76,7 @@ void Keyboard_GPIO_Init(void)
 	LPLD_GPIO_EnableIrq(keyboard_gpio_init_struct);
 }
 
+/*时间测量计时器启动*/
 void Time_Counter_Start(void)
 {
 	/* Timer count start */
@@ -113,6 +89,7 @@ void Time_Counter_Start(void)
 	PIT->CHANNEL[0].TCTRL |= (0 | PIT_TCTRL_TEN_MASK);
 }
 
+/*计时器取值同时重置计时器*/
 uint32 Time_Counter_Get(void)
 {
 	/* Timer count end */
@@ -132,6 +109,7 @@ uint32 Time_Counter_Get(void)
 	return val;
 }
 
+/*按键延时*/
 void Keybord_Delay(void)
 {
 	uint16 i, n;
@@ -210,7 +188,7 @@ void Keyboard_Isr(void)
 	Menu_Show();
 }
 
-//Polling Keyboard
+//Polling Keyboard（aborted）
 void Keyboard_Scan(void)
 {
 		//确定

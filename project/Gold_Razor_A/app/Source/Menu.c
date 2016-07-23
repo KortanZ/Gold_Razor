@@ -9,7 +9,7 @@
 
 ListType currentList = PID_STEER;
 
-uint8 sdhcMessage[][9] = {"OK", "ERROR", "WRPRT", "NOTRDY", "PARERR", "NONRSPNS"};
+uint8 sdhcMessage[][9] = {"OK", "ERROR", "WRPRT", "NOTRDY", "PARERR", "NONRSPNS"};	//sd卡状态返回值提示的显示
 
 MenuType menuList[] = {
 
@@ -58,35 +58,40 @@ MenuType menuList[] = {
 	{MOTOR_KI, MOTOR_KP, PID_MOTOR, MOTOR_SPEED, "Motor_Sp:", NULL, NULL, 3},
 
 	{STEER_CURV, STEER_ST, PID_STEER, STEER_MID, "Steer_Mid:", NULL, NULL, 3},
-};
+};	//菜单
 
+/*菜单显示函数*/
 void Menu_Show(void)
 {
 	uint8 i;
 	ListType list = currentList;
-	uint8 page = (uint8)(menuList[list].indexInPage / 4);
+	uint8 page = (uint8)(menuList[list].indexInPage / 4);	//按每页显示4条项，用页内索引计算应该显示在第几页
+	/*将屏幕将要显示菜单的几行清屏*/
 	for(i = 1; i < 5; i++)
 	{
 		OLED_ClearLine(i);
 	}
+	/*显示菜单*/
 	do
 	{
 		if((uint8)(menuList[list].indexInPage / 4) == page)
 		{
-			OLED_ShowString(8, (menuList[list].indexInPage % 4) + 1, menuList[list].str);
-			Menu_Num_Show(list);
+			OLED_ShowString(8, (menuList[list].indexInPage % 4) + 1, menuList[list].str);	//显示该项的字符
+			Menu_Num_Show(list);	//显示该项的数据
 		}
 		list = menuList[list].next;
 	}while(list != currentList);
-	OLED_ShowChar(0, (menuList[currentList].indexInPage % 4) + 1, '>');
+	OLED_ShowChar(0, (menuList[currentList].indexInPage % 4) + 1, '>');	//显示指示符
 }
 
+/*数据显示*/
 void Menu_Num_Show(ListType lst)
 {
 
 	if(NULL != menuList[lst].data)
 	{
-		if(lst >= STEER_ST_KP && lst <= DIFF_EN)
+		if(lst >= STEER_ST_KP && lst <= DIFF_EN) //float32型的扩大100倍消除小数后再显示
+			//数据链接时数据指针为统一方便存储全强转为void *，这里要按原来的类型还原
 			OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((float32 *)menuList[lst].data) * 100), Num_Len);
 		else if(lst >= STEER_BB && lst <= MOTOR_BB)
 		  	OLED_ShowNum(70, (menuList[lst].indexInPage % 4) + 1, (int32)(*((int16 *)menuList[lst].data)), Num_Len);
@@ -97,6 +102,8 @@ void Menu_Num_Show(ListType lst)
 	}
 }
 
+/*内存变量与菜单项链接*/
+//统一强转为void方便统一存储
 void Menu_Data_Link(void)
 {
 
@@ -135,6 +142,7 @@ void Menu_Data_Link(void)
 
 }
 
+/*数据增加*/
 void Menu_Data_Increase(ListType lst)
 {
 	if(NULL != menuList[lst].data)
@@ -150,6 +158,7 @@ void Menu_Data_Increase(ListType lst)
 	}
 }
 
+/*数据减小*/
 void Menu_Data_Decrease(ListType lst)
 {
 	if(NULL != menuList[lst].data)
@@ -165,6 +174,7 @@ void Menu_Data_Decrease(ListType lst)
 	}
 }
 
+/*图像发送和停止*/
 void Img_Send_Change(void)
 {
 	imgSendFlag = ~imgSendFlag;
@@ -174,12 +184,14 @@ void Img_Send_Change(void)
 		menuList[currentList].str = "Img Send Begin";
 }
 
+/*停车重启*/
 void Broken_Down_Restart(void)
 {
 	brokeDownFlag = 0;
 	OLED_ClearLine(5);
 }
 
+/*sd卡初始化*/
 void SDHC_Init(void)
 {
 	SDHCRES sd_state;
@@ -191,19 +203,21 @@ void SDHC_Init(void)
 	}
 }
 
+/*sd卡写数据*/
 void SDHC_Write_Data(void)
 {
 
 	uint8 i, flag = 0;
 	SDHCRES sd_state;
-	uint8 *sdhcBuff = (uint8 *)malloc(sizeof(512));
+	uint8 *sdhcBuff = (uint8 *)malloc(sizeof(512));		//一次写512字节
 
-	if (NULL == sdhcBuff)
+	if (NULL == sdhcBuff)	//调用malloc函数必须判断内存是否申请成功，否则为危险操作
 	{
 		OLED_ClearLine(5);
 		OLED_ShowString(0, 5, "SDHC alloc Failed");
 	}
-	else
+	else	//为了方便操作和统一管理，用了一种比较占空间的方法，每个数据都强转为float32型存储，存储在512字节的前4字节，
+			//也就是每个数据占用512字节，后期可以改成把数据写入缓冲区在写进sd卡，这样就只用512字节就可以存下所有数据
 	{
 		for (i = PID_STEER; i < STEER_MID; ++i)
 		{
@@ -225,7 +239,7 @@ void SDHC_Write_Data(void)
 					sd_state = LPLD_SDHC_WriteBlocks((uint8 *)sdhcBuff, i, 1);
 				}
 
-				if(sd_state)
+				if(sd_state)	//判断每次写数据是否成功，一次不成功就将标志位置位
 				{
 					flag = 1;
 				}
@@ -243,11 +257,12 @@ void SDHC_Write_Data(void)
 			OLED_ShowString(0, 5, "SDHC Write Ok");
 		}
 
-		free(sdhcBuff);
+		free(sdhcBuff);		//malloc后不用了一定要free，不然会内存溢出
 	}
 
 }
 
+/*sd卡读数据*/
 void SDHC_Read_Data(void)
 {
 
