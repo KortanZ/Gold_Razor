@@ -13,7 +13,7 @@ typedef struct
 }PIDParaStruct;
 
 typedef struct{
-	PIDParaStruct *para;
+	PIDParaStruct *para; //参数表
 	float32 error[3];
 	float32 u[3];
 	int8 useBang;

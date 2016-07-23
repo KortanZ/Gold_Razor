@@ -102,11 +102,13 @@ void Main_Isr(void)
 	leftPulse = Encoder_GetPulseNum(ENCODER_LEFT);
 	rightPulse = Encoder_GetPulseNum(ENCODER_RIGHT);
 
+	/*因为只有一个正交解码模块，所以需要确定方向*/
 	if(leftPulse < 0)
 	{
 		rightPulse = -rightPulse;
 	}
 
+	/* 停车标识的检查 */
 	if(!brokeDownFlag)
 	{
 		Speed_Controller(speedCtrler, PWM_To_Pulse(PWM_Expect), (leftPulse + rightPulse) / 2.0);
@@ -122,12 +124,5 @@ void Main_Isr(void)
 		Speed_Controller(speedCtrler, 0, (leftPulse + rightPulse) / 2.0);
 		Steer_Controller(steerCtrler, steerMidValue, steerMidValue);
 	}
-
-
-	// VirtualSignal[0] = motorCtrler -> u[0];
-	// VirtualSignal[1] = leftPulse;
-	// VirtualSignal[2] = rightPulse;
-	// VirtualSignal[3] = PWM_Expect;
-	// OutPut_Data();
 	
 }

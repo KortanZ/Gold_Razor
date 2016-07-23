@@ -59,6 +59,7 @@ void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty)
 {
 
     /* Set motor threshold */
+    /* 占空比不能超过100% */
     if (tagetDuty > 10000)
     {
         tagetDuty = 10000;
@@ -68,6 +69,7 @@ void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty)
         tagetDuty = -10000;
     }
 
+    /* 实现左右电机的正传或者反转 */
 	switch (motorPos)
 	{
 		case MOTOR_LEFT :
@@ -80,9 +82,10 @@ void Motor_Duty_Change(MotorPosition motorPos, int32 tagetDuty)
             break;
 	}
 }
+
 float32 PulseNum_To_PWM(float32 pulseNum)
 {
-	/* This function convert pulse number to rotational speed */
+	/* This function convert pulse number to pwm */
 
 	float32 pwm;
 	pwm = (pulseNum + B_CONST) / B_COF;
@@ -91,6 +94,8 @@ float32 PulseNum_To_PWM(float32 pulseNum)
 
 float32 PWM_To_Pulse(uint32 pwm)
 {
+    /* This function convert pwm to pulse number */
+
 	float32 pulse;
 	pulse = B_COF * pwm - B_CONST;
 

@@ -22,8 +22,8 @@
 
 
 typedef enum {
-	MOTOR_LEFT, 
-	MOTOR_RIGHT,
+	MOTOR_LEFT, //左边电机
+	MOTOR_RIGHT, //右边电机
 }MotorPosition;
 
 extern int32 PWM_Expect_Base;

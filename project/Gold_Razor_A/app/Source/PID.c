@@ -36,8 +36,9 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	float32 PWMoutput_1 , PWMoutput_2;
 	float32 Differ_Temp = 0;
 	int32 distanceTemp = 0;
-	/* previous difference PID */
 
+	/* previous difference PID */
+	/* 微分先行的PID控制 */
 	float32 incrementU;
 
 	motorCtrler -> error[0] = expect - real;
@@ -48,18 +49,20 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 					 - (motorCtrler -> para -> Kd) * ((motorCtrler -> u[0]) - (motorCtrler -> u[1]));
 
 	/* anti-windup */
-
+	/* 积分分离与抗积分饱和 */
 	if ((motorCtrler -> u[1]) > U_MAX || (motorCtrler -> u[1]) < -U_MAX)
 	{
 		incrementU -= (motorCtrler -> para -> Ki) * (motorCtrler -> error[0]);
 	}
-
+	/* 每一轮的变量迭代 */
 	motorCtrler -> u[0] = (motorCtrler -> u[1]) + incrementU;
 
 	motorCtrler -> u[2] = motorCtrler -> u[1];
 	motorCtrler -> u[1] = motorCtrler -> u[0];
 	motorCtrler -> error[1] = motorCtrler -> error[0];
 
+	/* bang-bang control */
+	/*棒棒控制*/
 	if(motorCtrler -> error[0] > motorThersh)
 	{
 		Motor_Duty_Change(MOTOR_LEFT, 6500);
@@ -73,9 +76,12 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 	else
 	{
 		/*          Differ PID Control  Block      */
+		/* 差速PID控制，因效果不明显，乘上了一个增益 */
 		Differ_Temp = enhance * Differ_Controller(differCtrler, steerMidValue, MidAve);
 		distanceTemp = Distance_Controller(distanceCtrler, expDistance, carDistance / 1000);
 
+		/* set diff thersh */
+		/* 差速阈值 */
 		if (Differ_Temp > 3000)
 		{
 			Differ_Temp = 3000;
@@ -84,6 +90,7 @@ void Speed_Controller(PIDStruct *motorCtrler, float32 expect, float32 real)
 			Differ_Temp = -3000;
 		}
 
+		/* 差速PID与速度控制系统为并联关系，此处为输出叠加口，实质为一个加法器 */
 		PWMoutput_1 = motorCtrler -> u[0] + Differ_Temp + distanceTemp;
 		PWMoutput_2 = motorCtrler -> u[0] - Differ_Temp + distanceTemp;
 
@@ -128,11 +135,14 @@ void Steer_Controller(PIDStruct *SteerCon_Data, float32 expect, float32 real)
 	SteerCon_Data -> error[1] = SteerCon_Data -> error[0];
 	SteerCon_Data -> error[0] = real - expect;
 
+	/* 舵机中值叠加上一个增量形式的PID控制器 */
 	incrementU = (SteerCon_Data -> para -> Kp) * ((SteerCon_Data -> error[0]))           
 			   + (SteerCon_Data -> para -> Kd) * ((SteerCon_Data -> error[0]) - (SteerCon_Data -> error[1]));
 
 	SteerCon_Data -> u[0] = STEER_MID_DUTY + incrementU;
 
+	/* bang-bang control */
+	/* 标志位来决定是否使用棒棒控制 */
 	if (SteerCon_Data -> error[0] > steerThersh && SteerCon_Data -> useBang)
 	{
 		Steer_Duty_Change(STEER_RIGHT_DUTY);

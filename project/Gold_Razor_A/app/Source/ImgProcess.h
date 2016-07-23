@@ -80,9 +80,9 @@ typedef struct
 
 
 typedef enum{
-	STRAIGHT,
-	PSE_ST,
-	CURV,
+	STRAIGHT, //直道
+	PSE_ST, //伪直道
+	CURV, //弯道
 }RoadMode;
 
 extern int16 MidAve;

@@ -904,9 +904,11 @@ RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
 	int16 midErrInvSlp;
 	float32 midInvSlp;
 
+	/* 通过计算中线斜率的倒数和中线误差斜率的倒数来综合判定当前赛道 */
 	midErrInvSlp = (MidLine_Buff[y - 5] - steerMidValue) - 2 * (MidLine_Buff[y] - steerMidValue) + (MidLine_Buff[y + 5] - steerMidValue);
 	midInvSlp = (MidLine_Buff[y - 5] - steerMidValue) / -3.0;
 
+	/* 其中的5为整定参数，而两个标识位是白丢线的特殊情况 */
 	if(fabs(midErrInvSlp) < 5 && fabs(midInvSlp) < 5 && !(LeftFlag_Switch.LeftLost) && !(RightFlag_Switch.RightLost))
 	{
 		// OLED_ClearLine(5);
@@ -938,6 +940,7 @@ RoadMode Road_Check(int16 *MidLine_Buff, uint8 y)
 
 void Mode_Change(PIDStruct *steerCtrler, PIDStruct *differCtrler)
 {
+	/* 本函数为一个状态切换函数，用来进行赛道识别后的切换 */
 	RoadMode thisMode;
 	thisMode = Road_Check(PIC_DateBlock.MidLine, 15);
 
